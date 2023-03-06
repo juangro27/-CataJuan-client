@@ -1,5 +1,7 @@
 import { Route, Routes } from "react-router-dom"
+import EditUserPage from "../pages/EditUserPage/EditUserPage"
 import LoginPage from "../pages/LoginPage/LoginPage"
+import MyProfilePage from "../pages/MyProfilePage/MyProfilePage"
 import SignupPage from "../pages/SignupPage/SignupPage"
 
 const AppRoutes = () => {
@@ -12,10 +14,10 @@ const AppRoutes = () => {
             <Route path="/logout" element={<p>LOGOUT</p>} />
             <Route path="/aboutus" element={<p>ABOUT US</p>} />
             <Route path="/contact" element={<p>CONTACT</p>} />
-            <Route path="/myprofile" element={<p>MY PROFILE</p>} />
+            <Route path="/myprofile" element={<MyProfilePage />} />
             <Route path="/myprofile/edit" element={<p>EDIT PROFILE</p>} />
             <Route path="/users" element={<p>USERS</p>} />
-            <Route path="/users/:id/edit" element={<p>EDIT USER</p>} />
+            <Route path="/users/:id/edit" element={<EditUserPage />} />
             <Route path="/users/:id/my-posts" element={<p>MY POSTS</p>} />
             <Route path="/users/:id/favorites-posts" element={<p>FAVORITE POSTS</p>} />
             <Route path="/countries" element={<p>COUNTRIES</p>} />
