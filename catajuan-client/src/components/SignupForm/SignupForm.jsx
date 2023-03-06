@@ -1,18 +1,16 @@
 import { useState, useContext } from "react"
 import { Form, Button } from "react-bootstrap"
-import authService from "../../services/auth.services"
+import authService from "../../services/auth.service"
 import { useNavigate } from 'react-router-dom'
 
 
 const SignupForm = () => {
-    // name, lastName, avatar, email, password
+
     const [signupData, setSignupData] = useState({
         name: '',
         lastName: '',
         email: '',
         password: '',
-        avatar: '',
-
     })
 
     const navigate = useNavigate()
@@ -36,7 +34,7 @@ const SignupForm = () => {
 
     return (
 
-        <Form onSubmit={handleFormSubmit} enctype="multipart/form-data">
+        <Form onSubmit={handleFormSubmit} >
 
             <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Name:</Form.Label>
@@ -51,11 +49,6 @@ const SignupForm = () => {
             <Form.Group className="mb-3" controlId="password">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" value={signupData.password} onChange={handleInputChange} name="password" />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="avatar" >
-                <Form.Label>Avaar</Form.Label>
-                <Form.Control type="file" value={signupData.avatar} onChange={handleInputChange} name="avatar" />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="email">
