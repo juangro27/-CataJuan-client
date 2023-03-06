@@ -6,10 +6,6 @@ import { AuthContext } from '../../contexts/auth.context'
 const Navigation = () => {
 
     const { user, logout } = useContext(AuthContext)
-<<<<<<< HEAD
-=======
-
->>>>>>> 7201f9b65949f686772445b4cea32dd0988cefb4
     return (
         <Navbar bg='dark' variant='dark' expand="md" className='mb-4'>
             <Container>
