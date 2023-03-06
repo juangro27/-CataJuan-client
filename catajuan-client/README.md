@@ -17,7 +17,7 @@ Client routes
 | /countries                                        | List of countries page                         |            |
 | /countries/:id                                    | Specific country page                          |            |
 | /countries/:id/edit                               | Edit specific country page                     |     ✅    |
-| /countries/posts/:id/comments/:comment/edit       | Edit comment for a specific country page       |     ✅    |
+| /countries/:id/comments/:comment/edit             | Edit comment for a specific country page       |     ✅    |
 | /posts                                            | List of posts for a specific country page      |            |
 | /posts/create                                     | Create a new post for a specific country page  |     ✅    |
 | /posts/:id                                        | Sepecific post for a specific country page     |     ✅    |
