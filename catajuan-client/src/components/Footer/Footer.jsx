@@ -1,8 +1,8 @@
-import './Footer.css'
-
 const Footer = () => {
     const footerStyle = {
-        backgroundColor: '#ffffff',
+        backgroundColor: 'black',
+        color: 'white',
+        textAlign: 'center'
     }
 
     return <footer style={footerStyle}>Todos los derechos reservados</footer>
