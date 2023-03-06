@@ -1,4 +1,4 @@
-const axios = require('axios')
+import axios from 'axios'
 
 class AuthService {
     static _instance
@@ -9,7 +9,7 @@ class AuthService {
     }
     static getInstance() {
         if (!this._instance) {
-            this._instance = new ApiCountriesService();
+            this._instance = new AuthService();
         }
         return this._instance;
     }
@@ -29,4 +29,4 @@ class AuthService {
 
 }
 
-module.exports = AuthService.getInstance()
+export default AuthService.getInstance()
