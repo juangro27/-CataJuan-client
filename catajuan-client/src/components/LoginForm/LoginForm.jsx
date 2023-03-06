@@ -1,7 +1,7 @@
 import { useState, useContext } from "react"
 import { Form, Button } from "react-bootstrap"
 import { AuthContext } from "../../contexts/auth.context"
-import authService from "../../services/auth.services"
+import authService from "../../services/auth.service"
 
 
 const LoginForm = () => {
