@@ -11,7 +11,6 @@ const AppRoutes = () => {
             <Route path="/" element={<p>INICIO</p>} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
-            <Route path="/logout" element={<p>LOGOUT</p>} />
             <Route path="/aboutus" element={<p>ABOUT US</p>} />
             <Route path="/contact" element={<p>CONTACT</p>} />
             <Route path="/myprofile" element={<MyProfilePage />} />
@@ -23,12 +22,10 @@ const AppRoutes = () => {
             <Route path="/countries" element={<p>COUNTRIES</p>} />
             <Route path="/countries/:id" element={<p>COUNTRY</p>} />
             <Route path="/countries/:id/edit" element={<p>EDIT COUNTRY</p>} />
-            <Route path="/countries/:id/comments/:comment/edit" element={<p>EDIT COMMENT IN COUNTRY</p>} />
             <Route path="/posts" element={<p>POSTS</p>} />
             <Route path="/posts/create" element={<p>CREATE POST</p>} />
             <Route path="/posts/:id" element={<p>POST</p>} />
             <Route path="/posts/:id/edit" element={<p>EDIT POST</p>} />
-            <Route path="/posts/:id/comments/:comment/edit" element={<p>EDIT COMMENT IN POST</p>} />
             <Route path="*" element={<p>404</p>} />
         </Routes>
     )

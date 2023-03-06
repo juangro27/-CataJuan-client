@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Col, Container, Form, Row, Button } from "react-bootstrap"
+import { Col, Container, Form, Row, Button, FormGroup } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import userService from '../../services/user.service'
 import { useNavigate } from 'react-router-dom'
@@ -53,13 +53,17 @@ const UserEdit = ({ user }) => {
 
                         <Row>
                             <Col>
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control type="name" value={currentUser.name} onChange={handleInputChange} name="name" />
+                                <FormGroup controlId="name">
+                                    <Form.Label>Name</Form.Label>
+                                    <Form.Control type="text" value={currentUser.name} onChange={handleInputChange} name="name" />
+                                </FormGroup>
                             </Col>
 
                             <Col>
-                                <Form.Label>Last name</Form.Label>
-                                <Form.Control type="lastName" value={currentUser.lastName} onChange={handleInputChange} name="lastName" />
+                                <FormGroup controlId="lastName">
+                                    <Form.Label>Last name</Form.Label>
+                                    <Form.Control type="text" value={currentUser.lastName} onChange={handleInputChange} name="lastName" />
+                                </FormGroup>
                             </Col>
                         </Row>
 
@@ -67,12 +71,17 @@ const UserEdit = ({ user }) => {
 
                         <Row>
                             <Col>
-                                <img src={currentUser.avatar} alt="profile image" />
+                                <FormGroup controlId="avatar">
+                                    <Form.Label>Avatar</Form.Label>
+                                    <Form.Control type="text" value={currentUser.avatar} onChange={handleInputChange} name="avatar" />
+                                </FormGroup>
                             </Col>
 
                             <Col>
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control type="email" value={currentUser.email} onChange={handleInputChange} name="email" />
+                                <FormGroup controlId="email">
+                                    <Form.Label>Email</Form.Label>
+                                    <Form.Control type="email" value={currentUser.email} onChange={handleInputChange} name="email" />
+                                </FormGroup>
                             </Col>
 
                         </Row>
