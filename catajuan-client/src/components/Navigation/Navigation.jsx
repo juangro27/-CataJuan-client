@@ -6,7 +6,6 @@ import { AuthContext } from '../../contexts/auth.context'
 const Navigation = () => {
 
     const { user, logout } = useContext(AuthContext)
-    console.log(user)
     return (
         <Navbar bg='dark' variant='dark' expand="md" className='mb-4'>
             <Container>

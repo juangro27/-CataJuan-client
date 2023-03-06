@@ -1,4 +1,7 @@
 import { Route, Routes } from "react-router-dom"
+import CountriesPage from "../pages/CountriesPage/CountriesPage"
+import CountryDetailsPage from "../pages/CountryDetailsPage/CountryDetailsPage"
+import CountryEditPage from "../pages/CountryEditPage/CountryEditPage"
 import LoginPage from "../pages/LoginPage/LoginPage"
 import SignupPage from "../pages/SignupPage/SignupPage"
 
@@ -18,9 +21,9 @@ const AppRoutes = () => {
             <Route path="/users/:id/edit" element={<p>EDIT USER</p>} />
             <Route path="/users/:id/my-posts" element={<p>MY POSTS</p>} />
             <Route path="/users/:id/favorites-posts" element={<p>FAVORITE POSTS</p>} />
-            <Route path="/countries" element={<p>COUNTRIES</p>} />
-            <Route path="/countries/:id" element={<p>COUNTRY</p>} />
-            <Route path="/countries/:id/edit" element={<p>EDIT COUNTRY</p>} />
+            <Route path="/countries" element={<CountriesPage />} />
+            <Route path="/countries/:id" element={<CountryDetailsPage />} />
+            <Route path="/countries/:id/edit" element={<CountryEditPage></CountryEditPage>} />
             <Route path="/countries/:id/comments/:comment/edit" element={<p>EDIT COMMENT IN COUNTRY</p>} />
             <Route path="/posts" element={<p>POSTS</p>} />
             <Route path="/posts/create" element={<p>CREATE POST</p>} />
