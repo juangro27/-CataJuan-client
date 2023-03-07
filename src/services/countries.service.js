@@ -19,6 +19,10 @@ class CountryService {
         return this.api.get(`/`)
     }
 
+    getCountriesNames() {
+        return this.api.get('/names')
+    }
+
     getOneCountry(id) {
         return this.api.get(`/${id}`)
     }

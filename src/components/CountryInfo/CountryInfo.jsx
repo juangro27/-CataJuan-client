@@ -23,7 +23,7 @@ const CountryInfo = ({ country }) => {
             <h1>{country.flag}{country.name}</h1>
             <Link to={'/edit'}>Edit</Link>
             <Link to={'/delete'} onClick={handleClick}>Delete</Link>
-            <Link to={'/posts/create'}>Create new post</Link>
+            <Link to={`/posts/create?country=${id}`}>Create new post</Link>
         </>
     )
 }

@@ -34,9 +34,14 @@ const Navigation = () => {
                             <Nav.Link as="span">Sign Up</Nav.Link>
                         </Link>
                         <Link to="/" onClick={logout}>
+<<<<<<< HEAD
                             <Nav.Link as="span">Log out</Nav.Link>
                         </Link>
 
+=======
+                            <Nav.Link as="span">Log Out</Nav.Link>
+                        </Link>
+>>>>>>> catalina
                     </Nav>
                     {
                         user &&
