@@ -12,7 +12,6 @@ const NewPost = () => {
 
     const { user } = useContext(AuthContext)
     const [countries, setCountries] = useState([])
-    const [currentUser, setCurrentUser] = useState({})
 
     const location = useLocation()
     const queryParams = new URLSearchParams(location.search)
@@ -29,16 +28,17 @@ const NewPost = () => {
     })
 
     useEffect(() => {
+        setPostData({ ...postData, owner: user?._id })
         countriesService
             .getCountriesNames()
             .then(({ data }) => setCountries(data))
+            .catch(err => console.log(err))
+
     }, [])
 
     useEffect(() => {
-        setCurrentUser(user)
-        setPostData({ ...postData, owner: currentUser._id })
-
-    }, [])
+        setPostData({ ...postData, owner: user?._id })
+    }, [user])
 
     const handleInputChange = e => {
         const { value, name } = e.target

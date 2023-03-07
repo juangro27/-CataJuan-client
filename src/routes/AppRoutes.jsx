@@ -7,7 +7,8 @@ import LoginPage from "../pages/LoginPage/LoginPage"
 import MyProfilePage from "../pages/MyProfilePage/MyProfilePage"
 import SignupPage from "../pages/SignupPage/SignupPage"
 import NewPostPage from "../pages/NewPostPage/NewPostPage"
-
+import PostPage from "../pages/PostPage/PostPage"
+import EditPostPage from "../pages/EditPostPage/EditPostPage"
 const AppRoutes = () => {
 
     return (
@@ -28,8 +29,8 @@ const AppRoutes = () => {
             <Route path="/countries/:id/edit" element={<CountryEditPage />} />
             <Route path="/posts" element={<p>POSTS</p>} />
             <Route path="/posts/create" element={<NewPostPage />} />
-            <Route path="/posts/:id" element={<p>POST</p>} />
-            <Route path="/posts/:id/edit" element={<p>EDIT POST</p>} />
+            <Route path="/posts/:id" element={<PostPage />} />
+            <Route path="/posts/:id/edit" element={<EditPostPage />} />
             <Route path="*" element={<p>404</p>} />
         </Routes>
     )
