@@ -19,6 +19,8 @@ class PostService {
     }
 
     createPost(data) {
+        console.log(data)
+
         return this.api.post(`/create`, data)
     }
 
