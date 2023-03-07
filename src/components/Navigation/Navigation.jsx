@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../contexts/auth.context'
@@ -32,6 +32,9 @@ const Navigation = () => {
                         </Link>
                         <Link to="/signup">
                             <Nav.Link as="span">Sign Up</Nav.Link>
+                        </Link>
+                        <Link to="/" onClick={logout}>
+                            <Nav.Link as="span">Log out</Nav.Link>
                         </Link>
 
                     </Nav>

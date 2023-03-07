@@ -2,29 +2,38 @@ import { useParams } from "react-router-dom"
 import { Form, Button } from "react-bootstrap"
 import { useState, useContext } from "react"
 import { AuthContext } from '../../contexts/auth.context'
+import commentsService from "../../services/comments.service"
 
 
-const Comments = ({ comments }) => {
+const CommentForm = ({ type, refreshComments }) => {
 
-    const { user } = useContext(AuthContext)
     const [comment, setComment] = useState('')
     const { id } = useParams()
+    const { user } = useContext(AuthContext)
 
     const handleInputChange = (e) => {
+
         const { value } = e.target
         setComment(value)
+
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault()
 
-        console.log({ comment, user, id })
+        e.preventDefault()
+        const commentData = { owner: user._id, comment }
+        commentsService
+            .createComment(type, id, commentData)
+            .then(() => {
+                setComment('')
+                refreshComments()
+            })
+            .catch(err => console.log(err))
+
     }
 
 
-    return (<>
-        <h1>Comments</h1>
-
+    return (
         <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="comment">
                 <Form.Label>Comment:</Form.Label>
@@ -34,9 +43,7 @@ const Comments = ({ comments }) => {
                 <Button variant="dark" type="submit">Send</Button>
             </div>
         </Form>
-    </>
-
     )
 }
 
-export default Comments
+export default CommentForm

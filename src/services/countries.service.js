@@ -30,23 +30,6 @@ class CountryService {
     deleteCountry(id) {
         return this.api.delete(`/${id}/delete`)
     }
-
-    createComment(country, data) {
-        return this.api.post(`/${country}/comments/create`, data)
-    }
-
-    editComment(country, data) {
-        return this.api.put(`/${country}/comments/create`, data)
-    }
-
-    editComment(country, data) {
-        return this.api.put(`/${country}/comments/edit`, data)
-    }
-
-    deleteComment(country) {
-        return this.api.delete(`/${country}/comments/delete`)
-    }
-
 }
 
 export default CountryService.getInstance()
