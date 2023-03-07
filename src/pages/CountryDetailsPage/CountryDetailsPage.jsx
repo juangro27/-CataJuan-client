@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import Comments from "../../components/Comments/Comments"
 import CountryInfo from "../../components/CountryInfo/CountryInfo"
 import countriesService from "../../services/countries.service"
 
@@ -19,7 +20,11 @@ const CountryDetailsPage = () => {
 
 
     return (
-        <CountryInfo country={country} />
+        <>
+            <CountryInfo country={country} />
+            <Comments type='COUNTRY' comments={country.comments} />
+        </>
+
     )
 }
 
