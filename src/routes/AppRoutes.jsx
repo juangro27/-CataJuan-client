@@ -6,6 +6,7 @@ import EditUserPage from "../pages/EditUserPage/EditUserPage"
 import LoginPage from "../pages/LoginPage/LoginPage"
 import MyProfilePage from "../pages/MyProfilePage/MyProfilePage"
 import SignupPage from "../pages/SignupPage/SignupPage"
+import NewPostPage from "../pages/NewPostPage/NewPostPage"
 
 const AppRoutes = () => {
 
@@ -24,13 +25,9 @@ const AppRoutes = () => {
             <Route path="/users/:id/favorites-posts" element={<p>FAVORITE POSTS</p>} />
             <Route path="/countries" element={<CountriesPage />} />
             <Route path="/countries/:id" element={<CountryDetailsPage />} />
-            <Route path="/countries/:id/edit" element={<CountryEditPage></CountryEditPage>} />
-            <Route path="/countries/:id/comments/:comment/edit" element={<p>EDIT COMMENT IN COUNTRY</p>} />
-            <Route path="/countries" element={<p>COUNTRIES</p>} />
-            <Route path="/countries/:id" element={<p>COUNTRY</p>} />
-            <Route path="/countries/:id/edit" element={<p>EDIT COUNTRY</p>} />
+            <Route path="/countries/:id/edit" element={<CountryEditPage />} />
             <Route path="/posts" element={<p>POSTS</p>} />
-            <Route path="/posts/create" element={<p>CREATE POST</p>} />
+            <Route path="/posts/create" element={<NewPostPage />} />
             <Route path="/posts/:id" element={<p>POST</p>} />
             <Route path="/posts/:id/edit" element={<p>EDIT POST</p>} />
             <Route path="*" element={<p>404</p>} />

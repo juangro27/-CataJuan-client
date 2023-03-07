@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../contexts/auth.context'
@@ -6,6 +6,8 @@ import { AuthContext } from '../../contexts/auth.context'
 const Navigation = () => {
 
     const { user, logout } = useContext(AuthContext)
+
+
     return (
         <Navbar bg='dark' variant='dark' expand="md" className='mb-4'>
             <Container>

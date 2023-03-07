@@ -1,13 +1,11 @@
 import { createContext, useEffect, useState } from "react"
 import authService from "../services/auth.service"
 
-
 const AuthContext = createContext()
 
 function AuthProviderWrapper(props) {
 
     const [user, setUser] = useState(null)
-
 
     const authenticateUser = () => {
 
