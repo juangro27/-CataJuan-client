@@ -36,8 +36,6 @@ const Navigation = () => {
                         <Link to="/" onClick={logout}>
                             <Nav.Link as="span">Log out</Nav.Link>
                         </Link>
-
-
                     </Nav>
                     {
                         user &&

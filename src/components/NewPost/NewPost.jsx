@@ -25,7 +25,7 @@ const NewPost = () => {
         postImg: '',
         description: '',
         country: myParam,
-        owner: currentUser ? currentUser._id : ''
+        owner: ''
     })
 
     useEffect(() => {
@@ -36,6 +36,8 @@ const NewPost = () => {
 
     useEffect(() => {
         setCurrentUser(user)
+        setPostData({ ...postData, owner: currentUser._id })
+
     }, [])
 
     const handleInputChange = e => {
@@ -44,9 +46,7 @@ const NewPost = () => {
     }
 
     const handleFormSubmit = (e) => {
-
         e.preventDefault()
-
         postsService
             .createPost(postData)
             .then(() => navigate('/'))
