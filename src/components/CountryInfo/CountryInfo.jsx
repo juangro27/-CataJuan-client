@@ -21,8 +21,9 @@ const CountryInfo = ({ country }) => {
     return (
         <>
             <h1>{country.flag}{country.name}</h1>
-            <Link to={'./edit'}>Edit</Link>
-            <Link to={'./delete'} onClick={handleClick}>Delete</Link>
+            <Link to={'/edit'}>Edit</Link>
+            <Link to={'/delete'} onClick={handleClick}>Delete</Link>
+            <Link to={'/posts/create'}>Create new post</Link>
         </>
     )
 }
