@@ -18,8 +18,8 @@ class CommentsService {
         return this.api.get(`/${type}/${typeId}`)
     }
 
-    createComment(type, typeId, data) {
-        return this.api.post(`/create/${type}/${typeId}`, data)
+    createComment(type, typeId, comment) {
+        return this.api.post(`/create/${type}/${typeId}`, comment)
     }
 
     editComment(id, data) {
