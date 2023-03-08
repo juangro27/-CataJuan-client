@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Button, Form } from "react-bootstrap"
+import { AuthContext } from "../../contexts/auth.context"
 import commentsService from "../../services/comments.service"
 
 
@@ -7,6 +8,7 @@ const CommentsList = ({ refreshComments, specs, commentsData }) => {
 
     const [isEdit, setIsEdit] = useState({ status: false, index: null })
     const [commentValue, setCommentValue] = useState('')
+    const { user } = useContext(AuthContext)
 
     const handleInputChange = (e) => {
 
@@ -55,7 +57,6 @@ const CommentsList = ({ refreshComments, specs, commentsData }) => {
                     const { owner } = comment
                     return (
                         isEdit.status && i === isEdit.index
-
                             ?
                             <Form.Group className="mb-3" controlId="comment" key={comment._id}>
                                 <Form.Label>Comment:</Form.Label>
@@ -66,8 +67,12 @@ const CommentsList = ({ refreshComments, specs, commentsData }) => {
                             :
                             <div key={comment._id}>
                                 <li key={comment._id}>{owner.name}, {comment.comment}</li>
-                                <Button onClick={() => changeIsEdit(true, i, comment.comment)}>Edit</Button>
-                                <Button onClick={() => deleteComment(comment._id)}>Delete</Button>
+                                {(owner._id === user?._id || user?.role === 'ADMIN') &&
+                                    <>
+                                        <Button onClick={() => changeIsEdit(true, i, comment.comment)}>Edit</Button>
+                                        <Button onClick={() => deleteComment(comment._id)}>Delete</Button>
+                                    </>
+                                }
                             </div>
 
                     )

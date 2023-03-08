@@ -1,8 +1,14 @@
 import postsService from '../../services/posts.service'
 import { useNavigate, useParams, Link } from 'react-router-dom'
-
+import { AuthContext } from '../../contexts/auth.context'
+import { useEffect, useContext } from 'react'
 
 const PostInfo = ({ post }) => {
+
+    const { user } = useContext(AuthContext)
+    useEffect(() => {
+
+    }, [user])
 
     const { id } = useParams()
     const navigate = useNavigate()
@@ -20,8 +26,14 @@ const PostInfo = ({ post }) => {
     return (
         <>
             <h1>{post.title}</h1>
-            <Link to="./edit">Edit</Link>
-            <Link to="./delete" onClick={handleClick}>Delete</Link>
+
+            {
+                (user._id === post.owner || user.role === 'ADMIN') &&
+                <>
+                    <Link to={`/posts/${post._id}/edit`}>Edit</Link>
+                    <Link to={'/delete'} onClick={handleClick}>Delete</Link>
+                </>
+            }
 
         </>
     )

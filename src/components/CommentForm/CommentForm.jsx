@@ -22,11 +22,7 @@ const CommentForm = ({ type, refreshComments }) => {
 
         e.preventDefault()
         commentsService
-<<<<<<< HEAD
-            .createComment(type, id, comment)
-=======
             .createComment(type, id, { comment })
->>>>>>> c8de2e46040f9b4efeba4200bdc7416d9b153e3c
             .then(() => {
                 setComment('')
                 refreshComments()

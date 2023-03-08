@@ -27,15 +27,23 @@ const Navigation = () => {
                         <Link to="/contact">
                             <Nav.Link as="span">Contact</Nav.Link>
                         </Link>
-                        <Link to="/login">
-                            <Nav.Link as="span">Log In</Nav.Link>
-                        </Link>
-                        <Link to="/signup">
-                            <Nav.Link as="span">Sign Up</Nav.Link>
-                        </Link>
-                        <Link to="/" onClick={logout}>
-                            <Nav.Link as="span">Log out</Nav.Link>
-                        </Link>
+                        {
+                            user ?
+                                <>
+                                    <Link to="/" onClick={logout}>
+                                        <Nav.Link as="span">Log out</Nav.Link>
+                                    </Link>
+                                </>
+                                :
+                                <>
+                                    <Link to="/login">
+                                        <Nav.Link as="span">Log In</Nav.Link>
+                                    </Link>
+                                    <Link to="/signup">
+                                        <Nav.Link as="span">Sign Up</Nav.Link>
+                                    </Link>
+                                </>
+                        }
                     </Nav>
                     {
                         user &&
