@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import countriesService from '../../services/countries.service'
 import postsService from '../../services/posts.service'
+import uploadService from '../../services/upload.service'
 import { AuthContext } from '../../contexts/auth.context'
 import { useLocation } from 'react-router-dom';
 
@@ -24,11 +24,9 @@ const NewPost = () => {
         postImg: '',
         description: '',
         country: myParam,
-        owner: ''
     })
 
     useEffect(() => {
-        setPostData({ ...postData, owner: user?._id })
         countriesService
             .getCountriesNames()
             .then(({ data }) => setCountries(data))
@@ -43,15 +41,23 @@ const NewPost = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
-        postsService
-            .createPost(postData)
+
+        const formData = new FormData();
+        formData.append('imageUrl', e.target.imageUrl.files[0]);
+
+        uploadService
+            .uploadImage(formData)
+            .then(({ data }) => {
+                const { cloudinary_url } = data
+                return postsService.createPost({ ...postData, postImg: cloudinary_url })
+
+            })
             .then(({ data: post }) => navigate(`/posts/${post}`))
             .catch(err => console.log(err))
-
     }
 
     return (
-        <Form onSubmit={handleFormSubmit} >
+        <Form onSubmit={handleFormSubmit} encType="multipart/form-data" >
 
             <Form.Group className="mb-3" controlId="title">
                 <Form.Label>Title:</Form.Label>
@@ -81,7 +87,7 @@ const NewPost = () => {
 
             <Form.Group className="mb-3" controlId="postImg">
                 <Form.Label>Image</Form.Label>
-                <Form.Control type="text" value={postData.postImg} onChange={handleInputChange} name="postImg" />
+                <Form.Control type="file" name="imageUrl" />
             </Form.Group>
 
 

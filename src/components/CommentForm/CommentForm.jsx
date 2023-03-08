@@ -21,9 +21,8 @@ const CommentForm = ({ type, refreshComments }) => {
     const handleSubmit = (e) => {
 
         e.preventDefault()
-        const commentData = { owner: user._id, comment }
         commentsService
-            .createComment(type, id, commentData)
+            .createComment(type, id, { comment })
             .then(() => {
                 setComment('')
                 refreshComments()

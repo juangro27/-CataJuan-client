@@ -1,5 +1,6 @@
 import { Col, Container, Form, Row, Button, FormGroup } from "react-bootstrap"
 import userService from '../../services/user.service'
+import uploadService from '../../services/upload.service'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../contexts/auth.context'
 import { useContext, useState } from 'react'
@@ -23,15 +24,27 @@ const UserEdit = () => {
         setCurrentUser({ ...currentUser, [name]: value })
     }
 
+
+
     const handleFormSubmit = e => {
 
         e.preventDefault()
 
-        userService
-            .editUser(user._id, currentUser)
+        const formData = new FormData();
+        formData.append('imageUrl', e.target.imageUrl.files[0]);
+
+
+        uploadService
+            .uploadImage(formData)
+            .then(({ data }) => {
+                const { cloudinary_url } = data
+                return userService.editUser(user._id, { ...currentUser, avatar: cloudinary_url })
+
+            })
             .then(({ data }) => {
                 localStorage.setItem('authToken', data.authToken)
                 authenticateUser()
+                return
             })
             .then(() => navigate('/myprofile'))
             .catch(err => console.log(err))
@@ -41,7 +54,7 @@ const UserEdit = () => {
         <Container>
             <Row>
 
-                <Form onSubmit={handleFormSubmit} >
+                <Form onSubmit={handleFormSubmit} encType="multipart/form-data" >
 
                     <Col md={{ offset: 2, span: 8 }}>
 
@@ -65,9 +78,9 @@ const UserEdit = () => {
 
                         <Row>
                             <Col>
-                                <FormGroup controlId="avatar">
+                                <FormGroup controlId="imageUrl">
                                     <Form.Label>Avatar</Form.Label>
-                                    <Form.Control type="text" value={currentUser.avatar} onChange={handleInputChange} name="avatar" />
+                                    <Form.Control type="file" name="imageUrl" />
                                 </FormGroup>
                             </Col>
 
@@ -83,14 +96,6 @@ const UserEdit = () => {
                         <div className="d-grid m-3">
                             <Button variant="dark" type="submit">Update</Button>
                         </div>
-
-                        {/* <hr />
-                    <h3>My favorites</h3>
-                    <p>These are my favorite destinations</p>
-
-                    <hr />
-                    <h3 >My Posts</h3>
-                    <p className="mb-5">These are my posts</p> */}
 
                     </Col>
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Col, Container, Form, Row, Button, FormGroup } from "react-bootstrap"
 import postsService from '../../services/posts.service'
 import { useNavigate } from 'react-router-dom'
+import uploadService from '../../services/upload.service'
 
 
 const PostEdit = ({ postId }) => {
@@ -25,9 +26,17 @@ const PostEdit = ({ postId }) => {
 
         e.preventDefault()
 
-        postsService
-            .editPost(postId, currentPost)
-            .then(() => navigate(`/countries/${currentPost.country}`))
+        const formData = new FormData();
+        formData.append('imageUrl', e.target.imageUrl.files[0]);
+
+        uploadService
+            .uploadImage(formData)
+            .then(({ data }) => {
+                const { cloudinary_url } = data
+                return postsService.editPost(postId, { ...currentPost, postImg: cloudinary_url })
+
+            })
+            .then(({ data: post }) => navigate(`/posts/${post._id}`))
             .catch(err => console.log(err))
     }
 
@@ -35,7 +44,7 @@ const PostEdit = ({ postId }) => {
         <Container>
             <Row>
 
-                <Form onSubmit={handleFormSubmit} >
+                <Form onSubmit={handleFormSubmit} encType="multipart/form-data">
 
                     <Col md={{ offset: 2, span: 8 }}>
 
@@ -59,9 +68,10 @@ const PostEdit = ({ postId }) => {
 
                         <Row>
                             <Col>
+                                <img src={currentPost.postImg} alt="" />
                                 <FormGroup controlId="postImg">
                                     <Form.Label>Image</Form.Label>
-                                    <Form.Control type="text" value={currentPost.postImg} onChange={handleInputChange} name="postImg" />
+                                    <Form.Control type="file" name="imageUrl" />
                                 </FormGroup>
                             </Col>
 

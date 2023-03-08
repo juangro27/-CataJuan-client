@@ -1,11 +1,26 @@
 import axios from 'axios'
 
 class CountryService {
+
     static _instance
+
     constructor() {
+
         this.api = axios.create({
             baseURL: `${process.env.REACT_APP_API_URL}/countries`
         })
+
+        this.api.interceptors.request.use((config) => {
+
+            const storedToken = localStorage.getItem("authToken");
+
+            if (storedToken) {
+                config.headers = { Authorization: `Bearer ${storedToken}` }
+            }
+
+            return config
+        })
+
     }
     static getInstance() {
         if (!this._instance) {

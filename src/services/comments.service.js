@@ -1,11 +1,26 @@
 import axios from 'axios'
 
 class CommentsService {
+
     static _instance
+
     constructor() {
+
         this.api = axios.create({
             baseURL: `${process.env.REACT_APP_API_URL}/comments`
         })
+
+        this.api.interceptors.request.use((config) => {
+
+            const storedToken = localStorage.getItem("authToken");
+
+            if (storedToken) {
+                config.headers = { Authorization: `Bearer ${storedToken}` }
+            }
+
+            return config
+        })
+
     }
     static getInstance() {
         if (!this._instance) {
@@ -18,8 +33,8 @@ class CommentsService {
         return this.api.get(`/${type}/${typeId}`)
     }
 
-    createComment(type, typeId, data) {
-        return this.api.post(`/create/${type}/${typeId}`, data)
+    createComment(type, typeId, comment) {
+        return this.api.post(`/create/${type}/${typeId}`, comment)
     }
 
     editComment(id, data) {
