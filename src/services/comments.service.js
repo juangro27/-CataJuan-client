@@ -15,7 +15,7 @@ class CommentsService {
     }
 
     getCommets(type, typeId) {
-        return this.api.get(`/${typeId}?type=${type}`)
+        return this.api.get(`/${type}/${typeId}`)
     }
 
     createComment(type, typeId, data) {

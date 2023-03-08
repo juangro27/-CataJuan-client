@@ -38,6 +38,7 @@ const NewPost = () => {
 
     useEffect(() => {
         setPostData({ ...postData, owner: user?._id })
+
     }, [user])
 
     const handleInputChange = e => {
@@ -49,7 +50,7 @@ const NewPost = () => {
         e.preventDefault()
         postsService
             .createPost(postData)
-            .then(() => navigate('/'))
+            .then(({ data: post }) => navigate(`/posts/${post}`))
             .catch(err => console.log(err))
 
     }

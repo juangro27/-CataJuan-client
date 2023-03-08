@@ -30,8 +30,8 @@ class PostService {
         return this.api.put(`/${id}/edit`, data)
     }
 
-    deletePost(id) {
-        return this.api.delete(`/${id}/delete`)
+    deletePost(id, country) {
+        return this.api.delete(`/${id}/${country}/delete`)
     }
 
 }

@@ -26,7 +26,7 @@ const CountryInfo = ({ country }) => {
 
             <Link to={'/edit'}>Edit</Link>
             <Link to={'/delete'} onClick={handleClick}>Delete</Link>
-            <Link to={`/posts/create?country=${id}`}>Create new post</Link>
+            <Link to={`/posts/create?country=${id}`} >Create new post</Link>
         </>
     )
 }
