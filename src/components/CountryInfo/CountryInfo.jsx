@@ -24,7 +24,7 @@ const CountryInfo = ({ country }) => {
 
             <PostsList posts={posts} />
 
-            <Link to={'/edit'}>Edit</Link>
+            <Link to={`/countries/${id}/edit`}>Edit</Link>
             <Link to={'/delete'} onClick={handleClick}>Delete</Link>
             <Link to={`/posts/create?country=${id}`} >Create new post</Link>
         </>

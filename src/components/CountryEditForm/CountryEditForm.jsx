@@ -2,6 +2,7 @@ import countriesService from "../../services/countries.service"
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from "react"
 import { Button, Form, Row, Col } from "react-bootstrap";
+import uploadService from '../../services/upload.service'
 
 
 const CountryEditForm = ({ fireFinalActions }) => {
@@ -76,9 +77,18 @@ const CountryEditForm = ({ fireFinalActions }) => {
     }
 
     const handleCountrySubmit = e => {
+
         e.preventDefault()
-        countriesService
-            .editCountry(countryId, country)
+
+        const formData = new FormData();
+        formData.append('imageUrl', e.target.imageUrl.files[0]);
+
+        uploadService
+            .uploadImage(formData)
+            .then(({ data }) => {
+                const { cloudinary_url } = data
+                return countriesService.editCountry(countryId, { ...country, img: cloudinary_url })
+            })
             .then(() => {
                 fireFinalActions()
             })
@@ -87,7 +97,7 @@ const CountryEditForm = ({ fireFinalActions }) => {
 
     return (
 
-        <Form onSubmit={handleCountrySubmit}>
+        <Form onSubmit={handleCountrySubmit} encType="multipart/form-data">
             <Row>
 
                 <Form.Group as={Col} md={4} controlId="discriminationProtection">
@@ -147,6 +157,12 @@ const CountryEditForm = ({ fireFinalActions }) => {
                         checked={country.propaganda ? true : false}
                         onChange={() => { changeChecked('propaganda') }} />
 
+                </Form.Group>
+
+                <Form.Group controlId="img">
+                    <img src={country.img} alt="" />
+                    <Form.Label>Image</Form.Label>
+                    <Form.Control type="file" name="imageUrl" />
                 </Form.Group>
 
             </Row>
