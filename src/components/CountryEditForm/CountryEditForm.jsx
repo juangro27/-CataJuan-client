@@ -80,21 +80,12 @@ const CountryEditForm = ({ fireFinalActions }) => {
 
         e.preventDefault()
 
-        // countriesService
-        //     .editCountry(countryId, country)
-        //     .then(() => {
-        //         fireFinalActions()
-        //     })
-        //     .catch(err => console.log(err))
-
-
         const formData = new FormData();
         formData.append('imageUrl', e.target.imageUrl.files[0]);
 
         uploadService
             .uploadImage(formData)
             .then(({ data }) => {
-                console.log(data)
                 const { cloudinary_url } = data
                 return countriesService.editCountry(countryId, { ...country, img: cloudinary_url })
             })
