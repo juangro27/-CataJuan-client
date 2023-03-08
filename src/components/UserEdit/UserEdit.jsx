@@ -1,28 +1,22 @@
-import { useEffect, useState } from "react"
 import { Col, Container, Form, Row, Button, FormGroup } from "react-bootstrap"
-import { Link } from "react-router-dom"
 import userService from '../../services/user.service'
 import { useNavigate } from 'react-router-dom'
-import { useContext } from 'react'
 import { AuthContext } from '../../contexts/auth.context'
+import { useContext, useState } from 'react'
 
 
-const UserEdit = ({ user }) => {
+const UserEdit = () => {
 
-    const { authenticateUser } = useContext(AuthContext)
+    const { authenticateUser, user } = useContext(AuthContext)
 
     const [currentUser, setCurrentUser] = useState({
-        name: '',
-        lastName: '',
-        email: '',
-        avatar: ''
+        name: user.name,
+        lastName: user.lastName,
+        email: user.email,
+        avatar: user.avatar
     })
+
     const navigate = useNavigate()
-
-    useEffect(() => {
-        setCurrentUser(user)
-    }, [user])
-
 
     const handleInputChange = e => {
         const { value, name } = e.target

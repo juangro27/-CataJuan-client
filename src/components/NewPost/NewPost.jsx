@@ -36,11 +36,6 @@ const NewPost = () => {
 
     }, [])
 
-    useEffect(() => {
-        setPostData({ ...postData, owner: user?._id })
-
-    }, [user])
-
     const handleInputChange = e => {
         const { value, name } = e.target
         setPostData({ ...postData, [name]: value })

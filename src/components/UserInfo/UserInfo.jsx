@@ -1,32 +1,30 @@
-import { useEffect, useState } from "react"
 import { Col, Container, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import { useContext } from 'react'
+import { AuthContext } from '../../contexts/auth.context'
 
 
-const UserInfo = ({ user }) => {
+const UserInfo = () => {
 
-    const [currentUser, setCurrentUser] = useState({})
-    useEffect(() => {
-        setCurrentUser(user)
-    }, [user])
+    const { user } = useContext(AuthContext)
 
-    const link = `/users/${currentUser._id}/edit`
+    const link = `/users/${user._id}/edit`
 
     return (
         <Container>
             <Row>
                 <Col md={{ offset: 2, span: 8 }}>
 
-                    <h1>{currentUser.name} {currentUser.lastName}</h1>
+                    <h1>{user.name} {user.lastName}</h1>
                     <hr />
 
                     <Row>
                         <Col>
-                            <img src={currentUser.avatar} alt="profile image" />
+                            <img src={user.avatar} alt="profile image" />
                         </Col>
 
                         <Col>
-                            <p>Email: {currentUser.email}</p>
+                            <p>Email: {user.email}</p>
                             <Link to={link}>Edit</Link>
                         </Col>
                     </Row>
