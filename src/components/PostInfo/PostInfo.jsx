@@ -1,7 +1,7 @@
 import postsService from '../../services/posts.service'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import { AuthContext } from '../../contexts/auth.context'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import votesService from '../../services/votes.service'
 import VotesForm from '../VotesForm/VotesForm'
 
@@ -12,6 +12,10 @@ const PostInfo = ({ post }) => {
     const { id } = useParams()
     const navigate = useNavigate()
     const { country } = post
+
+    useEffect(() => {
+        refreshVotes()
+    }, [])
 
     const handleClick = (e) => {
 

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import countriesService from '../../services/countries.service'
 import { useNavigate, useParams } from 'react-router-dom'
 import PostsList from '../PostsList/PostsList'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../contexts/auth.context'
 import votesService from '../../services/votes.service'
 import VotesForm from '../VotesForm/VotesForm'
@@ -15,6 +15,9 @@ const CountryInfo = ({ country }) => {
     const navigate = useNavigate()
     const posts = country.posts
 
+    useEffect(() => {
+        refreshVotes()
+    }, [])
 
     const handleClick = (e) => {
 

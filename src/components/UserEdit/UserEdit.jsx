@@ -109,18 +109,3 @@ const UserEdit = () => {
 }
 
 export default UserEdit
-
-function sumPairs(ints, s) {
-    let result = []
-
-    for (let i = 0; i < ints.length; i++) {
-        if (result.length === 2) return
-
-        for (let j = 0; j < ints.length; j++) {
-            if (i === j) continue
-            else if (ints[i] + ints[j] === s) return result.push(ints[i], ints[j])
-        }
-    }
-    console.log(result)
-    return result
-}

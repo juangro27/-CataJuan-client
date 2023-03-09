@@ -23,7 +23,7 @@ const UserInfo = () => {
 
                     <Row>
                         <Col>
-                            <img src={avatar} alt="profile image" />
+                            <img src={avatar} alt={`${capitalizedName} profile`} />
                         </Col>
 
                         <Col>
