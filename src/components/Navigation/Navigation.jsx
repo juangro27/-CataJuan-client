@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../contexts/auth.context'
+import capitalize from '../../utils/capitalize'
 
 const Navigation = () => {
 
@@ -49,7 +50,7 @@ const Navigation = () => {
                         user &&
                         <Navbar.Text>Bienvenid@,
                             <Link to="/myprofile">
-                                <Nav.Link as="span">{user.name}</Nav.Link>
+                                <Nav.Link as="span">{capitalize(user.name)}</Nav.Link>
                             </Link>
                         </Navbar.Text>
                     }

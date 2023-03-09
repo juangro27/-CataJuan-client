@@ -5,6 +5,7 @@ import CommentsList from "../../components/CommentsList/CommentsList"
 import CountryInfo from "../../components/CountryInfo/CountryInfo"
 import commentsService from "../../services/comments.service"
 import countriesService from "../../services/countries.service"
+import capitalize from "../../utils/capitalize"
 
 const CountryDetailsPage = () => {
 
@@ -24,7 +25,7 @@ const CountryDetailsPage = () => {
             .getOneCountry(id)
             .then(({ data }) => {
                 setComments(data.comments)
-                setCountry(data)
+                setCountry({ ...data, name: capitalize(data.name) })
             })
             .catch(err => console.log(err))
 

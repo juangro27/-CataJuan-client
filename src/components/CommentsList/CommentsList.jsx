@@ -2,6 +2,7 @@ import { useContext, useState } from "react"
 import { Button, Form } from "react-bootstrap"
 import { AuthContext } from "../../contexts/auth.context"
 import commentsService from "../../services/comments.service"
+import capitalize from "../../utils/capitalize"
 
 
 const CommentsList = ({ refreshComments, specs, commentsData }) => {
@@ -55,6 +56,8 @@ const CommentsList = ({ refreshComments, specs, commentsData }) => {
 
                 commentsData?.map((comment, i) => {
                     const { owner } = comment
+                    const name = capitalize(owner.name)
+
                     return (
                         isEdit.status && i === isEdit.index
                             ?
@@ -66,7 +69,7 @@ const CommentsList = ({ refreshComments, specs, commentsData }) => {
                             </Form.Group>
                             :
                             <div key={comment._id}>
-                                <li key={comment._id}>{owner.name}, {comment.comment}</li>
+                                <li key={comment._id}>{name}, {comment.comment}</li>
                                 {(owner._id === user?._id || user?.role === 'ADMIN') &&
                                     <>
                                         <Button onClick={() => changeIsEdit(true, i, comment.comment)}>Edit</Button>

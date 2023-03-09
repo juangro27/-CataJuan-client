@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 import postsService from '../../services/posts.service'
 import { useNavigate } from 'react-router-dom'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { AuthContext } from '../../contexts/auth.context'
+import capitalize from '../../utils/capitalize'
 
 
 const PostsList = ({ posts }) => {
@@ -26,10 +27,12 @@ const PostsList = ({ posts }) => {
             {
                 posts?.map(({ title, _id, owner }) => {
 
+                    const capitalizedTitle = capitalize(title)
+
                     return (
                         <div key={_id} >
 
-                            <Link to={`/posts/${_id}`}><p>{title}</p></Link>
+                            <Link to={`/posts/${_id}`}><p>{capitalizedTitle}</p></Link>
 
                             {
                                 (user?._id === owner || user?.role === 'ADMIN') &&

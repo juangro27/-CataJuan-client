@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import { Link } from 'react-router-dom'
 import countriesService from "../../services/countries.service"
+import capitalize from '../../utils/capitalize'
 
-const countriesList = () => {
+const CountriesList = () => {
 
     const [countries, setCountries] = useState([])
 
@@ -22,9 +23,9 @@ const countriesList = () => {
 
     return (
         <ul>
-            {countries.map(elm => <li key={elm._id}><Link to={elm._id}>{elm.name}</Link></li>)}
+            {countries.map(elm => <li key={elm._id}><Link to={elm._id}>{capitalize(elm.name)}</Link></li>)}
         </ul>
     )
 
 }
-export default countriesList
+export default CountriesList

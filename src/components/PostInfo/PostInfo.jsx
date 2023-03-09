@@ -1,7 +1,7 @@
 import postsService from '../../services/posts.service'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import { AuthContext } from '../../contexts/auth.context'
-import { useEffect, useContext } from 'react'
+import { useContext } from 'react'
 
 const PostInfo = ({ post }) => {
 
