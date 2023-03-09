@@ -13,12 +13,13 @@ const SignupForm = () => {
         password: '',
     })
     const [errors, setErrors] = useState([])
-
     const navigate = useNavigate()
 
     const handleInputChange = e => {
+
         const { value, name } = e.target
         setSignupData({ ...signupData, [name]: value })
+
     }
 
     const handleFormSubmit = e => {
@@ -30,7 +31,7 @@ const SignupForm = () => {
             .then(() => navigate('/login'))
             .catch(err => {
                 console.log(err)
-                setErrors([err.response.data.message])
+                setErrors([err.response.data.errorMessages])
             })
 
     }

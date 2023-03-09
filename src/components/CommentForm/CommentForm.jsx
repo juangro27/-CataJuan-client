@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom"
 import { Form, Button } from "react-bootstrap"
-import { useState, useContext } from "react"
-import { AuthContext } from '../../contexts/auth.context'
+import { useState } from "react"
 import commentsService from "../../services/comments.service"
 import FormError from "../FormError/FormError"
 
@@ -10,7 +9,6 @@ const CommentForm = ({ type, refreshComments }) => {
 
     const [comment, setComment] = useState('')
     const { id } = useParams()
-    const { user } = useContext(AuthContext)
     const [errors, setErrors] = useState([])
 
     const handleInputChange = (e) => {

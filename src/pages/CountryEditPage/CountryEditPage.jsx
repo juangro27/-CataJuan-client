@@ -1,6 +1,6 @@
 import CountryEditForm from "../../components/CountryEditForm/CountryEditForm"
 import { Container, Row, Col } from "react-bootstrap"
-import { useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useContext } from "react"
 import { AuthContext } from "../../contexts/auth.context"
 
@@ -10,11 +10,7 @@ const CountryEditPage = () => {
     const { id } = useParams()
     const { user } = useContext(AuthContext)
 
-
-
-    const fireFinalActions = () => {
-        navigate(`/countries/${id}`)
-    }
+    const fireFinalActions = () => navigate(`/countries/${id}`)
 
     return (
         <>
@@ -37,7 +33,8 @@ const CountryEditPage = () => {
                         </Row>
 
                     </Container >
-                    : navigate(`/login`)
+                    :
+                    <Navigate to={'/login'} />
             }
         </>
     )

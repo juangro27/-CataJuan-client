@@ -1,25 +1,20 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import countriesService from '../../services/countries.service'
 import postsService from '../../services/posts.service'
 import uploadService from '../../services/upload.service'
-import { AuthContext } from '../../contexts/auth.context'
 import { useLocation } from 'react-router-dom';
 import FormError from "../FormError/FormError"
 
 
 const NewPost = () => {
 
-    const { user } = useContext(AuthContext)
     const [countries, setCountries] = useState([])
     const [errors, setErrors] = useState([])
-
-
     const location = useLocation()
     const queryParams = new URLSearchParams(location.search)
     const myParam = queryParams.get('country')
-
     const navigate = useNavigate()
 
     const [postData, setPostData] = useState({
@@ -30,19 +25,29 @@ const NewPost = () => {
     })
 
     useEffect(() => {
+
+        getNames()
+
+    }, [])
+
+    const getNames = () => {
+
         countriesService
             .getCountriesNames()
             .then(({ data }) => setCountries(data))
             .catch(err => console.log(err))
 
-    }, [])
+    }
 
     const handleInputChange = e => {
+
         const { value, name } = e.target
         setPostData({ ...postData, [name]: value })
+
     }
 
     const handleFormSubmit = (e) => {
+
         e.preventDefault()
 
         const formData = new FormData();
@@ -51,15 +56,18 @@ const NewPost = () => {
         uploadService
             .uploadImage(formData)
             .then(({ data }) => {
-                const { cloudinary_url } = data
-                return postsService.createPost({ ...postData, postImg: cloudinary_url })
+
+                const { cloudinary_url: postImg } = data
+                return postsService.createPost({ ...postData, postImg })
 
             })
             .then(({ data: post }) => navigate(`/posts/${post}`))
             .catch(err => setErrors(err.response.data.errorMessages))
+
     }
 
     return (
+
         <Form onSubmit={handleFormSubmit} encType="multipart/form-data" >
 
             <Form.Group className="mb-3" controlId="title">

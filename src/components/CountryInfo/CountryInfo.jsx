@@ -22,6 +22,7 @@ const CountryInfo = ({ country }) => {
             .then(() => navigate('/countries'))
             .catch(err => console.log(err))
     }
+
     return (
         <>
             <h1>{country.flag}{country.name}</h1>

@@ -7,7 +7,6 @@ import { AuthContext } from '../../contexts/auth.context'
 const UserInfo = () => {
 
     const { user } = useContext(AuthContext)
-
     const link = `/users/${user._id}/edit`
 
     return (

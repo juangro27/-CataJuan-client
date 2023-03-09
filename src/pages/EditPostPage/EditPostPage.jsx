@@ -8,7 +8,7 @@ const EditPostPage = () => {
 
     return (
         <>
-            <h2>Edit post</h2>
+            <h2>Edit Post</h2>
             <PostEdit postId={postId} />
         </>
     )

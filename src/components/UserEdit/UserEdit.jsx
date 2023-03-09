@@ -8,23 +8,21 @@ import { useContext, useState } from 'react'
 
 const UserEdit = () => {
 
-    const { authenticateUser, user } = useContext(AuthContext)
-
+    const { authenticateUser, user, storeToken } = useContext(AuthContext)
     const [currentUser, setCurrentUser] = useState({
         name: user.name,
         lastName: user.lastName,
         email: user.email,
         avatar: user.avatar
     })
-
     const navigate = useNavigate()
 
     const handleInputChange = e => {
+
         const { value, name } = e.target
         setCurrentUser({ ...currentUser, [name]: value })
+
     }
-
-
 
     const handleFormSubmit = e => {
 
@@ -33,16 +31,17 @@ const UserEdit = () => {
         const formData = new FormData();
         formData.append('imageUrl', e.target.imageUrl.files[0]);
 
-
         uploadService
             .uploadImage(formData)
             .then(({ data }) => {
+
                 const { cloudinary_url } = data
                 return userService.editUser(user._id, { ...currentUser, avatar: cloudinary_url })
 
             })
             .then(({ data }) => {
-                localStorage.setItem('authToken', data.authToken)
+
+                storeToken(data.authToken)
                 authenticateUser()
                 return navigate('/myprofile')
 

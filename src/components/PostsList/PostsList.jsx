@@ -9,10 +9,6 @@ const PostsList = ({ posts }) => {
 
     const navigate = useNavigate()
     const { user } = useContext(AuthContext)
-    useEffect(() => {
-
-    }, [user])
-
 
     const handleClick = (e) => {
 

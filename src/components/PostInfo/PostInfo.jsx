@@ -6,13 +6,10 @@ import { useEffect, useContext } from 'react'
 const PostInfo = ({ post }) => {
 
     const { user } = useContext(AuthContext)
-    useEffect(() => {
-
-    }, [user])
-
     const { id } = useParams()
     const navigate = useNavigate()
     const { country } = post
+
     const handleClick = (e) => {
 
         e.preventDefault()

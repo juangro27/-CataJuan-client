@@ -8,19 +8,28 @@ import FormError from "../FormError/FormError"
 
 const PostEdit = ({ postId }) => {
 
-    const [currentPost, setCurrentPost] = useState({})
+    const [currentPost, setCurrentPost] = useState({
+        title: '',
+        description: '',
+        postImg: ''
+    })
     const navigate = useNavigate()
     const [errors, setErrors] = useState([])
 
-
     useEffect(() => {
+
+        getPost()
+
+    }, [])
+
+    const getPost = () => {
 
         postsService
             .getOnePost(postId)
             .then(({ data }) => setCurrentPost(data))
             .catch(err => console.log(err))
 
-    }, [])
+    }
 
     const handleInputChange = e => {
 
@@ -41,7 +50,6 @@ const PostEdit = ({ postId }) => {
             .then(({ data }) => {
                 const { cloudinary_url } = data
                 return postsService.editPost(postId, { ...currentPost, postImg: cloudinary_url })
-
             })
             .then(({ data: post }) => navigate(`/posts/${post._id}`))
             .catch(err => setErrors(err.response.data.errorMessages))

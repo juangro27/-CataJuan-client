@@ -9,37 +9,44 @@ import countriesService from "../../services/countries.service"
 const CountryDetailsPage = () => {
 
     const { id } = useParams()
-    const [country, setCountry] = useState([])
-    const [commentsArr, setCommentsArr] = useState([])
+    const [country, setCountry] = useState({})
+    const [comments, setComments] = useState([])
 
     useEffect(() => {
+
+        getCountry()
+
+    }, [])
+
+    const getCountry = () => {
 
         countriesService
             .getOneCountry(id)
             .then(({ data }) => {
-                setCommentsArr(data.comments)
+                setComments(data.comments)
                 setCountry(data)
             })
             .catch(err => console.log(err))
 
-    }, [])
+    }
 
     const refreshComments = () => {
 
         commentsService
             .getCommets('COUNTRY', id)
             .then(({ data }) => {
-                setCommentsArr(data.comments)
+                setComments(data.comments)
             })
             .catch(err => console.log(err))
+
     }
 
     return (
         <>
 
             <CountryInfo country={country} />
-            <CommentsList specs={{ type: 'COUNTRY', id }} commentsData={commentsArr} refreshComments={refreshComments} />
-            <CommentForm type='COUNTRY' comments={commentsArr} refreshComments={refreshComments} />
+            <CommentsList specs={{ type: 'COUNTRY', id }} commentsData={comments} refreshComments={refreshComments} />
+            <CommentForm type='COUNTRY' comments={comments} refreshComments={refreshComments} />
         </>
 
     )

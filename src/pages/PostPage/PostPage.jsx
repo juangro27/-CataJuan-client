@@ -14,6 +14,12 @@ const PostPage = () => {
 
     useEffect(() => {
 
+        getPost()
+
+    }, [])
+
+    const getPost = () => {
+
         postsService
             .getOnePost(id)
             .then(({ data }) => {
@@ -22,8 +28,7 @@ const PostPage = () => {
             })
             .catch(err => console.log(err))
 
-    }, [])
-
+    }
     const refreshComments = () => {
 
         commentsService
@@ -32,8 +37,6 @@ const PostPage = () => {
                 setCommentsArr(data.comments)
             })
             .catch(err => console.log(err))
-
-
     }
 
     return (<>

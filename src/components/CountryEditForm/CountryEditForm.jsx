@@ -28,6 +28,12 @@ const CountryEditForm = ({ fireFinalActions }) => {
 
     useEffect(() => {
 
+        editCountry()
+
+    }, [])
+
+    const editCountry = () => {
+
         countriesService
             .getOneCountry(countryId)
             .then(({ data }) => {
@@ -61,7 +67,7 @@ const CountryEditForm = ({ fireFinalActions }) => {
             })
             .catch(err => console.log(err))
 
-    }, [])
+    }
 
     const handleInputChange = e => {
 
@@ -86,8 +92,8 @@ const CountryEditForm = ({ fireFinalActions }) => {
         uploadService
             .uploadImage(formData)
             .then(({ data }) => {
-                const { cloudinary_url } = data
-                return countriesService.editCountry(countryId, { ...country, img: cloudinary_url })
+                const { cloudinary_url: img } = data
+                return countriesService.editCountry(countryId, { ...country, img })
             })
             .then(() => {
                 fireFinalActions()

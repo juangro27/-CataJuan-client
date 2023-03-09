@@ -8,7 +8,7 @@ import FormError from "../FormError/FormError"
 
 const LoginForm = () => {
 
-    const { authenticateUser } = useContext(AuthContext)
+    const { authenticateUser, storeToken } = useContext(AuthContext)
     const [errors, setErrors] = useState([])
 
     const [loginData, setLoginData] = useState({
@@ -30,11 +30,11 @@ const LoginForm = () => {
         authService
             .login(loginData)
             .then(({ data }) => {
-                localStorage.setItem('authToken', data.authToken)
+                storeToken(data.authToken)
                 authenticateUser()
             })
             .then(() => navigate('/'))
-            .catch(err => setErrors([err.response.data.message]))
+            .catch(err => setErrors([err.response.data.errorMessages]))
     }
 
     return (

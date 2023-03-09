@@ -1,6 +1,24 @@
+import { useEffect, useState } from "react"
 import { Link } from 'react-router-dom'
+import countriesService from "../../services/countries.service"
 
-const countriesList = ({ countries }) => {
+const countriesList = () => {
+
+    const [countries, setCountries] = useState([])
+
+    useEffect(() => {
+
+        loadCountries()
+
+    }, [])
+
+    const loadCountries = () => {
+
+        countriesService
+            .getCountries()
+            .then(({ data }) => setCountries(data))
+            .catch(err => console.log(err))
+    }
 
     return (
         <ul>
