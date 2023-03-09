@@ -28,7 +28,7 @@ const PostInfo = ({ post }) => {
             <h1>{post.title}</h1>
 
             {
-                (user._id === post.owner || user.role === 'ADMIN') &&
+                (user?._id === post.owner || user?.role === 'ADMIN') &&
                 <>
                     <Link to={`/posts/${post._id}/edit`}>Edit</Link>
                     <Link to={'/delete'} onClick={handleClick}>Delete</Link>

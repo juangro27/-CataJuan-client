@@ -1,9 +1,8 @@
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import CommentForm from "../../components/CommentForm/CommentForm"
 import CommentsList from "../../components/CommentsList/CommentsList"
 import CountryInfo from "../../components/CountryInfo/CountryInfo"
-import { AuthContext } from "../../contexts/auth.context"
 import commentsService from "../../services/comments.service"
 import countriesService from "../../services/countries.service"
 
