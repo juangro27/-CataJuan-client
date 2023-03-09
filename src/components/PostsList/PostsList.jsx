@@ -26,6 +26,7 @@ const PostsList = ({ posts }) => {
 
     return (
         <div>
+
             {
                 posts?.map(({ title, _id, owner }) => {
 
