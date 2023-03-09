@@ -32,7 +32,7 @@ const PostPage = () => {
     const refreshComments = () => {
 
         commentsService
-            .getCommets('POST', id)
+            .getComments('POST', id)
             .then(({ data }) => {
                 setCommentsArr(data.comments)
             })

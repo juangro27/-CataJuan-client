@@ -33,7 +33,7 @@ const CountryDetailsPage = () => {
     const refreshComments = () => {
 
         commentsService
-            .getCommets('COUNTRY', id)
+            .getComments('COUNTRY', id)
             .then(({ data }) => {
                 setComments(data.comments)
             })

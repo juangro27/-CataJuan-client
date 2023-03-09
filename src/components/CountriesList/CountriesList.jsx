@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Link } from 'react-router-dom'
 import countriesService from "../../services/countries.service"
 
-const countriesList = () => {
+const CountriesList = () => {
 
     const [countries, setCountries] = useState([])
 
@@ -27,4 +27,4 @@ const countriesList = () => {
     )
 
 }
-export default countriesList
+export default CountriesList

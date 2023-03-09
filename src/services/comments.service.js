@@ -29,7 +29,7 @@ class CommentsService {
         return this._instance;
     }
 
-    getCommets(type, typeId) {
+    getComments(type, typeId) {
         return this.api.get(`/${type}/${typeId}`)
     }
 
