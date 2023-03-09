@@ -3,12 +3,13 @@ import { Form, Button } from "react-bootstrap"
 import authService from "../../services/auth.service"
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../contexts/auth.context'
+import FormError from "../FormError/FormError"
 
 
 const LoginForm = () => {
 
     const { authenticateUser } = useContext(AuthContext)
-
+    const [errors, setErrors] = useState([])
 
     const [loginData, setLoginData] = useState({
         email: '',
@@ -33,7 +34,7 @@ const LoginForm = () => {
                 authenticateUser()
             })
             .then(() => navigate('/'))
-            .catch(err => console.log(err))
+            .catch(err => setErrors([err.response.data.message]))
     }
 
     return (
@@ -49,6 +50,8 @@ const LoginForm = () => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" value={loginData.password} onChange={handleInputChange} name="password" />
             </Form.Group>
+
+            {errors?.length > 0 && <FormError>{errors.map(elm => <p>{elm}</p>)} </FormError>}
 
             <div className="d-grid">
                 <Button variant="dark" type="submit">Sign in</Button>

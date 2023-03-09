@@ -6,12 +6,15 @@ import postsService from '../../services/posts.service'
 import uploadService from '../../services/upload.service'
 import { AuthContext } from '../../contexts/auth.context'
 import { useLocation } from 'react-router-dom';
+import FormError from "../FormError/FormError"
 
 
 const NewPost = () => {
 
     const { user } = useContext(AuthContext)
     const [countries, setCountries] = useState([])
+    const [errors, setErrors] = useState([])
+
 
     const location = useLocation()
     const queryParams = new URLSearchParams(location.search)
@@ -53,7 +56,7 @@ const NewPost = () => {
 
             })
             .then(({ data: post }) => navigate(`/posts/${post}`))
-            .catch(err => console.log(err))
+            .catch(err => setErrors(err.response.data.errorMessages))
     }
 
     return (
@@ -89,6 +92,8 @@ const NewPost = () => {
                 <Form.Label>Image</Form.Label>
                 <Form.Control type="file" name="imageUrl" />
             </Form.Group>
+
+            {errors.length > 0 && <FormError>{errors.map((elm, index) => <p key={index}>{elm}</p>)} </FormError>}
 
 
             <div className="d-grid mb-3">

@@ -3,23 +3,30 @@ import { Col, Container, Form, Row, Button, FormGroup } from "react-bootstrap"
 import postsService from '../../services/posts.service'
 import { useNavigate } from 'react-router-dom'
 import uploadService from '../../services/upload.service'
+import FormError from "../FormError/FormError"
 
 
 const PostEdit = ({ postId }) => {
 
     const [currentPost, setCurrentPost] = useState({})
     const navigate = useNavigate()
+    const [errors, setErrors] = useState([])
+
 
     useEffect(() => {
+
         postsService
             .getOnePost(postId)
             .then(({ data }) => setCurrentPost(data))
             .catch(err => console.log(err))
+
     }, [])
 
     const handleInputChange = e => {
+
         const { value, name } = e.target
         setCurrentPost({ ...currentPost, [name]: value })
+
     }
 
     const handleFormSubmit = e => {
@@ -37,7 +44,8 @@ const PostEdit = ({ postId }) => {
 
             })
             .then(({ data: post }) => navigate(`/posts/${post._id}`))
-            .catch(err => console.log(err))
+            .catch(err => setErrors(err.response.data.errorMessages))
+
     }
 
     return (
@@ -76,6 +84,9 @@ const PostEdit = ({ postId }) => {
                             </Col>
 
                         </Row>
+
+                        {errors.length > 0 && <FormError>{errors.map((elm, index) => <p key={index}>{elm}</p>)} </FormError>}
+
 
                         <div className="d-grid m-3">
                             <Button variant="dark" type="submit">Update</Button>

@@ -1,8 +1,9 @@
 import countriesService from "../../services/countries.service"
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from "react"
-import { Button, Form, Row, Col } from "react-bootstrap";
+import { Button, Form, Row, Col } from "react-bootstrap"
 import uploadService from '../../services/upload.service'
+import FormError from "../FormError/FormError"
 
 
 const CountryEditForm = ({ fireFinalActions }) => {
@@ -23,7 +24,7 @@ const CountryEditForm = ({ fireFinalActions }) => {
         score: '',
     })
 
-
+    const [errors, setErrors] = useState([])
 
     useEffect(() => {
 
@@ -60,7 +61,6 @@ const CountryEditForm = ({ fireFinalActions }) => {
             })
             .catch(err => console.log(err))
 
-
     }, [])
 
     const handleInputChange = e => {
@@ -92,7 +92,7 @@ const CountryEditForm = ({ fireFinalActions }) => {
             .then(() => {
                 fireFinalActions()
             })
-            .catch(err => console.log(err))
+            .catch(err => setErrors(err.response.data.errorMessages))
     }
 
     return (
@@ -166,6 +166,8 @@ const CountryEditForm = ({ fireFinalActions }) => {
                 </Form.Group>
 
             </Row>
+
+            {errors.length > 0 && <FormError>{errors.map(elm => <p>{elm}</p>)} </FormError>}
 
             <Button variant="dark" type="submit">Save</Button>
 

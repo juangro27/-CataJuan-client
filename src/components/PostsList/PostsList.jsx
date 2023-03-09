@@ -13,6 +13,7 @@ const PostsList = ({ posts }) => {
 
     }, [user])
 
+
     const handleClick = (e) => {
 
         e.preventDefault()
@@ -22,6 +23,7 @@ const PostsList = ({ posts }) => {
             .then(() => navigate(`/countries/${posts.country}`))
             .catch(err => console.log(err))
     }
+
     return (
         <div>
             {
@@ -29,14 +31,17 @@ const PostsList = ({ posts }) => {
 
                     return (
                         <div key={_id} >
+
                             <Link to={`/posts/${_id}`}><p>{title}</p></Link>
+
                             {
-                                (user._id === owner || user.role === 'ADMIN') &&
+                                (user?._id === owner || user?.role === 'ADMIN') &&
                                 <>
                                     <Link to={`/posts/${_id}/edit`}>Edit</Link>
                                     <Link to={'/delete'} onClick={handleClick}>Delete</Link>
                                 </>
                             }
+
                         </div>
                     )
                 })
