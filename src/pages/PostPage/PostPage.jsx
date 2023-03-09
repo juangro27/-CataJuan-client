@@ -5,6 +5,7 @@ import postsService from '../../services/posts.service'
 import PostInfo from '../../components/PostInfo/PostInfo'
 import CommentsList from '../../components/CommentsList/CommentsList'
 import CommentForm from '../../components/CommentForm/CommentForm'
+import capitalize from '../../utils/capitalize'
 
 const PostPage = () => {
 
@@ -24,7 +25,7 @@ const PostPage = () => {
             .getOnePost(id)
             .then(({ data }) => {
                 setCommentsArr(data.comments)
-                setPost(data)
+                setPost({ ...data, title: capitalize(data.title) })
             })
             .catch(err => console.log(err))
 

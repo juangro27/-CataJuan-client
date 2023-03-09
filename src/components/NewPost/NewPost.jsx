@@ -4,9 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import countriesService from '../../services/countries.service'
 import postsService from '../../services/posts.service'
 import uploadService from '../../services/upload.service'
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'
 import FormError from "../FormError/FormError"
-
 
 const NewPost = () => {
 

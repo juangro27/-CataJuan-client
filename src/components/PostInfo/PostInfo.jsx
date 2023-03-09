@@ -1,7 +1,7 @@
 import postsService from '../../services/posts.service'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import { AuthContext } from '../../contexts/auth.context'
-import { useEffect, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import votesService from '../../services/votes.service'
 import VotesForm from '../VotesForm/VotesForm'
 
