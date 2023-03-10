@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../contexts/auth.context'
 import votesService from '../../services/votes.service'
 import VotesForm from '../VotesForm/VotesForm'
-
+import Nivo from '../Nivo/Nivo'
 const CountryInfo = ({ country }) => {
 
     const [votes, setVotes] = useState(0)
@@ -62,5 +62,6 @@ const CountryInfo = ({ country }) => {
         </>
     )
 }
+
 
 export default CountryInfo
