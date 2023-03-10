@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import UserInfo from '../../components/UserInfo/UserInfo'
 import { AuthContext } from '../../contexts/auth.context'
 import postsService from '../../services/posts.service'
+import capitalize from '../../utils/capitalize'
 
 const MyProfilePage = () => {
 
@@ -14,12 +16,10 @@ const MyProfilePage = () => {
     }, [])
 
     const getMyPosts = () => {
-        console.log(user)
         postsService
             .getByOwner(user?._id)
             .then(post => {
-                console.log(post)
-                setPosts(post)
+                setPosts(post.data)
             })
             .catch(err => console.log(err))
     }
@@ -35,10 +35,20 @@ const MyProfilePage = () => {
 
             <hr />
             <h3 >My Posts</h3>
+            <ul>
 
-            {
-                posts.map(elm => <p>{elm.title}</p>)
-            }
+                {
+                    posts.map(elm => {
+                        return (
+                            <li key={elm._id}>
+                                <Link to={`/posts/${elm._id}`}> {capitalize(elm.title)} </Link>
+
+                            </li>
+                        )
+                    })
+                }
+            </ul>
+
 
             <p className="mb-5">These are my posts</p>
 
