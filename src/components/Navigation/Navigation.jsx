@@ -9,16 +9,12 @@ const Navigation = () => {
 
     const { user, logout } = useContext(AuthContext)
 
-    const options = ['option1', 'option2', 'option3']
-
-
     return (
         <Navbar bg='dark' variant='dark' expand="md" className='mb-4'>
             <Container>
                 <Navbar.Brand href="#home">CataJuan</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-                <SearchForm />
 
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
@@ -51,10 +47,12 @@ const Navigation = () => {
                                     </Link>
                                 </>
                         }
+                        <SearchForm />
+
                     </Nav>
                     {
                         user &&
-                        <Navbar.Text>Bienvenid@,
+                        <Navbar.Text className='d-flex'>Bienvenid@,
                             <Link to="/myprofile" className='inline'>
                                 <Nav.Link as="span">{capitalize(user.name)}</Nav.Link>
                             </Link>
