@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react"
+import { Button } from "react-bootstrap"
 import { Link } from 'react-router-dom'
 import countriesService from "../../services/countries.service"
 import capitalize from '../../utils/capitalize'
+import ModalCountry from "../ModalCountry/ModalCountry"
 import Nivo from "../Nivo/Nivo"
 
 const CountriesList = () => {
 
     const [countries, setCountries] = useState([])
+    const [selectedCountry, setSelectedCountry] = useState('')
+    const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
 
@@ -22,17 +26,41 @@ const CountriesList = () => {
             .catch(err => console.log(err))
     }
 
+    const showCountry = (country) => {
+
+        countryInformation(country)
+        setShowModal(true)
+
+    }
+
+    const handleClose = () => {
+        setShowModal(false)
+    }
+
+    const countryInformation = (country) => {
+
+        countriesService
+            .getOneCountryByCode(country)
+            .then(({ data }) => setSelectedCountry(data))
+            .catch(err => console.log(err))
+
+    }
+
     return (
-        <ul>
+        <>
+            {(selectedCountry && showModal) &&
+                <ModalCountry handleClose={handleClose} showModal={showModal} country={selectedCountry} />
+            }
             <div className="d-flex justify-content-center" >
                 <div id='root' style={{ width: '1000px', height: '600px' }}>
-                    <Nivo />
+                    <Nivo showCountry={showCountry} />
+                    <h3>Safety index map</h3>
                 </div>
             </div>
-
-
-            {countries.map(elm => <li key={elm._id}><Link to={elm._id}>{capitalize(elm.name)}</Link></li>)}
-        </ul>
+            <ul>
+                {countries.map(elm => <li key={elm._id}><Link to={elm._id}>{capitalize(elm.name)}</Link></li>)}
+            </ul>
+        </>
     )
 
 }

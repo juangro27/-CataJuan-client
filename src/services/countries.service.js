@@ -42,6 +42,10 @@ class CountryService {
         return this.api.get(`/${id}`)
     }
 
+    getOneCountryByCode(code) {
+        return this.api.get(`/code/${code}`)
+    }
+
     editCountry(id, data) {
         return this.api.put(`/${id}/edit`, data)
     }

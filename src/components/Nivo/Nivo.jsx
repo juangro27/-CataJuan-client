@@ -1,9 +1,9 @@
 import { ResponsiveChoropleth } from '@nivo/geo'
 import React from 'react'
-import data from './data'
+import data from './data.json'
 import countries from './features.json'
 
-const MyResponsiveChoropleth = ({ data, domain }) => (
+const MyResponsiveChoropleth = ({ data, domain, onClick }) => (
     <ResponsiveChoropleth
         data={data}
         domain={domain}
@@ -14,7 +14,7 @@ const MyResponsiveChoropleth = ({ data, domain }) => (
         valueFormat=".2s"
         projectionTranslation={[0.5, 0.7]}
         projectionScale={150}  // Adjust the zoom level
-        enableGraticule={true}
+        enableGraticule={false}
         graticuleLineColor="#DDDDDD"
         borderWidth={0.5}
         borderColor="#152538"
@@ -24,7 +24,7 @@ const MyResponsiveChoropleth = ({ data, domain }) => (
                 direction: "column",
                 justify: true,
                 translateX: 20,
-                translateY: -100,
+                translateY: -7,
                 itemsSpacing: 0,
                 itemWidth: 94,
                 itemHeight: 18,
@@ -40,18 +40,29 @@ const MyResponsiveChoropleth = ({ data, domain }) => (
                             itemOpacity: 1
                         }
                     }
-                ]
+                ],
             }
         ]}
+        onClick={onClick}
+
     />
 );
 
 
 
-const Nivo = () => {
+const Nivo = ({ showCountry }) => {
+
+    const handleMapClick = (feature) => {
+        if (feature.properties.alpha3Code !== 'NODATA') showCountry(feature.properties.alpha3Code);
+    }
 
     return (
-        <MyResponsiveChoropleth data={data} domain={[3000]} />
+        <MyResponsiveChoropleth
+            data={data}
+            domain={[-200, 383]}
+
+            onClick={handleMapClick}
+        />
     )
 }
 
