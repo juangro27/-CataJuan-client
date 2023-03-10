@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
-import countriesService from '../../services/countries.service'
 import { useNavigate, useParams } from 'react-router-dom'
-import PostsList from '../PostsList/PostsList'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../contexts/auth.context'
+import countriesService from '../../services/countries.service'
 import votesService from '../../services/votes.service'
+import PostsList from '../PostsList/PostsList'
 import VotesForm from '../VotesForm/VotesForm'
 import Nivo from '../Nivo/Nivo'
 const CountryInfo = ({ country }) => {

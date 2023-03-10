@@ -6,6 +6,7 @@ import postsService from '../../services/posts.service'
 import uploadService from '../../services/upload.service'
 import { useLocation } from 'react-router-dom'
 import FormError from "../FormError/FormError"
+import capitalize from '../../utils/capitalize'
 
 const NewPost = () => {
 
@@ -86,9 +87,9 @@ const NewPost = () => {
                     {
                         countries.map(elm => {
                             return elm._id === myParam ?
-                                <option key={elm._id} value={elm._id}>{elm.name}</option>
+                                <option key={elm._id} value={elm._id}>{capitalize(elm.name)}</option>
                                 :
-                                <option key={elm._id} value={elm._id}>{elm.name}</option>
+                                <option key={elm._id} value={elm._id}>{capitalize(elm.name)}</option>
                         })
                     }
                 </Form.Select>

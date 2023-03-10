@@ -64,34 +64,28 @@ const PostEdit = ({ postId }) => {
 
                     <Col md={{ offset: 2, span: 8 }}>
 
-                        <Row>
-                            <Col>
-                                <FormGroup controlId="title">
-                                    <Form.Label>Title</Form.Label>
-                                    <Form.Control type="text" value={currentPost.title} onChange={handleInputChange} name="title" />
-                                </FormGroup>
-                            </Col>
 
-                            <Col>
-                                <FormGroup controlId="description">
-                                    <Form.Label>Description</Form.Label>
-                                    <Form.Control type="text" value={currentPost.description} onChange={handleInputChange} name="description" />
-                                </FormGroup>
-                            </Col>
-                        </Row>
+                        <FormGroup controlId="title">
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control type="text" value={currentPost.title} onChange={handleInputChange} name="title" />
+                        </FormGroup>
+
+
 
                         <hr />
 
-                        <Row>
-                            <Col>
-                                <img src={currentPost.postImg} alt="" />
-                                <FormGroup controlId="postImg">
-                                    <Form.Label>Image</Form.Label>
-                                    <Form.Control type="file" name="imageUrl" />
-                                </FormGroup>
-                            </Col>
 
-                        </Row>
+                        <img src={currentPost.postImg} alt={currentPost.title} style={{ width: '450px' }} />
+                        <FormGroup controlId="postImg">
+                            <Form.Label>Image</Form.Label>
+                            <Form.Control type="file" name="imageUrl" />
+                        </FormGroup>
+
+
+                        <FormGroup controlId="description">
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control type="text" value={currentPost.description} onChange={handleInputChange} name="description" />
+                        </FormGroup>
 
                         {errors.length > 0 && <FormError>{errors.map((elm, index) => <p key={index}>{elm}</p>)} </FormError>}
 
