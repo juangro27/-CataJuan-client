@@ -6,8 +6,8 @@ import countriesService from '../../services/countries.service'
 import votesService from '../../services/votes.service'
 import PostsList from '../PostsList/PostsList'
 import VotesForm from '../VotesForm/VotesForm'
-import Nivo from '../Nivo/Nivo'
 import FavoriteForm from '../FavoriteForm/FavoriteForm'
+
 const CountryInfo = ({ country }) => {
 
     const [votes, setVotes] = useState(0)
@@ -19,6 +19,7 @@ const CountryInfo = ({ country }) => {
     useEffect(() => {
         refreshVotes()
     }, [])
+
 
     const handleClick = (e) => {
 

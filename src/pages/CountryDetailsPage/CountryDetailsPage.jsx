@@ -17,7 +17,8 @@ const CountryDetailsPage = () => {
 
         getCountry()
 
-    }, [])
+    }, [id])
+
 
     const getCountry = () => {
 

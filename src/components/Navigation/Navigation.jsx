@@ -3,10 +3,13 @@ import { Container, Nav, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../contexts/auth.context'
 import capitalize from '../../utils/capitalize'
+import SearchForm from '../SearchForm/SearchForm'
 
 const Navigation = () => {
 
     const { user, logout } = useContext(AuthContext)
+
+    const options = ['option1', 'option2', 'option3']
 
 
     return (
@@ -14,6 +17,9 @@ const Navigation = () => {
             <Container>
                 <Navbar.Brand href="#home">CataJuan</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+                <SearchForm />
+
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Link to="/">
@@ -49,7 +55,7 @@ const Navigation = () => {
                     {
                         user &&
                         <Navbar.Text>Bienvenid@,
-                            <Link to="/myprofile">
+                            <Link to="/myprofile" className='inline'>
                                 <Nav.Link as="span">{capitalize(user.name)}</Nav.Link>
                             </Link>
                         </Navbar.Text>
