@@ -46,9 +46,8 @@ const PostInfo = ({ post }) => {
     return (
         <>
             <h1>{post.title}</h1>
-            <h1>Votes: {votes}</h1>
-
-            <VotesForm setVote={setVote} />
+            <img src={post.postImg} alt={post.title} style={{ width: '400px' }} />
+            <p>{post.description}</p>
             {
                 (user?._id === post.owner || user?.role === 'ADMIN') &&
                 <>
@@ -56,6 +55,10 @@ const PostInfo = ({ post }) => {
                     <Link to={'/delete'} onClick={handleClick}>Delete</Link>
                 </>
             }
+
+            <hr />
+            <h1>Votes: {votes}</h1>
+            <VotesForm setVote={setVote} />
 
         </>
     )

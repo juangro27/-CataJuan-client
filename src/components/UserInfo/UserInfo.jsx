@@ -14,9 +14,9 @@ const UserInfo = () => {
     const capitalizedLastName = capitalize(lastName)
 
     return (
-        <Container>
+        <>
             <Row>
-                <Col md={{ offset: 2, span: 8 }}>
+                <Col md={{ offset: 2, span: 9 }}>
 
                     <h1>{capitalizedName} {capitalizedLastName}</h1>
                     <hr />
@@ -32,17 +32,9 @@ const UserInfo = () => {
                         </Col>
                     </Row>
 
-                    <hr />
-                    <h3>My favorites</h3>
-                    <p>These are my favorite destinations</p>
-
-                    <hr />
-                    <h3 >My Posts</h3>
-                    <p className="mb-5">These are my posts</p>
-
                 </Col>
             </Row>
-        </Container>
+        </>
 
 
     )

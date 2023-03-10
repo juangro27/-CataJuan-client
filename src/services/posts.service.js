@@ -33,6 +33,10 @@ class PostService {
         return this.api.get(`/`)
     }
 
+    getByOwner(id) {
+        return this.api.get(`/owner/${id}`)
+    }
+
     createPost(data) {
         return this.api.post(`/create`, data)
     }
