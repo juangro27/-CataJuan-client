@@ -44,7 +44,6 @@ const CountryDetailsPage = () => {
 
     return (
         <>
-
             <CountryInfo country={country} />
             <CommentsList specs={{ type: 'COUNTRY', id }} commentsData={comments} refreshComments={refreshComments} />
             <CommentForm type='COUNTRY' comments={comments} refreshComments={refreshComments} />

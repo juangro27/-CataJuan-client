@@ -4,6 +4,7 @@ import { AuthContext } from '../../contexts/auth.context'
 import { useContext, useEffect, useState } from 'react'
 import votesService from '../../services/votes.service'
 import VotesForm from '../VotesForm/VotesForm'
+import FavoriteForm from '../FavoriteForm/FavoriteForm'
 
 const PostInfo = ({ post }) => {
 
@@ -46,6 +47,7 @@ const PostInfo = ({ post }) => {
     return (
         <>
             <h1>{post.title}</h1>
+            <FavoriteForm specs={{ type: 'POST', id }} />
             <img src={post.postImg} alt={post.title} style={{ width: '400px' }} />
             <p>{post.description}</p>
             {

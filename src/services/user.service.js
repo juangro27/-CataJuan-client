@@ -38,6 +38,14 @@ class UserService {
         return this.api.delete(`/${id}/delete`)
     }
 
+    addFavorite(type, typeId) {
+        return this.api.put(`/addFavorite/${type}/${typeId}`)
+    }
+
+    isFavorite(type, typeId) {
+        return this.api.get(`/isFavorite/${type}/${typeId}`)
+    }
+
 }
 
 export default UserService.getInstance()

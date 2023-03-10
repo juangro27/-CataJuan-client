@@ -7,6 +7,7 @@ import votesService from '../../services/votes.service'
 import PostsList from '../PostsList/PostsList'
 import VotesForm from '../VotesForm/VotesForm'
 import Nivo from '../Nivo/Nivo'
+import FavoriteForm from '../FavoriteForm/FavoriteForm'
 const CountryInfo = ({ country }) => {
 
     const [votes, setVotes] = useState(0)
@@ -48,6 +49,7 @@ const CountryInfo = ({ country }) => {
     return (
         <>
             <h1>{country.flag}{country.name}</h1>
+            <FavoriteForm specs={{ type: 'COUNTRY', id }} />
             <h1>Votes: {votes}</h1>
             <VotesForm setVote={setVote} />
             <PostsList posts={posts} />
