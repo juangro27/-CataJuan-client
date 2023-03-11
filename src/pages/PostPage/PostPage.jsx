@@ -24,6 +24,7 @@ const PostPage = () => {
         postsService
             .getOnePost(id)
             .then(({ data }) => {
+                console.log(data)
                 setCommentsArr(data.comments)
                 setPost({ ...data, title: capitalize(data.title) })
             })

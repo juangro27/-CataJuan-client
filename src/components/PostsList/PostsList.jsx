@@ -25,14 +25,12 @@ const PostsList = ({ posts }) => {
         <div>
 
             {
-                posts?.map(({ title, _id, owner }) => {
-
-                    const capitalizedTitle = capitalize(title)
+                posts?.map(({ title, _id, owner, score }) => {
 
                     return (
                         <div key={_id} >
 
-                            <Link to={`/posts/${_id}`}><p>{capitalizedTitle}</p></Link>
+                            <Link to={`/posts/${_id}`}><p>{capitalize(title)}, {score}</p></Link>
 
                             {
                                 (user?._id === owner || user?.role === 'ADMIN') &&
