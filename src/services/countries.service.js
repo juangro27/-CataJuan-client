@@ -30,8 +30,20 @@ class CountryService {
     }
 
 
-    getCountries() {
-        return this.api.get(`/`)
+    getCountries({
+        discriminationProtection,
+        violenceCriminalization,
+        goodPlaceToLive,
+        transgenderLegal,
+        illegalSameSexRelationships,
+        propaganda,
+        score,
+        transMurderRates,
+        safetyIndex,
+        alphabetic
+    }) {
+
+        return this.api.get(`/?discriminationProtection=${discriminationProtection}&violenceCriminalization=${violenceCriminalization}&goodPlaceToLive=${goodPlaceToLive}&transgenderLegal=${transgenderLegal}&illegalSameSexRelationships=${illegalSameSexRelationships}&propaganda=${propaganda}&score=${score}&transMurderRates=${transMurderRates}&safetyIndex=${safetyIndex}&alphabetic=${alphabetic}`)
     }
 
     getCountriesNames() {

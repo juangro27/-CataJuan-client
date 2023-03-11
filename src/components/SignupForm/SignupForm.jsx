@@ -61,7 +61,7 @@ const SignupForm = () => {
             {errors?.length > 0 && <FormError>{errors.map((elm, index) => <p key={index}>{elm}</p>)} </FormError>}
 
             <div className="d-grid">
-                <Button variant="dark" type="submit">Registrarme</Button>
+                <Button variant="dark" type="submit">Sign Up</Button>
             </div>
 
         </Form>

@@ -22,6 +22,7 @@ class UserService {
         })
 
     }
+
     static getInstance() {
         if (!this._instance) {
             this._instance = new UserService()
@@ -29,6 +30,9 @@ class UserService {
         return this._instance;
     }
 
+    getUser(id) {
+        return this.api.get(`/${id}`)
+    }
 
     editUser(id, data) {
         return this.api.put(`/${id}/edit`, data)

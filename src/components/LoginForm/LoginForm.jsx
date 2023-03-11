@@ -51,7 +51,7 @@ const LoginForm = () => {
                 <Form.Control type="password" value={loginData.password} onChange={handleInputChange} name="password" />
             </Form.Group>
 
-            {errors?.length > 0 && <FormError>{errors.map(elm => <p>{elm}</p>)} </FormError>}
+            {errors?.length > 0 && <FormError>{errors.map(elm => <p key={elm}>{elm}</p>)} </FormError>}
 
             <div className="d-grid">
                 <Button variant="dark" type="submit">Sign in</Button>

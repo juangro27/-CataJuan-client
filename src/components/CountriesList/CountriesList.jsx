@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import { Button } from "react-bootstrap"
 import { Link } from 'react-router-dom'
 import countriesService from "../../services/countries.service"
 import capitalize from '../../utils/capitalize'
+import CountryOptions from "../CountryOptions/CountryOptions"
 import ModalCountry from "../ModalCountry/ModalCountry"
 import Nivo from "../Nivo/Nivo"
 
@@ -21,12 +21,12 @@ const CountriesList = () => {
     const loadCountries = () => {
 
         countriesService
-            .getCountries()
+            .getCountriesNames()
             .then(({ data }) => setCountries(data))
             .catch(err => console.log(err))
     }
 
-    const showCountry = (country) => {
+    const showCountry = country => {
 
         countryInformation(country)
         setShowModal(true)
@@ -37,7 +37,13 @@ const CountriesList = () => {
         setShowModal(false)
     }
 
-    const countryInformation = (country) => {
+    const filterCountries = countries => {
+
+        setCountries(countries)
+
+    }
+
+    const countryInformation = country => {
 
         countriesService
             .getOneCountryByCode(country)
@@ -57,6 +63,9 @@ const CountriesList = () => {
                     <h3>Safety index map</h3>
                 </div>
             </div>
+
+            <CountryOptions filterCountries={filterCountries} />
+
             <ul>
                 {countries.map(elm => <li key={elm._id}><Link to={elm._id}>{capitalize(elm.name)}</Link></li>)}
             </ul>
