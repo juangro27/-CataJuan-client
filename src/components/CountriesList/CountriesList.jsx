@@ -10,6 +10,7 @@ const CountriesList = () => {
 
     const [countries, setCountries] = useState([])
     const [selectedCountry, setSelectedCountry] = useState('')
+    const [page, setPage] = useState(2)
     const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
@@ -19,9 +20,9 @@ const CountriesList = () => {
     }, [])
 
     const loadCountries = () => {
-
+        console.log(page)
         countriesService
-            .getCountriesNames()
+            .getCountriesNames(page)
             .then(({ data }) => setCountries(data))
             .catch(err => console.log(err))
     }
