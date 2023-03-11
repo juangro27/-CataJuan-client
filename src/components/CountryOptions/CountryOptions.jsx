@@ -14,7 +14,8 @@ const CountryOptions = ({ filterCountries }) => {
         calification: '',
         transMurderRates: '',
         safetyIndex: '',
-        alphabetic: ''
+        alphabetic: '',
+        page: 1
     })
 
     useEffect(() => {
@@ -44,7 +45,8 @@ const CountryOptions = ({ filterCountries }) => {
             calification: '',
             transMurderRates: '',
             safetyIndex: '',
-            alphabetic: ''
+            alphabetic: '',
+            page: 1
         })
 
         const form = document.getElementById('options');
