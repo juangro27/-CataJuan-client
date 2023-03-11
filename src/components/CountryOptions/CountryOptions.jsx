@@ -67,7 +67,7 @@ const CountryOptions = ({ filterCountries }) => {
 
     return (
         <>
-            <Form id="theForm" >
+            <Form id="theForm" className="m-5">
 
                 Discrimination protection
                 <Form.Select id="discriminationProtection" defaultValue='' onChange={handleOption}>
