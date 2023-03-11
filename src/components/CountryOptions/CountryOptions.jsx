@@ -15,7 +15,7 @@ const CountryOptions = ({ filterCountries }) => {
         transMurderRates: '',
         safetyIndex: '',
         alphabetic: '',
-        page: '',
+        page: 1,
         score: '',
     })
 
@@ -47,7 +47,7 @@ const CountryOptions = ({ filterCountries }) => {
             transMurderRates: '',
             safetyIndex: '',
             alphabetic: '',
-            page: '',
+            page: 1,
             score: '',
         })
 
