@@ -14,7 +14,9 @@ const CountryOptions = ({ filterCountries }) => {
         calification: '',
         transMurderRates: '',
         safetyIndex: '',
-        alphabetic: ''
+        alphabetic: '',
+        page: '',
+        score: '',
     })
 
     useEffect(() => {
@@ -44,7 +46,9 @@ const CountryOptions = ({ filterCountries }) => {
             calification: '',
             transMurderRates: '',
             safetyIndex: '',
-            alphabetic: ''
+            alphabetic: '',
+            page: '',
+            score: '',
         })
 
         const form = document.getElementById('options');
@@ -117,7 +121,7 @@ const CountryOptions = ({ filterCountries }) => {
                     <option value="Punishments range from jail time to the death penalty">Punishments range from jail time to the death penalty</option>
                 </Form.Select>
 
-                calification
+                Calification
                 <Form.Select id="calification" defaultValue='' onChange={handleOption}>
                     <option value="">Select option</option>
                     <option value="f">F</option>
@@ -153,6 +157,13 @@ const CountryOptions = ({ filterCountries }) => {
                     <option value="">Select option</option>
                     <option value="1">A-Z</option>
                     <option value="-1">Z-A</option>
+                </Form.Select>
+
+                Sort by Score
+                <Form.Select id="score" defaultValue='' onChange={handleOption}>
+                    <option value="">Select option</option>
+                    <option value="1">Lowest first</option>
+                    <option value="-1">Highest first</option>
                 </Form.Select>
 
                 <Button onClick={resetOptions}>Reset</Button>

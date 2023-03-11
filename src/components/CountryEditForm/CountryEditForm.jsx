@@ -48,7 +48,7 @@ const CountryEditForm = ({ fireFinalActions }) => {
                     score,
                     transMurderRates,
                     transgenderLegal,
-                    violenceCriminalization
+                    violenceCriminalization,
                 } = data
 
                 setCountry({
