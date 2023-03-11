@@ -21,7 +21,7 @@ const CountryEditForm = ({ fireFinalActions }) => {
         transMurderRates: '',
         transgenderLegal: '',
         violenceCriminalization: '',
-        score: '',
+        calificatiom: '',
     })
 
     const [errors, setErrors] = useState([])
@@ -140,9 +140,9 @@ const CountryEditForm = ({ fireFinalActions }) => {
                     <Form.Control type="text" name="violenceCriminalization" value={country.violenceCriminalization} onChange={handleInputChange} />
                 </Form.Group>
 
-                <Form.Group as={Col} md={4} controlId="score">
-                    <Form.Label>score</Form.Label>
-                    <Form.Control type='text' name="score" value={country.score} onChange={handleInputChange} />
+                <Form.Group as={Col} md={4} controlId="calification">
+                    <Form.Label>calification</Form.Label>
+                    <Form.Control type='text' name="calification" value={country.calification} onChange={handleInputChange} />
                 </Form.Group>
 
                 <Form.Group as={Col} md={4} controlId="illegalSameSexRelationships">

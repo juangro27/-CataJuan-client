@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Button, Form } from "react-bootstrap"
 import countriesService from "../../services/countries.service"
 
-const CountryOptions = ({ filterCountries }) => {
+const PostsOptions = ({ filterCountries }) => {
 
     const [queries, setQueries] = useState({
         discriminationProtection: '',
@@ -11,7 +11,7 @@ const CountryOptions = ({ filterCountries }) => {
         propaganda: '',
         illegalSameSexRelationships: '',
         transgenderLegal: '',
-        calification: '',
+        score: '',
         transMurderRates: '',
         safetyIndex: '',
         alphabetic: ''
@@ -35,19 +35,11 @@ const CountryOptions = ({ filterCountries }) => {
     const resetOptions = () => {
 
         setQueries({
-            discriminationProtection: '',
-            violenceCriminalization: '',
-            goodPlaceToLive: '',
-            propaganda: '',
-            illegalSameSexRelationships: '',
-            transgenderLegal: '',
-            calification: '',
-            transMurderRates: '',
-            safetyIndex: '',
+
             alphabetic: ''
         })
 
-        const form = document.getElementById('options');
+        const form = document.getElementById('theForm');
         const selectElements = form.getElementsByTagName('select');
         for (let i = 0; i < selectElements.length; i++) {
             selectElements[i].selectedIndex = 0;
@@ -67,7 +59,7 @@ const CountryOptions = ({ filterCountries }) => {
 
     return (
         <>
-            <Form id="options" >
+            <Form id="theForm" >
 
                 Discrimination protection
                 <Form.Select id="discriminationProtection" defaultValue='' onChange={handleOption}>
@@ -117,8 +109,8 @@ const CountryOptions = ({ filterCountries }) => {
                     <option value="Punishments range from jail time to the death penalty">Punishments range from jail time to the death penalty</option>
                 </Form.Select>
 
-                calification
-                <Form.Select id="calification" defaultValue='' onChange={handleOption}>
+                Score
+                <Form.Select id="score" defaultValue='' onChange={handleOption}>
                     <option value="">Select option</option>
                     <option value="f">F</option>
                     <option value="d-">D-</option>
@@ -161,4 +153,4 @@ const CountryOptions = ({ filterCountries }) => {
     )
 }
 
-export default CountryOptions
+export default PostsOptions

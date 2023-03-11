@@ -23,7 +23,9 @@ class CountryService {
 
     }
     static getInstance() {
+
         if (!this._instance) {
+
             this._instance = new CountryService();
         }
         return this._instance;
@@ -37,13 +39,13 @@ class CountryService {
         transgenderLegal,
         illegalSameSexRelationships,
         propaganda,
-        score,
+        calification,
         transMurderRates,
         safetyIndex,
         alphabetic
     }) {
 
-        return this.api.get(`/?discriminationProtection=${discriminationProtection}&violenceCriminalization=${violenceCriminalization}&goodPlaceToLive=${goodPlaceToLive}&transgenderLegal=${transgenderLegal}&illegalSameSexRelationships=${illegalSameSexRelationships}&propaganda=${propaganda}&score=${score}&transMurderRates=${transMurderRates}&safetyIndex=${safetyIndex}&alphabetic=${alphabetic}`)
+        return this.api.get(`/?discriminationProtection=${discriminationProtection}&violenceCriminalization=${violenceCriminalization}&goodPlaceToLive=${goodPlaceToLive}&transgenderLegal=${transgenderLegal}&illegalSameSexRelationships=${illegalSameSexRelationships}&propaganda=${propaganda}&calification=${calification}&transMurderRates=${transMurderRates}&safetyIndex=${safetyIndex}&alphabetic=${alphabetic}`)
     }
 
     getCountriesNames() {

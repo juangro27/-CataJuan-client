@@ -14,6 +14,7 @@ const ModalCountry = ({ handleClose, country, showModal }) => {
         illegalSameSexRelationships,
         propaganda,
         score,
+        calification,
         flag,
         _id: id
     } = country
@@ -31,6 +32,7 @@ const ModalCountry = ({ handleClose, country, showModal }) => {
                 <h1>{transMurderRates}</h1>
                 <h1>{illegalSameSexRelationships}</h1>
                 <h1>{propaganda}</h1>
+                <h1>{calification}</h1>
                 <h1>{score}</h1>
 
             </Modal.Body>
