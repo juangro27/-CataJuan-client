@@ -7,14 +7,15 @@ import votesService from '../../services/votes.service'
 import PostsList from '../PostsList/PostsList'
 import VotesForm from '../VotesForm/VotesForm'
 import FavoriteForm from '../FavoriteForm/FavoriteForm'
+import PostsOptions from '../PostsOptions/PostsOptions'
 
 const CountryInfo = ({ country }) => {
 
     const [votes, setVotes] = useState(0)
+    const [posts, setPosts] = useState(country.posts)
     const { user } = useContext(AuthContext)
     const { id } = useParams()
     const navigate = useNavigate()
-    const posts = country.posts
 
     useEffect(() => {
         refreshVotes()
@@ -47,12 +48,19 @@ const CountryInfo = ({ country }) => {
 
     }
 
+    const filterPosts = posts => {
+
+        setPosts(posts)
+
+    }
+
     return (
         <>
             <h1>{country.flag}{country.name}</h1>
             <FavoriteForm specs={{ type: 'COUNTRY', id }} />
             <h1>Votes: {votes}</h1>
             <VotesForm setVote={setVote} />
+            <PostsOptions filterPosts={filterPosts} country={id} />
             <PostsList posts={posts} />
             {
                 user?.role === 'ADMIN' &&
