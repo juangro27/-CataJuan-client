@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { Button } from "react-bootstrap"
 import { Link } from 'react-router-dom'
 import countriesService from "../../services/countries.service"
 import capitalize from '../../utils/capitalize'
@@ -11,18 +10,17 @@ const CountriesList = () => {
 
     const [countries, setCountries] = useState([])
     const [selectedCountry, setSelectedCountry] = useState('')
-    const [page, setPage] = useState(1)
     const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
 
-        page && loadCountries()
+        loadCountries()
 
-    }, [page])
+    }, [])
 
     const loadCountries = () => {
         countriesService
-            .getCountriesNames(page)
+            .getCountriesNames()
             .then(({ data }) => setCountries(data))
             .catch(err => console.log(err))
     }
@@ -53,16 +51,6 @@ const CountriesList = () => {
 
     }
 
-    const nextPage = () => {
-        page < 2 && setPage(page + 1)
-        console.log(page)
-    }
-
-    const previousPage = () => {
-        page > 1 && setPage(page - 1)
-        console.log(page)
-    }
-
     return (
         <>
             {(selectedCountry && showModal) &&
@@ -80,12 +68,6 @@ const CountriesList = () => {
             <ul>
                 {countries.map(elm => <li key={elm._id}><Link to={elm._id}>{capitalize(elm.name)}</Link></li>)}
             </ul>
-
-            <div className="d-flex m-2">
-                <Button onClick={() => previousPage()}>Previous</Button>
-                <p className="m-2">Page: {page}</p>
-                <Button onClick={() => nextPage()}>Next</Button>
-            </div>
 
         </>
     )

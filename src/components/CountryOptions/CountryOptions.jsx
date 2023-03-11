@@ -18,6 +18,8 @@ const CountryOptions = ({ filterCountries }) => {
         page: 1,
         score: '',
     })
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(0)
 
     useEffect(() => {
 
@@ -28,11 +30,16 @@ const CountryOptions = ({ filterCountries }) => {
     const getCountries = queries => {
 
         countriesService
-            .getCountries(queries)
-            .then(({ data }) => filterCountries(data))
+            .getCountries({ ...queries, page: currentPage })
+            .then(({ data }) => {
+                filterCountries(data.countries)
+                setCurrentPage(data.currentPage)
+                setTotalPages(data.totalPages)
+            })
             .catch(err => console.log(err))
 
     }
+
 
     const resetOptions = () => {
 
@@ -68,9 +75,21 @@ const CountryOptions = ({ filterCountries }) => {
 
     }
 
+    const nextPage = () => {
+        currentPage < totalPages && setCurrentPage(currentPage + 1)
+        setQueries({ ...queries, page: currentPage })
+    }
+
+    const previousPage = () => {
+        currentPage > 1 && setCurrentPage(currentPage - 1)
+        setQueries({ ...queries, page: currentPage })
+    }
+
+
 
     return (
         <>
+
             <Form id="options" className="m-5">
 
                 Discrimination protection
@@ -168,6 +187,18 @@ const CountryOptions = ({ filterCountries }) => {
 
                 <Button onClick={resetOptions}>Reset</Button>
             </Form>
+
+            <div className="d-flex m-2 align-content-center">
+                {currentPage !== 1 &&
+                    <Button onClick={() => previousPage()}>Previous</Button>
+                }
+
+                <p className="m-2">Page: {currentPage} / {totalPages}</p>
+
+                {currentPage < totalPages &&
+                    <Button onClick={() => nextPage()}>Next</Button>
+                }
+            </div>
         </>
     )
 }
