@@ -1,31 +1,73 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import { AuthContext } from '../../contexts/auth.context'
 import io from 'socket.io-client';
+import chatService from "../../services/chat.service";
 
 const ChatForm = () => {
-    const [message, setMessage] = useState('');
-    const socket = io.connect('http://localhost:5005');
+    const { user, getToken } = useContext(AuthContext)
 
-    const sendMessage = (event) => {
-        event.preventDefault();
-        socket.emit('chat message', message);
-        setMessage('');
-    };
+    const [messages, setMessages] = useState([]);
+    const socket = useRef(null);
 
     useEffect(() => {
-        socket.on('connect', () => {
-            console.log('Connected to server!');
-        });
+        const connectSocket = async () => {
+            const token = await getToken();
+            if (user) {
+                socket.current = io.connect('http://localhost:5005', { transports: ['websocket'], query: { token } });
+                socket.current.on('connect', () => {
+                    console.log('Connected to server!');
+                });
 
-        socket.on('disconnect', () => {
-            console.log('Disconnected from server!');
-        });
-    }, []);
+                socket.current.on('disconnect', () => {
+                    console.log('Disconnected from server!');
+                });
+
+                socket.current.on('chat message', function (msg) {
+                    chatService
+                        .getMessages()
+                        .then(({ data }) => setMessages(data.reverse()))
+                        .catch(err => console.log(err))
+                });
+            } else {
+                socket.current.disconnect();
+            }
+        };
+
+        connectSocket();
+    }, [getToken, user]);
+
+    const handleSubmit = (event) => {
+        const chatInput = document.getElementById('chat');
+        const message = chatInput.value
+        event.preventDefault();
+
+        chatService
+            .createMessage({ message })
+            .then(() => chatService.getMessages())
+            .then(({ data }) => setMessages(data.reverse()))
+            .catch(err => console.log(err))
+
+        socket.current.emit('chat message', chatInput.value);
+        chatInput.value = '';
+    };
 
     return (
-        <div style={{ width: '200px', height: '400px' }}>
-            <input value={message} onChange={(event) => setMessage(event.target.value)} />
-            <button onClick={sendMessage}>Send</button>
-        </ div>
+        <>
+            {user &&
+                <div style={{ width: '300px', backgroundColor: 'red', position: 'fixed', bottom: '0', right: '0' }}>
+                    <ul>
+                        {messages.map(({ message, owner, _id }) => (
+                            <li key={_id}><strong>{owner?.name}</strong>{message}</li>
+                        ))}
+                    </ul>
+                    <form onSubmit={handleSubmit} className='d-flex'>
+                        <input id="chat" />
+                        <button type="submit">Send</button>
+                    </form>
+                </div>
+            }
+        </>
+
     );
 };
 
