@@ -15,16 +15,7 @@ const ChatForm = () => {
         if (user) {
             socket.current = io.connect('http://localhost:5005', { transports: ['websocket'], query: { token: getToken() } });
 
-            socket.current.on('connect', () => {
-                console.log('Connected to server!');
-            });
-
-            socket.current.on('disconnect', () => {
-                console.log('Disconnected from server!');
-            });
-
             socket.current.on('chat message', function (msg) {
-                console.log('me emito')
                 chatService
                     .getMessages()
                     .then(({ data }) => setMessages(data.reverse()))
