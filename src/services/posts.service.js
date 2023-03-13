@@ -33,8 +33,8 @@ class PostService {
         return this.api.get(`/`)
     }
 
-    getPosts(country, { alphabetic, score }) {
-        return this.api.get(`/country/${country}/?alphabetic=${alphabetic}&score=${score}`)
+    getPosts(country, { alphabetic, score, page }) {
+        return this.api.get(`/country/${country}/?alphabetic=${alphabetic}&score=${score}&page=${page}`)
     }
 
     getByOwner(id) {
