@@ -21,7 +21,6 @@ const CountryInfo = ({ country }) => {
         refreshVotes()
     }, [])
 
-
     const handleClick = (e) => {
 
         e.preventDefault()
@@ -58,8 +57,10 @@ const CountryInfo = ({ country }) => {
         <>
             <h1>{country.flag}{country.name}</h1>
             <FavoriteForm specs={{ type: 'COUNTRY', id }} />
+
             <h1>Votes: {votes}</h1>
             <VotesForm setVote={setVote} />
+
             <PostsOptions filterPosts={filterPosts} country={id} />
             <PostsList posts={posts} />
             {

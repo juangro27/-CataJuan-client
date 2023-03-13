@@ -8,6 +8,8 @@ const PostsOptions = ({ country, filterPosts }) => {
         alphabetic: '',
         score: '',
     })
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(0)
 
     useEffect(() => {
 
@@ -18,10 +20,11 @@ const PostsOptions = ({ country, filterPosts }) => {
     const getPosts = queries => {
 
         postsService
-            .getPosts(country, queries)
+            .getPosts(country, { ...queries, page: currentPage })
             .then(({ data }) => {
-                console.log('data', data)
-                filterPosts(data)
+                filterPosts(data.posts)
+                setCurrentPage(data.currentPage)
+                setTotalPages(data.totalPages)
             })
             .catch(err => console.log(err))
 
@@ -51,6 +54,16 @@ const PostsOptions = ({ country, filterPosts }) => {
 
     }
 
+    const nextPage = () => {
+        currentPage < totalPages && setCurrentPage(currentPage + 1)
+        setQueries({ ...queries, page: currentPage })
+    }
+
+    const previousPage = () => {
+        currentPage > 1 && setCurrentPage(currentPage - 1)
+        setQueries({ ...queries, page: currentPage })
+    }
+
 
     return (
         <>
@@ -72,6 +85,18 @@ const PostsOptions = ({ country, filterPosts }) => {
 
                 <Button onClick={resetOptions}>Reset</Button>
             </Form>
+
+            <div className="d-flex m-2 align-content-center">
+                {currentPage !== 1 &&
+                    <Button onClick={() => previousPage()}>Previous</Button>
+                }
+
+                <p className="m-2">Page: {currentPage} / {totalPages}</p>
+
+                {currentPage < totalPages &&
+                    <Button onClick={() => nextPage()}>Next</Button>
+                }
+            </div>
         </>
     )
 }
