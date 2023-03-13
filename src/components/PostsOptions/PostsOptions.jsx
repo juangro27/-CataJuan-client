@@ -20,7 +20,6 @@ const PostsOptions = ({ country, filterPosts }) => {
         postsService
             .getPosts(country, queries)
             .then(({ data }) => {
-                console.log('data', data)
                 filterPosts(data)
             })
             .catch(err => console.log(err))
@@ -48,6 +47,13 @@ const PostsOptions = ({ country, filterPosts }) => {
         const { value } = e.target
 
         setQueries({ ...queries, [id]: value })
+        if (id === 'score') {
+            const select = document.getElementById('alphabetic')
+            select.selectedIndex = 0;
+        } else {
+            const select = document.getElementById('score')
+            select.selectedIndex = 0;
+        }
 
     }
 

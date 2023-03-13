@@ -24,9 +24,10 @@ const PostPage = () => {
         postsService
             .getOnePost(id)
             .then(({ data }) => {
-                console.log(data)
+
                 setCommentsArr(data.comments)
                 setPost({ ...data, title: capitalize(data.title) })
+
             })
             .catch(err => console.log(err))
 
@@ -35,9 +36,7 @@ const PostPage = () => {
 
         commentsService
             .getComments('POST', id)
-            .then(({ data }) => {
-                setCommentsArr(data.comments)
-            })
+            .then(({ data }) => setCommentsArr(data.comments))
             .catch(err => console.log(err))
     }
 

@@ -12,11 +12,8 @@ const CountryOptions = ({ filterCountries }) => {
         illegalSameSexRelationships: '',
         transgenderLegal: '',
         calification: '',
-        transMurderRates: '',
-        safetyIndex: '',
-        alphabetic: '',
+        sort: {},
         page: 1,
-        score: '',
     })
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0)
@@ -26,6 +23,7 @@ const CountryOptions = ({ filterCountries }) => {
         getCountries(queries)
 
     }, [queries])
+
 
     const getCountries = queries => {
 
@@ -51,19 +49,19 @@ const CountryOptions = ({ filterCountries }) => {
             illegalSameSexRelationships: '',
             transgenderLegal: '',
             calification: '',
-            transMurderRates: '',
-            safetyIndex: '',
-            alphabetic: '',
+            sort: {},
             page: 1,
-            score: '',
-        })
+        });
 
-        const form = document.getElementById('options');
+        setCurrentPage(1);
+        setTotalPages(0);
+
+        const form = document.getElementById('filter');
         const selectElements = form.getElementsByTagName('select');
+
         for (let i = 0; i < selectElements.length; i++) {
             selectElements[i].selectedIndex = 0;
         }
-
     }
 
     const handleOption = e => {
@@ -71,7 +69,25 @@ const CountryOptions = ({ filterCountries }) => {
         const { id } = e.target
         const { value } = e.target
 
-        setQueries({ ...queries, [id]: value })
+        if (id !== 'sort') setQueries({ ...queries, [id]: value })
+        else {
+            value === "Murder0"
+                ? setQueries({ ...queries, sort: { transMurderRates: -1 } })
+                : value === "Murder1"
+                    ? setQueries({ ...queries, sort: { transMurderRates: 1 } })
+                    : value === "Safety0"
+                        ? setQueries({ ...queries, sort: { safetyIndex: -1 } })
+                        : value === "Safety1"
+                            ? setQueries({ ...queries, sort: { safetyIndex: 1 } })
+                            : value === "Name0"
+                                ? setQueries({ ...queries, sort: { name: -1 } })
+                                : value === "Name1"
+                                    ? setQueries({ ...queries, sort: { name: 1 } })
+                                    : value === "Score0"
+                                        ? setQueries({ ...queries, sort: { score: -1 } })
+                                        : setQueries({ ...queries, sort: { score: 1 } })
+        }
+
 
     }
 
@@ -90,10 +106,10 @@ const CountryOptions = ({ filterCountries }) => {
     return (
         <>
 
-            <Form id="options" className="m-5">
+            <Form id="filter" className="m-5">
 
                 Discrimination protection
-                <Form.Select id="discriminationProtection" defaultValue='' onChange={handleOption}>
+                <Form.Select as="select" id="discriminationProtection" defaultValue='' onChange={handleOption}>
                     <option value="">Select option</option>
                     <option value="Constitutional protections">Constitutional protections</option>
                     <option value="Broad protections">Broad protections</option>
@@ -105,7 +121,7 @@ const CountryOptions = ({ filterCountries }) => {
                 <Form.Select id="violenceCriminalization" defaultValue='' onChange={handleOption} >
                     <option value="">Select option</option>
                     <option value="Hate crimes">Hate crimes</option>
-                    <option value="Inicitement">Inicitement</option>
+                    <option value="Incitement">Incitement</option>
                     <option value="Limited protections">Limited protections</option>
                     <option value="No protections">No LGBTQ+ protections</option>
                 </Form.Select>
@@ -136,53 +152,39 @@ const CountryOptions = ({ filterCountries }) => {
                 Transgender Legal Identity Laws
                 <Form.Select id="transgenderLegal" defaultValue='' onChange={handleOption} >
                     <option value="">Select option</option>
-                    <option value="Allowed">Allowed</option>
-                    <option value="Punishments range from jail time to the death penalty">Punishments range from jail time to the death penalty</option>
+                    <option value="No information">No information</option>
+                    <option value="Illegal">Illegal</option>
+                    <option value="Legal to change gender without sex reassignment surgery">Legal to change gender without sex reassignment surgery</option>
                 </Form.Select>
 
                 Calification
                 <Form.Select id="calification" defaultValue='' onChange={handleOption}>
                     <option value="">Select option</option>
                     <option value="f">F</option>
-                    <option value="d-">D-</option>
+                    <option value="d%2D">D-</option>
                     <option value="d">D</option>
-                    <option value="d+">D+</option>
-                    <option value="c-">C-</option>
+                    <option value="d%2B">D+</option>
+                    <option value="c%2D">C-</option>
                     <option value="c">C</option>
-                    <option value="c+">C+</option>
-                    <option value="b-">B-</option>
+                    <option value="c%2B">C+</option>
+                    <option value="b%2D">B-</option>
                     <option value="b">B</option>
-                    <option value="b+">B+</option>
-                    <option value="a-">A-</option>
+                    <option value="b%2B">B+</option>
+                    <option value="a%2D">A-</option>
                     <option value="a">A</option>
                 </Form.Select>
 
-                Sort by: Tans Murder Rates
-                <Form.Select id="transMurderRates" defaultValue='' onChange={handleOption}>
+                Sort by:
+                <Form.Select id="sort" defaultValue='' onChange={handleOption}>
                     <option value="">Select option</option>
-                    <option value="-1">Ascending</option>
-                    <option value="1">Descending-</option>
-                </Form.Select>
-
-                Sort by: Safety Index
-                <Form.Select id="safetyIndex" defaultValue='' onChange={handleOption}>
-                    <option value="">Select option</option>
-                    <option value="-1">Ascending</option>
-                    <option value="1">Descending</option>
-                </Form.Select>
-
-                Sort Alphabetically
-                <Form.Select id="alphabetic" defaultValue='' onChange={handleOption}>
-                    <option value="">Select option</option>
-                    <option value="1">A-Z</option>
-                    <option value="-1">Z-A</option>
-                </Form.Select>
-
-                Sort by Score
-                <Form.Select id="score" defaultValue='' onChange={handleOption}>
-                    <option value="">Select option</option>
-                    <option value="1">Lowest first</option>
-                    <option value="-1">Highest first</option>
+                    <option value="Murder0">Trans Murder Rates: Ascending</option>
+                    <option value="Murder1">Trans Murder Rates: Descending</option>
+                    <option value="Safety0">Safety Index: Ascending</option>
+                    <option value="Safety1">Safety Index: Descending-</option>
+                    <option value="Name1">Name: A-Z</option>
+                    <option value="Name0">Name: Z-A</option>
+                    <option value="Score1">Score: Lowest first</option>
+                    <option value="Score0">Score: Highest first</option>
                 </Form.Select>
 
                 <Button onClick={resetOptions}>Reset</Button>
