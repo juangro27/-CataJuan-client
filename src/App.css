@@ -1,0 +1,551 @@
+h1 {
+    text-align: center;
+    margin: 20px;
+    font-size: 40px;
+}
+
+/* header */
+.header {
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    border-bottom: 1px solid #e3e5ed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.75rem;
+}
+
+.header-logo {
+    height: 40px;
+    width: 40px;
+    margin-right: 20px;
+}
+
+/* navbar */
+
+.navbar {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-link {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    height: 64px;
+    min-width: 64px;
+    border-radius: 8px;
+    margin-left: 6px;
+}
+
+.navbar-link:hover {
+    text-decoration: none;
+}
+
+.navbar-link:active {
+    text-decoration: none;
+}
+
+
+.navbar-link p {
+    margin-top: 6px;
+    font-size: 0.7rem
+}
+
+.theme-icon {
+    margin-right: 20px;
+}
+
+.header-user {
+    display: none;
+}
+
+
+.header-links {
+    display: none;
+}
+
+.header-links-mobile {
+    position: absolute;
+    z-index: 10000;
+    left: 0;
+    top: 65px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-links-mobile a {
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    border-bottom: #c2c2c2 1px solid;
+}
+
+
+/* Esto es de SignUpForm */
+.form {
+    text-align: center;
+    width: 80%;
+    margin: 15px 0;
+}
+
+
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 90px);
+}
+
+.form-container h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+
+.input {
+    margin-bottom: 25px;
+}
+
+.input label {
+
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+
+}
+
+/* ErrorForm */
+
+.error-alert {
+    position: fixed;
+    z-index: 9999;
+    bottom: 0;
+
+    left: 0;
+}
+
+.error-alert-notification {
+    margin: 10px;
+}
+
+.error-alert-notification h1 {
+    font-size: 1.2rem;
+    margin: 5px;
+}
+
+/* Country Options Filter */
+.filtering {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.filtering-options {
+    width: 100%;
+    margin: 0;
+    border-radius: 12px;
+}
+
+.filtering {
+    padding: 15px;
+}
+
+.filtering select {
+    margin-top: 10px;
+}
+
+.filtering button {
+    grid-row: 3;
+    padding: 0 120px;
+    margin-top: 15px;
+}
+
+.wide-btn {
+    display: flex;
+    flex-direction: column;
+}
+
+.wide-btn button {
+    padding: 0 60px;
+    margin-top: 15px;
+}
+
+
+.login-submit button {
+
+    width: 100%;
+}
+
+.countries-list-accordion {
+    padding: 70px 5% 40px;
+}
+
+.countries-list-accordion section {
+    margin: 0;
+}
+
+.country-list-result {
+    margin-bottom: 40px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+/* Mapa */
+
+
+.map {
+    display: none;
+}
+
+
+.country-card {
+    width: 100%;
+}
+
+.country-card img {
+    height: 100px;
+}
+
+
+/* Country List */
+
+
+.content-card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.country-card-container {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    margin: 0;
+}
+
+.country-card-container a {
+    margin: 5%;
+    width: 100%;
+}
+
+.post-card-container {
+    display: flex;
+    justify-content: center;
+    width: 30%;
+    margin: 20px;
+}
+
+.post-card-container a {
+    margin: 5%;
+    width: 100%;
+}
+
+.post-card-container article div {
+    width: 100%;
+}
+
+.post-card-container header {
+    width: 100%;
+    margin: 0 10px;
+}
+
+
+.post-card-container footer {
+    font-weight: 600;
+}
+
+.post-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.post-card-header p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    margin: 10px;
+}
+
+.user-info p {
+    margin-left: 10px;
+}
+
+.pagination {
+    margin: 40px 0;
+}
+
+/* Country info */
+
+.country-info-container {
+    margin: 20px;
+
+}
+
+.country-info-container h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.country-info-header {
+    font-size: 1.5rem;
+    margin: 30px 35px 0 35px;
+}
+
+.country-info-container button {
+    margin: 0 5px 10px 0;
+}
+
+.post-sorting {
+    margin: 0 30px 10px 30px;
+}
+
+.post-sorting button {
+    margin: 10px 0;
+}
+
+.crete-post-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.crete-post-btn button {
+    padding: 0 50px;
+}
+
+
+.comment-form {
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+
+
+.comment-textarea {
+    width: 70%;
+}
+
+.comment-btn {
+    width: 70%;
+    margin: 10px 0;
+}
+
+.comment-btn button {
+    width: 100%;
+}
+
+.comment-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.comments-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 20%;
+    margin-left: 40px;
+}
+
+.comment-owner {
+    color: #1f1f1f;
+    font-weight: 700;
+}
+
+@media screen and (min-width: 600px) {
+
+    .header-user {
+        display: block;
+    }
+
+    .header-links {
+        display: flex;
+    }
+
+    .header-menu-mobile {
+        display: none;
+    }
+
+
+    .header-user-avatar abbr {
+        width: 100%;
+    }
+
+
+    /* Login */
+    .form {
+        min-width: 400px;
+        width: 40%;
+    }
+
+    /* sign up*/
+
+    .wide-btn {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .wide-btn button {
+        width: 30%;
+        margin: 0 1.66%;
+    }
+
+    /* countrylist filtering options */
+    .filtering {
+        padding: 30px;
+    }
+
+    .filtering-options {
+        width: 100%;
+        display: grid;
+        flex-direction: row;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, auto);
+        grid-gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+        align-items: end;
+        margin: 0;
+        padding: 30px;
+        border-radius: 12px;
+    }
+
+    .filtering select {
+        margin: 15px;
+    }
+
+    .country-card-container {
+        width: 40%;
+    }
+
+    /* chat */
+
+    .chat-container {
+        position: fixed;
+        bottom: 80px;
+        right: 30px;
+        border-radius: 25px 25px 0 0;
+        width: 400px;
+        height: fit-content;
+    }
+
+    .chat-form {
+        position: fixed;
+        width: 400px;
+    }
+
+    .chat-input {
+        position: relative;
+        z-index: 997;
+        border-radius: 25px;
+        height: 52px;
+        width: 100%;
+        border: solid 2px #aeaeae;
+        padding-left: 60px;
+        font-size: 1rem;
+    }
+
+    .chat-input-active {
+        border-radius: 0 0 25px 25px;
+    }
+
+    .chat-input:focus {
+        outline: none;
+    }
+
+    .chat-input::placeholder {
+        font-size: 1rem;
+    }
+
+    .chat-input-icon {
+        position: absolute !important;
+        z-index: 998;
+        top: 3px;
+        left: 1px;
+    }
+
+    .chat-messages-container {
+        width: 100%;
+        border: solid 2px #aeaeae;
+        border-bottom: none;
+        border-radius: 25px 25px 0 0;
+        background-color: #fff;
+        padding: 10px 30px;
+    }
+
+    .chat-messages-container p {
+
+        margin: 5px;
+        font-size: 0.9rem;
+
+    }
+
+    .chat-messages-container a {
+        text-decoration: none;
+        color: #1f1f1f;
+        font-weight: 700;
+    }
+
+    .chat-messages-container a:hover {
+        color: #1f1f1f;
+    }
+
+}
+
+
+@media screen and (min-width: 999px) {
+    .filtering-options {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, auto);
+    }
+
+    .nivo {
+        height: 600px;
+        width: 1000px;
+        align-content: center;
+    }
+
+    .nivo p {
+
+        font-size: 0.9rem;
+        font-weight: 700;
+    }
+
+    .map {
+        margin-top: 20px;
+        width: 100%;
+        max-width: 100vw;
+        display: flex;
+        justify-content: center;
+    }
+
+    .country-card-container {
+        width: 30%;
+    }
+
+}

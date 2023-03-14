@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
-import { Button, Form } from "react-bootstrap"
 import postsService from "../../services/posts.service"
+import { Accordion, AccordionSection, Select, Button } from 'react-rainbow-components';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
+
 
 const PostsOptions = ({ country, filterPosts }) => {
 
-    const [queries, setQueries] = useState({
-        alphabetic: '',
-        score: '',
-    })
+    const [queries, setQueries] = useState({ sort: {} })
 
     useEffect(() => {
 
@@ -19,19 +19,14 @@ const PostsOptions = ({ country, filterPosts }) => {
 
         postsService
             .getPosts(country, queries)
-            .then(({ data }) => {
-                filterPosts(data)
-            })
+            .then(({ data }) => filterPosts(data))
             .catch(err => console.log(err))
 
     }
 
     const resetOptions = () => {
 
-        setQueries({
-            score: '',
-            alphabetic: ''
-        })
+        setQueries({ sort: {} })
 
         const form = document.getElementById('options');
         const selectElements = form.getElementsByTagName('select');
@@ -41,44 +36,62 @@ const PostsOptions = ({ country, filterPosts }) => {
 
     }
 
+    const getQueries = (newQuery) => {
+
+        if (!newQuery) setQueries({ ...queries })
+        else {
+            newQuery === "alphabetic1"
+                ? setQueries({ sort: { title: 1 } })
+                : newQuery === "alphabetic0"
+                    ? setQueries({ sort: { title: -1 } })
+                    : newQuery === "score1"
+                        ? setQueries({ sort: { score: 1 } })
+                        : setQueries({ sort: { score: -1 } })
+        }
+    }
+
+
     const handleOption = e => {
 
-        const { id } = e.target
         const { value } = e.target
 
-        setQueries({ ...queries, [id]: value })
-        if (id === 'score') {
-            const select = document.getElementById('alphabetic')
-            select.selectedIndex = 0;
-        } else {
-            const select = document.getElementById('score')
-            select.selectedIndex = 0;
-        }
+        getQueries(value)
 
     }
 
 
     return (
-        <>
-            <Form id="options" >
+        <div className="post-sorting">
+            <Accordion >
+                <AccordionSection icon={<FontAwesomeIcon icon={faFilter} />}
+                    label="Sort Posts">
+                    <div id='options'>
+                        <Select
+                            label="Sort by:"
+                            labelAlignment="left"
+                            id="alphabetic"
+                            defaultValue=''
+                            onChange={handleOption}
+                            options={[
+                                { value: '', label: 'Select Option' },
+                                { value: 'alphabetic1', label: 'A-Z' },
+                                { value: 'alphabetic0', label: 'Z-A' },
+                                { value: 'score1', label: 'Lowest first' },
+                                { value: 'score0', label: 'Highest first' }
+                            ]}
+                        />
+                    </div>
 
-                Sort Alphabetically
-                <Form.Select id="alphabetic" defaultValue='' onChange={handleOption}>
-                    <option value="">Select option</option>
-                    <option value="1">A-Z</option>
-                    <option value="-1">Z-A</option>
-                </Form.Select>
+                    <Button
+                        label="Reset"
+                        onClick={resetOptions}
+                        variant="brand"
+                        className="wide-btn"
+                    />
 
-                Sort by Score
-                <Form.Select id="score" defaultValue='' onChange={handleOption}>
-                    <option value="">Select option</option>
-                    <option value="1">Lowest first</option>
-                    <option value="-1">Highest first</option>
-                </Form.Select>
-
-                <Button onClick={resetOptions}>Reset</Button>
-            </Form>
-        </>
+                </AccordionSection>
+            </Accordion >
+        </div>
     )
 }
 

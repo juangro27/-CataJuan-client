@@ -4,16 +4,27 @@ import io from 'socket.io-client';
 import chatService from "../../services/chat.service";
 import capitalize from "../../utils/capitalize";
 import { Link } from "react-router-dom";
+import { ButtonIcon } from "react-rainbow-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComment, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const ChatForm = () => {
+    const socket = useRef(null);
     const { user, getToken } = useContext(AuthContext)
+    const [useChat, setUseChat] = useState(false)
+    const handleConnect = () => {
+        if (!useChat) setUseChat(true)
+        else {
+            socket.current.disconnect();
+            setUseChat(false)
+        }
+    }
 
     const [messages, setMessages] = useState([]);
-    const socket = useRef(null);
 
 
     useEffect(() => {
-        if (user) {
+        if (user && useChat) {
             getMessages()
             socket.current = io.connect('http://localhost:5005', { transports: ['websocket'], query: { token: getToken() } });
 
@@ -27,12 +38,13 @@ const ChatForm = () => {
                 socket.current.disconnect();
             }
         };
-    }, [user, getToken]);
+    }, [useChat]);
 
     const handleSubmit = (event) => {
-        const chatInput = document.getElementById('chat');
-        const message = chatInput.value
+
         event.preventDefault();
+        const chatInput = document.getElementById('chat-input');
+        const message = chatInput.value
 
         chatService
             .createMessage({ message })
@@ -51,22 +63,46 @@ const ChatForm = () => {
             .then(({ data }) => setMessages(data.reverse()))
             .catch(err => console.log(err))
     }
-
     return (
         <>
-            {user &&
-                <>
-                    <ul>
+            <>
+                {(user && useChat) &&
+                    <div className="chat-messages-container">
                         {messages.map(({ message, owner, _id }) => (
-                            <li key={_id}><Link to={owner?._id}>{capitalize(owner?.name)}</Link>{` ${capitalize(message)}`}</li>
+                            <p key={_id}><Link to={owner?._id}>{capitalize(owner?.name)}:</Link>{` ${capitalize(message)}`}</p>
                         ))}
-                    </ul>
-                    <form onSubmit={handleSubmit} className='d-flex'>
-                        <input id="chat" />
-                        <button type="submit">Send</button>
-                    </form>
-                </>
-            }
+                    </div>
+                }
+                {
+                    user ?
+                        <form onSubmit={handleSubmit} id='chat' className="chat-form">
+                            <ButtonIcon
+                                className='chat-input-icon'
+                                onClick={handleConnect}
+                                variant="brand"
+                                size="large"
+                                tooltip="Chat"
+                                icon={<FontAwesomeIcon icon={useChat ? faTimes : faComment} />
+                                } />
+
+                            <input placeholder="Start chating..." type="text" id="chat-input" className={useChat ? "chat-input chat-input-active" : "chat-input"} />
+                        </form>
+                        :
+                        <form onSubmit={handleSubmit} id='chat' className="chat-form">
+                            <ButtonIcon
+                                className='chat-input-icon'
+                                onClick={handleConnect}
+                                variant="border-filled"
+                                size="large"
+                                tooltip="Chat"
+                                icon={<FontAwesomeIcon icon={useChat ? faTimes : faComment} />
+                                } />
+
+                            <input placeholder="Start chating..." type="text" id="chat-input" className="chat-input" />
+                        </form>
+                }
+
+            </>
         </>
     );
 };

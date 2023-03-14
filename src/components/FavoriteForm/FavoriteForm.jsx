@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react"
-import { Button } from "react-bootstrap"
 import userService from "../../services/user.service"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Button, ButtonIcon } from 'react-rainbow-components'
+import { faHeart as noFav } from "@fortawesome/free-regular-svg-icons"
+import { faHeart as Fav } from "@fortawesome/free-solid-svg-icons"
+
 
 
 const FavoriteForm = ({ specs }) => {
@@ -24,7 +28,7 @@ const FavoriteForm = ({ specs }) => {
     }
 
 
-    const handleClick = () => {
+    const handleConnect = () => {
 
         userService
             .addFavorite(type, id)
@@ -35,8 +39,13 @@ const FavoriteForm = ({ specs }) => {
     return (
 
         <>
-            <h1>is favorite: {isFavorite ? 'yes' : 'no'}</h1>
-            <Button onClick={handleClick}>Favorite</Button>
+            < ButtonIcon
+                onClick={handleConnect}
+                variant="brand"
+                size="large"
+                tooltip={isFavorite ? "Alredy favorite" : 'Make favorite'}
+                icon={< FontAwesomeIcon icon={isFavorite ? Fav : noFav} />
+                } />
         </>
 
     )

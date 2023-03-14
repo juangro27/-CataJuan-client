@@ -42,7 +42,6 @@ const CountryDetailsPage = () => {
             .catch(err => console.log(err))
 
     }
-
     return (
         <>
             <CountryInfo country={country} />

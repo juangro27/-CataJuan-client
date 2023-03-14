@@ -1,61 +1,15 @@
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react"
-import { Button, Form } from "react-bootstrap"
+import { Accordion, AccordionSection, Select } from 'react-rainbow-components';
+import { ButtonGroup, ButtonIcon, Button, Pagination } from 'react-rainbow-components';
 import countriesService from "../../services/countries.service"
 
-const CountryOptions = ({ filterCountries }) => {
-
-    const [queries, setQueries] = useState({
-        discriminationProtection: '',
-        violenceCriminalization: '',
-        goodPlaceToLive: '',
-        propaganda: '',
-        illegalSameSexRelationships: '',
-        transgenderLegal: '',
-        calification: '',
-        sort: {},
-        page: 1,
-    })
-    const [currentPage, setCurrentPage] = useState(1)
-    const [totalPages, setTotalPages] = useState(0)
-
-    useEffect(() => {
-
-        getCountries(queries)
-
-    }, [queries])
-
-
-    const getCountries = queries => {
-
-        countriesService
-            .getCountries({ ...queries, page: currentPage })
-            .then(({ data }) => {
-                filterCountries(data.countries)
-                setCurrentPage(data.currentPage)
-                setTotalPages(data.totalPages)
-            })
-            .catch(err => console.log(err))
-
-    }
-
+const CountryOptions = ({ resetQueries, getQueries, resetPage }) => {
 
     const resetOptions = () => {
 
-        setQueries({
-            discriminationProtection: '',
-            violenceCriminalization: '',
-            goodPlaceToLive: '',
-            propaganda: '',
-            illegalSameSexRelationships: '',
-            transgenderLegal: '',
-            calification: '',
-            sort: {},
-            page: 1,
-        });
-
-        setCurrentPage(1);
-        setTotalPages(0);
-
+        resetQueries()
         const form = document.getElementById('filter');
         const selectElements = form.getElementsByTagName('select');
 
@@ -66,142 +20,164 @@ const CountryOptions = ({ filterCountries }) => {
 
     const handleOption = e => {
 
-        const { id } = e.target
+        const id = (e.target.parentNode).parentNode.id
         const { value } = e.target
-
-        if (id !== 'sort') setQueries({ ...queries, [id]: value })
-        else {
-            value === "Murder0"
-                ? setQueries({ ...queries, sort: { transMurderRates: -1 } })
-                : value === "Murder1"
-                    ? setQueries({ ...queries, sort: { transMurderRates: 1 } })
-                    : value === "Safety0"
-                        ? setQueries({ ...queries, sort: { safetyIndex: -1 } })
-                        : value === "Safety1"
-                            ? setQueries({ ...queries, sort: { safetyIndex: 1 } })
-                            : value === "Name0"
-                                ? setQueries({ ...queries, sort: { name: -1 } })
-                                : value === "Name1"
-                                    ? setQueries({ ...queries, sort: { name: 1 } })
-                                    : value === "Score0"
-                                        ? setQueries({ ...queries, sort: { score: -1 } })
-                                        : setQueries({ ...queries, sort: { score: 1 } })
-        }
-
+        resetPage()
+        getQueries({ [id]: value })
 
     }
-
-    const nextPage = () => {
-        currentPage < totalPages && setCurrentPage(currentPage + 1)
-        setQueries({ ...queries, page: currentPage })
-    }
-
-    const previousPage = () => {
-        currentPage > 1 && setCurrentPage(currentPage - 1)
-        setQueries({ ...queries, page: currentPage })
-    }
-
-
 
     return (
-        <>
+        <div className="countries-list-accordion">
+            <Accordion >
+                <AccordionSection icon={<FontAwesomeIcon icon={faFilter} />}
+                    label="Filter/Sort Countries">
+                    <div className="filtering">
+                        <div className="filtering-options" id="filter">
+                            <Select
+                                label="Protection against discrimination"
+                                labelAlignment="left"
+                                id="discriminationProtection"
+                                defaultValue=''
+                                onChange={handleOption}
+                                options={[
+                                    { value: '', label: 'Select Option' },
+                                    { value: 'Constitutional protections', label: 'Constitutional protections' },
+                                    { value: 'Broad protections', label: 'Broad protections' },
+                                    { value: 'Limited protections', label: 'Limited protections' },
+                                    { value: 'No protections', label: 'No protections' }
+                                ]}
+                            />
+                            <Select
+                                label="Criminalization against violence"
+                                labelAlignment="left"
+                                id="violenceCriminalization"
+                                defaultValue=''
+                                onChange={handleOption}
+                                options={[
+                                    { value: '', label: 'Select Option' },
+                                    { value: 'Hate crimes', label: 'Hate crimes' },
+                                    { value: 'Incitement', label: 'Incitement' },
+                                    { value: 'Limited protections', label: 'Limited protections' },
+                                    { value: 'No protections', label: 'No protections' }
+                                ]}
+                            />
+                            <Select
+                                label="Is it a good place to live?"
+                                labelAlignment="left"
+                                id="goodPlaceToLive"
+                                defaultValue=''
+                                onChange={handleOption}
+                                options={[
+                                    { value: '', label: 'Select Option' },
+                                    { value: '76-100%', label: '76-100%' },
+                                    { value: '51-75%', label: '51-75%' },
+                                    { value: '26-50%', label: '26-50%' },
+                                    { value: '0-25%', label: '0-25%' }
+                                ]}
+                            />
+                            <Select
+                                label="Propaganda/Morality Laws"
+                                labelAlignment="left"
+                                id="propaganda"
+                                defaultValue=''
+                                onChange={handleOption}
+                                options={[
+                                    { value: '', label: 'Select Option' },
+                                    { value: 'Allowed', label: 'Allowed' },
+                                    {
+                                        value: 'Laws prevent the discussion of Pro-LGTBTQ+ issues',
+                                        label: 'Laws prevent the discussion of Pro-LGTBTQ+ issues'
+                                    },
+                                ]}
+                            />
+                            <Select
+                                label="Illegal Same-sex Relationships"
+                                labelAlignment="left"
+                                id="illegalSameSexRelationships"
+                                defaultValue=''
+                                onChange={handleOption}
+                                options={[
+                                    { value: '', label: 'Select Option' },
+                                    { value: 'Allowed', label: 'Allowed' },
+                                    {
+                                        value: 'Punishments range from jail time to the death penalty',
+                                        label: 'Punishments range from jail time to the death penalty'
+                                    },
+                                ]}
+                            />
+                            <Select
+                                label="Transgender Legal Identity Laws"
+                                labelAlignment="left"
+                                id="transgenderLegal"
+                                defaultValue=''
+                                onChange={handleOption}
+                                options={[
+                                    { value: '', label: 'Select Option' },
+                                    {
+                                        value: 'Legal to change gender without sex reassignment surgery',
+                                        label: 'Legal to change gender without sex reassignment surgery'
+                                    },
+                                    { value: 'Illegal', label: 'Illegal' },
 
-            <Form id="filter" className="m-5">
+                                    { value: 'No information', label: 'No information' }
+                                ]}
+                            />
+                            <Select
+                                label="Calification"
+                                labelAlignment="left"
+                                id="calification"
+                                defaultValue=''
+                                onChange={handleOption}
+                                options={[
+                                    { value: '', label: 'Select Option' },
+                                    { value: 'a', label: 'A' },
+                                    { value: 'a%2D', label: 'A-' },
+                                    { value: 'b%2B', label: 'B+' },
+                                    { value: 'b', label: 'B' },
+                                    { value: 'b%2D', label: 'B-' },
+                                    { value: 'c%2B', label: 'C+' },
+                                    { value: 'c', label: 'C' },
+                                    { value: 'c%2D', label: 'C-' },
+                                    { value: 'd%2B', label: 'D+' },
+                                    { value: 'd', label: 'D' },
+                                    { value: 'd%2D', label: 'D-' },
+                                    { value: 'f', label: 'F' }
+                                ]}
+                            />
 
-                Discrimination protection
-                <Form.Select as="select" id="discriminationProtection" defaultValue='' onChange={handleOption}>
-                    <option value="">Select option</option>
-                    <option value="Constitutional protections">Constitutional protections</option>
-                    <option value="Broad protections">Broad protections</option>
-                    <option value="Limited protections">Limited protections</option>
-                    <option value="No protections">No LGBTQ+ protections</option>
-                </Form.Select>
+                            <Select
+                                label="Sort by:"
+                                labelAlignment="left"
+                                id="sort"
+                                defaultValue=''
+                                onChange={handleOption}
+                                options={[
+                                    { value: '', label: 'Select Option' },
+                                    { value: 'Murder0', label: 'Trans Murder Rates: Ascending' },
+                                    { value: 'Murder1', label: 'Trans Murder Rates: Descending' },
+                                    { value: 'Safety1', label: 'Safety Index: Ascending' },
+                                    { value: 'Safety0', label: 'Safety Index: Descending' },
+                                    { value: 'Name1', label: 'Name: A-Z' },
+                                    { value: 'Name0', label: 'Name: Z-A' },
+                                    { value: 'Score1', label: 'Score: Lowest first' },
+                                    { value: 'Score0', label: 'Score: Highest first' }
+                                ]}
+                            />
+                        </div>
 
-                Criminalization against violence
-                <Form.Select id="violenceCriminalization" defaultValue='' onChange={handleOption} >
-                    <option value="">Select option</option>
-                    <option value="Hate crimes">Hate crimes</option>
-                    <option value="Incitement">Incitement</option>
-                    <option value="Limited protections">Limited protections</option>
-                    <option value="No protections">No LGBTQ+ protections</option>
-                </Form.Select>
+                        <Button
+                            label="Reset"
+                            onClick={resetOptions}
+                            variant="brand"
+                            className="wide-btn"
+                        />
+                    </div>
+                </AccordionSection>
+            </Accordion>
 
-                Is it a good place to live?
-                <Form.Select id="goodPlaceToLive" defaultValue='' onChange={handleOption}>
-                    <option value="">Select option</option>
-                    <option value="0-25%">0-25%</option>
-                    <option value="26-50%">26-50%</option>
-                    <option value="51-75%">51-75%</option>
-                    <option value="76-100%">76-100%</option>
-                </Form.Select>
 
-                Propaganda/Morality Laws
-                <Form.Select id="propaganda" defaultValue='' onChange={handleOption}>
-                    <option value="">Select option</option>
-                    <option value="Allowed">Allowed</option>
-                    <option value="Laws prevent the discussion of Pro-LGTBTQ+ issues">Laws prevent the discussion of Pro-LGTBTQ+ issues</option>
-                </Form.Select>
-
-                Illegal Same-sex Relationships
-                <Form.Select id="illegalSameSexRelationships" defaultValue='' onChange={handleOption} >
-                    <option value="">Select option</option>
-                    <option value="Allowed">Allowed</option>
-                    <option value="Punishments range from jail time to the death penalty">Punishments range from jail time to the death penalty</option>
-                </Form.Select>
-
-                Transgender Legal Identity Laws
-                <Form.Select id="transgenderLegal" defaultValue='' onChange={handleOption} >
-                    <option value="">Select option</option>
-                    <option value="No information">No information</option>
-                    <option value="Illegal">Illegal</option>
-                    <option value="Legal to change gender without sex reassignment surgery">Legal to change gender without sex reassignment surgery</option>
-                </Form.Select>
-
-                Calification
-                <Form.Select id="calification" defaultValue='' onChange={handleOption}>
-                    <option value="">Select option</option>
-                    <option value="f">F</option>
-                    <option value="d%2D">D-</option>
-                    <option value="d">D</option>
-                    <option value="d%2B">D+</option>
-                    <option value="c%2D">C-</option>
-                    <option value="c">C</option>
-                    <option value="c%2B">C+</option>
-                    <option value="b%2D">B-</option>
-                    <option value="b">B</option>
-                    <option value="b%2B">B+</option>
-                    <option value="a%2D">A-</option>
-                    <option value="a">A</option>
-                </Form.Select>
-
-                Sort by:
-                <Form.Select id="sort" defaultValue='' onChange={handleOption}>
-                    <option value="">Select option</option>
-                    <option value="Murder0">Trans Murder Rates: Ascending</option>
-                    <option value="Murder1">Trans Murder Rates: Descending</option>
-                    <option value="Safety0">Safety Index: Ascending</option>
-                    <option value="Safety1">Safety Index: Descending-</option>
-                    <option value="Name1">Name: A-Z</option>
-                    <option value="Name0">Name: Z-A</option>
-                    <option value="Score1">Score: Lowest first</option>
-                    <option value="Score0">Score: Highest first</option>
-                </Form.Select>
-
-                <Button onClick={resetOptions}>Reset</Button>
-            </Form>
-
-            <div className="d-flex m-2 align-content-center">
-                {currentPage !== 1 &&
-                    <Button onClick={() => previousPage()}>Previous</Button>
-                }
-
-                <p className="m-2">Page: {currentPage} / {totalPages}</p>
-
-                {currentPage < totalPages &&
-                    <Button onClick={() => nextPage()}>Next</Button>
-                }
-            </div>
-        </>
+        </div>
     )
 }
 

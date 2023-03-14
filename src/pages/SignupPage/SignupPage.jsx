@@ -1,18 +1,18 @@
-import { Container, Row, Col } from 'react-bootstrap'
+import { useContext } from 'react'
 import SignupForm from '../../components/SignupForm/SignupForm'
+import { ThemeContext } from '../../contexts/theme.context'
 
 const SignupPage = () => {
 
+    const { themeSelected } = useContext(ThemeContext)
+
     return (
-        <Container>
-            <Row>
-                <Col md={{ offset: 3, span: 6 }}>
-                    <h1>Sign up</h1>
-                    <hr />
-                    <SignupForm />
-                </Col>
-            </Row>
-        </Container>
+        <div className={themeSelected.theme === 'light' ? "form-container form-container-light" : "form-container form-container-dark"}>
+
+            <h1>Sign up</h1>
+            <SignupForm />
+
+        </div>
     )
 }
 export default SignupPage

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
-import { Form, Button } from "react-bootstrap"
 import { useState } from "react"
+import { Button, Textarea } from 'react-rainbow-components'
 import commentsService from "../../services/comments.service"
 import FormError from "../FormError/FormError"
 
@@ -17,10 +17,8 @@ const CommentForm = ({ type, refreshComments }) => {
         setComment(value)
 
     }
-
     const handleSubmit = (e) => {
 
-        e.preventDefault()
         commentsService
             .createComment(type, id, { comment })
             .then(() => {
@@ -31,20 +29,31 @@ const CommentForm = ({ type, refreshComments }) => {
 
     }
 
-
     return (
-        <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="comment">
-                <Form.Label>Comment:</Form.Label>
-                <Form.Control as="textarea" rows={3} value={comment} onChange={handleInputChange} />
-            </Form.Group>
+        <div className="comment-form">
 
-            {errors.length > 0 && <FormError>{errors.map((elm, index) => <p key={index}>{elm}</p>)} </FormError>}
-
-            <div className="d-grid">
-                <Button variant="dark" type="submit">Send</Button>
+            <Textarea
+                className="comment-textarea"
+                id="comment"
+                rows={2}
+                placeholder="Insert comment"
+                value={comment}
+                onChange={handleInputChange}
+            />
+            <div className="comment-btn">
+                <Button
+                    label="Comment"
+                    onClick={() => handleSubmit()}
+                    variant="brand"
+                />
             </div>
-        </Form>
+
+            {
+                errors?.length > 0 &&
+                <FormError errorsArr={[errors]} />
+            }
+
+        </div>
     )
 }
 

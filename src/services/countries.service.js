@@ -32,18 +32,25 @@ class CountryService {
     }
 
 
-    getCountries({
-        discriminationProtection,
-        violenceCriminalization,
-        goodPlaceToLive,
-        transgenderLegal,
-        illegalSameSexRelationships,
-        propaganda,
-        calification,
-        sort,
-        page,
-    }) {
-        return this.api.post(`/?discriminationProtection=${discriminationProtection}&violenceCriminalization=${violenceCriminalization}&goodPlaceToLive=${goodPlaceToLive}&transgenderLegal=${transgenderLegal}&illegalSameSexRelationships=${illegalSameSexRelationships}&propaganda=${propaganda}&calification=${calification}&page=${page}`, { sort })
+    getCountries(queries) {
+
+        if (queries) {
+            const {
+                discriminationProtection,
+                violenceCriminalization,
+                goodPlaceToLive,
+                transgenderLegal,
+                illegalSameSexRelationships,
+                propaganda,
+                calification,
+                sort,
+                page,
+            } = queries
+
+            return this.api.post(`/?discriminationProtection=${discriminationProtection}&violenceCriminalization=${violenceCriminalization}&goodPlaceToLive=${goodPlaceToLive}&transgenderLegal=${transgenderLegal}&illegalSameSexRelationships=${illegalSameSexRelationships}&propaganda=${propaganda}&calification=${calification}&page=${page}`, { sort })
+
+        } else return this.api.post(`/`)
+
     }
 
     getCountriesNames(page) {

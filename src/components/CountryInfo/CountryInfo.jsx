@@ -8,6 +8,9 @@ import PostsList from '../PostsList/PostsList'
 import VotesForm from '../VotesForm/VotesForm'
 import FavoriteForm from '../FavoriteForm/FavoriteForm'
 import PostsOptions from '../PostsOptions/PostsOptions'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ButtonIcon, Button } from 'react-rainbow-components'
+
 
 const CountryInfo = ({ country }) => {
 
@@ -55,24 +58,36 @@ const CountryInfo = ({ country }) => {
     }
 
     return (
-        <>
-            <h1>{country.flag}{country.name}</h1>
-            <FavoriteForm specs={{ type: 'COUNTRY', id }} />
-            <h1>Votes: {votes}</h1>
-            <VotesForm setVote={setVote} />
+        <div className='country-info-container'>
+            <div className='country-info-header'>
+                <h1>{country.flag}{country.name}</h1>
+                <FavoriteForm specs={{ type: 'COUNTRY', id }} />
+                <h3>Votes: {votes}</h3>
+                <VotesForm setVote={setVote} />
+                <h3>Posts:</h3>
+            </div>
             <PostsOptions filterPosts={filterPosts} country={id} />
             <PostsList posts={posts} />
-            {
+            {/* {
                 user?.role === 'ADMIN' &&
                 <>
                     <Link to={`/countries/${id}/edit`}>Edit</Link>
                     <Link to={'/delete'} onClick={handleClick}>Delete</Link>
                 </>
-            }
-            <Link to={`/posts/create?country=${id}`} >Create new post</Link>
-        </>
+            } */}
+            <div className="crete-post-btn">
+                <Link to={`/posts/create?country=${id}`} >
+                    <Button
+                        label="Create new post"
+                        variant="brand"
+                        className="wide-btn"
+                    />
+                </Link>
+            </div>
+        </div>
     )
 }
 
 
 export default CountryInfo
+

@@ -21,7 +21,7 @@ const AppRoutes = () => {
             <Route path="/contact" element={<p>CONTACT</p>} />
             <Route path="/countries" element={<CountriesPage />} />
             <Route path="/countries/:id" element={<CountryDetailsPage />} />
-            <Route path="/posts" element={<p>POSTS</p>} />
+            <Route path="/posts" element={<PostPage />} />
             <Route path="/posts/:id" element={<PostPage />} />
 
             <Route element={<PrivateRoute />}>
