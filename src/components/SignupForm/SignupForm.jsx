@@ -1,10 +1,24 @@
-import { useState } from "react"
-import { Form, Button } from "react-bootstrap"
+import { useContext, useState } from "react"
+import { Form } from "react-bootstrap"
 import authService from "../../services/auth.service"
 import { useNavigate } from 'react-router-dom'
 import FormError from "../FormError/FormError"
 
+import { ProgressIndicator, ProgressStep, Button, Input, Notification } from 'react-rainbow-components'
+import styled from 'styled-components'
+import { ThemeContext } from "../../contexts/theme.context"
+// const StyledLabel = styled.p.attrs(props => {
+//     return props.theme.rainbow.palette;
+// })`
+//     color: ${props => props.text.label};
+// `
+
 const SignupForm = () => {
+
+    const stepNames = ['step-1', 'step-2', 'step-3'];
+    const { themeSelected } = useContext(ThemeContext)
+    const [currentStepIndex, setCurrentStepIndex] = useState(0)
+    const [currentStepName, setCurrentStepName] = useState('step-1')
 
     const [signupData, setSignupData] = useState({
         name: '',
@@ -33,39 +47,150 @@ const SignupForm = () => {
 
     }
 
+    const handleOnClick = (event, name) => {
+
+        setCurrentStepName(name)
+        setCurrentStepIndex(Number(name.slice(-1)) - 1)
+
+    }
+
+    const handleNextClick = () => {
+        if (currentStepIndex < stepNames.length - 1) {
+            const nextStepIndex = currentStepIndex + 1
+            setCurrentStepIndex(nextStepIndex)
+            setCurrentStepName(`step-${nextStepIndex + 1}`)
+        }
+    }
+
+    const handleBackClick = () => {
+        if (currentStepIndex > 0) {
+            const previewStepIndex = currentStepIndex - 1
+            setCurrentStepIndex(previewStepIndex)
+            setCurrentStepName(`step-${previewStepIndex + 1}`)
+        }
+    }
+
+    const isNextDisabled = () => {
+        if (currentStepIndex < stepNames.length - 1 && currentStepIndex >= 0) {
+            return false;
+        }
+        return true;
+    }
+
+    const isBackDisabled = () => {
+        if (currentStepIndex > 0 && currentStepIndex < stepNames.length) {
+            return false;
+        }
+        return true;
+    }
+
 
     return (
 
-        <Form onSubmit={handleFormSubmit} >
+        <div className="form">
+            <ProgressIndicator currentStepName={currentStepName} onClick={handleOnClick} className="steps-bar">
+                <ProgressStep name="step-1" />
+                <ProgressStep name="step-2" />
+                <ProgressStep name="step-3" />
+            </ProgressIndicator>
+            <div>
 
-            <Form.Group className="mb-3" controlId="name">
-                <Form.Label>Name:</Form.Label>
-                <Form.Control type="text" value={signupData.name} onChange={handleInputChange} name="name" />
-            </Form.Group>
+            </div>
+            {
+                currentStepIndex === 0 &&
+                <div className={themeSelected.theme === 'light' ? "input input-light" : "input input-dark"}>
+                    <Input
+                        label="Name"
+                        labelAlignment="left"
+                        placeholder="Your name"
+                        type="text"
+                        controlId="name"
+                        name="name"
+                        value={signupData.name}
+                        onChange={handleInputChange}
+                    // style={inputStyles}
+                    />
+                </div>
+            }
+            {
+                currentStepIndex === 1 &&
+                <div className={themeSelected.theme === 'light' ? "input input-light" : "input input-dark"}>
+                    <Input
+                        label="Last name"
+                        labelAlignment="left"
+                        placeholder="Your last name"
+                        type="text"
+                        controlId="lastName"
+                        name="lastName"
+                        value={signupData.lastName}
+                        onChange={handleInputChange}
+                    // style={inputStyles}
+                    />
+                </div>
+            }
+            {
+                currentStepIndex === 2 &&
+                <div>
+                    <div className={themeSelected.theme === 'light' ? "input input-light" : "input input-dark"}>
+                        <Input
+                            label="Email"
+                            labelAlignment="left"
+                            placeholder="Email@gmail.com"
+                            type="email"
+                            controlId="email"
+                            name="email"
+                            value={signupData.email}
+                            onChange={handleInputChange}
+                        // style={inputStyles}
+                        />
+                    </div>
+                    <div className={themeSelected.theme === 'light' ? "input input-light" : "input input-dark"}>
+                        <Input
+                            label="Password"
+                            labelAlignment="left"
+                            placeholder="**********"
+                            type="password"
+                            controlId="password"
+                            name="password"
+                            value={signupData.password}
+                            onChange={handleInputChange}
+                        // style={inputStyles}
+                        />
+                    </div>
+                </div>
+            }
+            <div className="wide-btn">
+                {
+                    currentStepIndex === 2 &&
+                    <Button
+                        label="Submit"
+                        onClick={handleFormSubmit}
+                        variant="brand"
+                    />
+                }
 
-            <Form.Group className="mb-3" controlId="lastName">
-                <Form.Label>Lastname:</Form.Label>
-                <Form.Control type="text" value={signupData.lastName} onChange={handleInputChange} name="lastName" />
-            </Form.Group>
+                <Button
+                    label="Back"
+                    onClick={() => handleBackClick()}
+                    variant="brand"
+                    disabled={isBackDisabled()}
+                />
 
-            <Form.Group className="mb-3" controlId="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" value={signupData.password} onChange={handleInputChange} name="password" />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" value={signupData.email} onChange={handleInputChange} name="email" />
-            </Form.Group>
-
-            {errors?.length > 0 && <FormError>{errors.map((elm, index) => <p key={index}>{elm}</p>)} </FormError>}
-
-            <div className="d-grid">
-                <Button variant="dark" type="submit">Sign Up</Button>
+                <Button
+                    label="Next"
+                    onClick={() => handleNextClick()}
+                    variant="brand"
+                    disabled={isNextDisabled()}
+                />
             </div>
 
-        </Form>
+            {
+                errors?.length > 0 &&
+                <FormError errorsArr={errors} />
+            }
+        </div >
     )
 }
 
 export default SignupForm
+

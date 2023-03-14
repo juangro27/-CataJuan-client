@@ -1,0 +1,81 @@
+.App-dark {
+    min-height: 100vh;
+    background-color: #1f1f1f;
+}
+
+.header-dark {
+    background-color: #1f1f1f;
+}
+
+.navbar-link-dark {
+    color: #fff;
+}
+
+.navbar-link-dark:hover {
+    background-color: #fff;
+    color: #1f1f1f;
+}
+
+.navbar-link-dark:active {
+    background-color: #fff;
+    color: #1f1f1f;
+}
+
+.navbar-link-dark-selected {
+    color: #1f1f1f;
+    background-color: #fff;
+}
+
+.navbar-link-dark-selected:hover {
+    color: #1f1f1f;
+}
+
+.navbar-link-dark-selected:visited {
+    text-decoration: none;
+    color: #1f1f1f;
+}
+
+.header-menu-mobile-dark a {
+    color: #fff;
+}
+
+.header-menu-mobile-dark a:hover {
+    color: #fff;
+}
+
+.header-links-mobile-dark {
+    background-color: #1f1f1f;
+}
+
+/*  Login */
+
+.form-container-dark h1 {
+
+    color: #fff;
+
+}
+
+.input-dark label {
+
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+
+}
+
+@media screen and (min-width: 600px) {
+
+    .header-user-avatar-dark abbr {
+
+        background-color: #fff;
+        color: #1f1f1f;
+
+    }
+
+    .nivo p {
+
+        color: #fff;
+    }
+
+}

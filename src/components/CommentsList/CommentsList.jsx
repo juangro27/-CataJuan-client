@@ -1,15 +1,20 @@
 import { useContext, useState } from "react"
-import { Button, Form } from "react-bootstrap"
+import { Form } from "react-bootstrap"
 import { AuthContext } from "../../contexts/auth.context"
+import { ActivityTimeline, Avatar, TimelineMarker, Button } from "react-rainbow-components"
 import commentsService from "../../services/comments.service"
+import getInitials from "../../utils/getInitials"
 import capitalize from "../../utils/capitalize"
-
+import { ThemeContext } from "../../contexts/theme.context"
+import { Link } from "react-router-dom"
 
 const CommentsList = ({ refreshComments, specs, commentsData }) => {
 
     const [isEdit, setIsEdit] = useState({ status: false, index: null })
     const [commentValue, setCommentValue] = useState('')
     const { user } = useContext(AuthContext)
+    const { themeSelected } = useContext(ThemeContext)
+
 
     const handleInputChange = (e) => {
 
@@ -51,37 +56,62 @@ const CommentsList = ({ refreshComments, specs, commentsData }) => {
     }
 
     return (
-        <ul>
-            {
+        <div className="comments-container">
+            <ActivityTimeline >
+                {
+                    commentsData?.map((comment, index) => {
+                        const { owner } = comment
+                        const name = capitalize(owner.name)
+                        let initials
+                        if (owner) initials = getInitials(owner?.name, owner?.lastName)
+                        return (
+                            (isEdit.status && index === isEdit.index)
+                                ?
+                                <Form.Group className="mb-3" controlId="comment" key={comment._id}>
+                                    <Form.Label>Comment:</Form.Label>
+                                    <Form.Control as="textarea" rows={3} value={commentValue} onChange={handleInputChange} />
+                                    <Button onClick={() => changeIsEdit(null)}>Cancel</Button>
+                                    <Button onClick={() => saveComment(comment._id, index)}>Save</Button>
+                                </Form.Group>
+                                :
+                                <TimelineMarker
+                                    key={comment._id}
+                                    label={<Link className="comment-owner" to={`./users/${comment.owner._id}`}>{capitalize(comment.owner.name)}</Link>}
+                                    icon={
+                                        <Avatar
+                                            src={owner.avatar}
+                                            initialsVariant="inverse"
+                                            className={themeSelected.theme === 'light' ? "header-user-avatar header-user-avatar-light" : "header-user-avatar header-user-avatar-dark"}
+                                            assistiveText={`${capitalize(owner.name)}`}
+                                            title={`${capitalize(owner.name)}`}
+                                            initials={initials}
 
-                commentsData?.map((comment, i) => {
-                    const { owner } = comment
-                    const name = capitalize(owner.name)
+                                        />
+                                    }
+                                    datetime={comment.createdAt}
+                                    description={
+                                        <div className="comment-data">
 
-                    return (
-                        isEdit.status && i === isEdit.index
-                            ?
-                            <Form.Group className="mb-3" controlId="comment" key={comment._id}>
-                                <Form.Label>Comment:</Form.Label>
-                                <Form.Control as="textarea" rows={3} value={commentValue} onChange={handleInputChange} />
-                                <Button onClick={() => changeIsEdit(null)}>Cancel</Button>
-                                <Button onClick={() => saveComment(comment._id, i)}>Save</Button>
-                            </Form.Group>
-                            :
-                            <div key={comment._id}>
-                                <li key={comment._id}>{name}, {comment.comment}</li>
-                                {(owner._id === user?._id || user?.role === 'ADMIN') &&
-                                    <>
-                                        <Button onClick={() => changeIsEdit(true, i, comment.comment)}>Edit</Button>
-                                        <Button onClick={() => deleteComment(comment._id)}>Delete</Button>
-                                    </>
-                                }
-                            </div>
+                                            {capitalize(comment.comment)}
 
-                    )
-                })
-            }
-        </ul>
+                                            {
+
+                                                (owner._id === user?._id || user?.role === 'ADMIN') &&
+                                                <div>
+                                                    <Button onClick={() => changeIsEdit(true, index, comment.comment)}>Edit</Button>
+                                                    <Button onClick={() => deleteComment(comment._id)}>Delete</Button>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                />
+
+
+                        )
+                    })
+                }
+            </ActivityTimeline >
+        </div >
     )
 
 }

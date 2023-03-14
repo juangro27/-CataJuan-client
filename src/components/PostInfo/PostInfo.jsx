@@ -15,8 +15,8 @@ const PostInfo = ({ post }) => {
     const { country } = post
 
     useEffect(() => {
-        refreshVotes()
-    }, [])
+        id && refreshVotes()
+    }, [id])
 
     const handleClick = (e) => {
 

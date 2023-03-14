@@ -1,22 +1,21 @@
+import { faComment, faStar, faTimes } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 import { Button } from "react-bootstrap"
+import { ButtonIcon } from "react-rainbow-components"
 import ChatForm from "../ChatForm/ChatForm"
 
 
 const Chat = () => {
 
-    const [useChat, setUseChat] = useState(false)
 
-
-    const handleConnect = () => setUseChat(true)
 
     return (
 
-        <div style={{ width: '300px', backgroundColor: 'pink', position: 'fixed', bottom: '0', right: '0' }}>
+        <div className="chat-container">
             {
-                useChat
-                    ? <ChatForm></ChatForm>
-                    : <Button onClick={handleConnect}>Connect</Button>
+                <ChatForm></ChatForm>
+
             }
         </div>
 
