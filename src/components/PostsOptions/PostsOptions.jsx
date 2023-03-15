@@ -8,7 +8,6 @@ import { faFilter } from "@fortawesome/free-solid-svg-icons";
 const PostsOptions = ({ country, filterPosts }) => {
 
     const [queries, setQueries] = useState({ sort: {} })
-
     useEffect(() => {
 
         getPosts(queries)
@@ -59,15 +58,6 @@ const PostsOptions = ({ country, filterPosts }) => {
 
     }
 
-    const nextPage = () => {
-        currentPage < totalPages && setCurrentPage(currentPage + 1)
-        setQueries({ ...queries, page: currentPage })
-    }
-
-    const previousPage = () => {
-        currentPage > 1 && setCurrentPage(currentPage - 1)
-        setQueries({ ...queries, page: currentPage })
-    }
 
 
     return (
