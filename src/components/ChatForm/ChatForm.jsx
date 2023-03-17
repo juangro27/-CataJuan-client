@@ -24,7 +24,7 @@ const ChatForm = ({ handleOpenChat, getMessages, handleOpenUserDetailsModal, mes
     useEffect(() => {
         if (user && useChat) {
             getMessages()
-            socket.current = io.connect('http://localhost:5005', { transports: ['websocket'], query: { token: getToken() } });
+            socket.current = io.connect('https://queero.netlify.app', { transports: ['websocket'], query: { token: getToken() } });
 
             socket.current.on('chat message', function (msg) {
                 getMessages()
