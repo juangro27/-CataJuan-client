@@ -63,15 +63,16 @@ const PostPage = () => {
 
                         <PostInfo post={post} />
                         <CommentsList specs={{ type: 'POST', id }} commentsData={commentsArr} refreshComments={refreshComments} />
-
-                        <CommentForm
-                            type='POST'
-                            comments={commentsArr}
-                            refreshComments={refreshComments}
-                            canComment={canComment}
-                            handdleCanComment={handdleCanComment}
-                        />
-
+                        {
+                            user &&
+                            <CommentForm
+                                type='POST'
+                                comments={commentsArr}
+                                refreshComments={refreshComments}
+                                canComment={canComment}
+                                handdleCanComment={handdleCanComment}
+                            />
+                        }
 
                     </>
             }

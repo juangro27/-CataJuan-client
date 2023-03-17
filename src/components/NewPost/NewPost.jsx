@@ -14,7 +14,7 @@ const NewPost = ({ showModal, handleClose }) => {
     const { id } = useParams()
     const navigate = useNavigate()
 
-    useEffect(() => getCountryNameList, [])
+    useEffect(() => getCountryNameList(), [])
 
     const [postData, setPostData] = useState({
         title: '',
