@@ -27,7 +27,7 @@ const AccountNav = () => {
                 className="theme-icon"
                 variant="brand"
 
-                onClick={changeTheme}
+                onClick={() => changeTheme(themeSelected.theme === 'light' ? 'dark' : 'light')}
                 icon={<FontAwesomeIcon icon={themeSelected.theme === 'light' ? faMoon : faSun} />}
             />
             {

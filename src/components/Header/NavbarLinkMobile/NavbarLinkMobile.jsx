@@ -13,7 +13,7 @@ const NavbarLinkMobile = () => {
     const handleClick = (e) => setShowNavbar(!showNavbar)
 
     const haddleChangeTheme = () => {
-        changeTheme()
+        changeTheme(themeSelected.theme === 'light' ? 'dark' : 'light')
         handleClick()
 
     }

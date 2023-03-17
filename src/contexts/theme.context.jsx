@@ -5,7 +5,9 @@ const ThemeContext = createContext()
 
 function ThemeProviderWrapper(props) {
 
-    const [themeSelected, setThemeSelected] = useState({ theme: 'light', variant: 'brand' })
+    const getTheme = () => localStorage.getItem('theme')
+    const themeStored = getTheme()
+    const [themeSelected, setThemeSelected] = useState({ theme: themeStored ? themeStored : 'light', variant: 'brand' })
 
     const theme = {
         rainbow: {
@@ -15,7 +17,8 @@ function ThemeProviderWrapper(props) {
             },
         },
     };
-    const changeTheme = () => {
+    const changeTheme = (theme) => {
+        localStorage.setItem('theme', theme)
         themeSelected.theme === 'light' ? setThemeSelected({ variant: 'inverse', theme: 'dark' }) : setThemeSelected({ variant: 'brand', theme: 'light' })
     }
     return (
