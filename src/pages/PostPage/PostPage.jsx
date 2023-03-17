@@ -1,5 +1,5 @@
 import { useParams, } from 'react-router-dom'
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import commentsService from '../../services/comments.service'
 import postsService from '../../services/posts.service'
 import PostInfo from '../../components/PostInfo/PostInfo'
@@ -8,12 +8,14 @@ import CommentsList from '../../components/CommentsList/CommentsList'
 import CommentForm from '../../components/CommentForm/CommentForm'
 import capitalize from '../../utils/capitalize'
 import { Spinner } from 'react-rainbow-components'
+import { AuthContext } from '../../contexts/auth.context'
 
 const PostPage = () => {
 
     const { id } = useParams()
     const [post, setPost] = useState([])
     const [commentsArr, setCommentsArr] = useState([])
+    const { user } = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(true)
     const [canComment, setCanComment] = useState(true)
 
