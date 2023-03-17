@@ -1,43 +1,43 @@
-import CountryEditForm from "../../components/CountryEditForm/CountryEditForm"
-import { Container, Row, Col } from "react-bootstrap"
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { useContext } from "react"
-import { AuthContext } from "../../contexts/auth.context"
+// import CountryEditForm from "../../components/CountryEditForm/CountryEditForm"
+// import { Container, Row, Col } from "react-bootstrap"
+// import { Navigate, useNavigate, useParams } from 'react-router-dom'
+// import { useContext } from "react"
+// import { AuthContext } from "../../contexts/auth.context"
 
-const CountryEditPage = () => {
+// const CountryEditPage = () => {
 
-    const navigate = useNavigate()
-    const { id } = useParams()
-    const { user } = useContext(AuthContext)
+//     const navigate = useNavigate()
+//     const { id } = useParams()
+//     const { user } = useContext(AuthContext)
 
-    const fireFinalActions = () => navigate(`/countries/${id}`)
+//     const fireFinalActions = () => navigate(`/countries/${id}`)
 
-    return (
-        <>
+//     return (
+//         <>
 
-            {
-                user.role === 'ADMIN' ?
-                    < Container >
+//             {
+//                 user.role === 'ADMIN' ?
+//                     < Container >
 
-                        <h1 className="mb-4">Edit Country</h1>
-                        <hr />
+//                         <h1 className="mb-4">Edit Country</h1>
+//                         <hr />
 
-                        <Row>
+//                         <Row>
 
-                            <Col md={{ span: 8, offset: 2 }}>
+//                             <Col md={{ span: 8, offset: 2 }}>
 
-                                <CountryEditForm fireFinalActions={fireFinalActions} />
+//                                 <CountryEditForm fireFinalActions={fireFinalActions} />
 
-                            </Col >
+//                             </Col >
 
-                        </Row>
+//                         </Row>
 
-                    </Container >
-                    :
-                    <Navigate to={'/login'} />
-            }
-        </>
-    )
-}
+//                     </Container >
+//                     :
+//                     <Navigate to={'/login'} />
+//             }
+//         </>
+//     )
+// }
 
-export default CountryEditPage
+// export default CountryEditPage

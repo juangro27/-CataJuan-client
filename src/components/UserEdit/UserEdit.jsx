@@ -1,21 +1,29 @@
-import { Col, Container, Form, Row, Button, FormGroup } from "react-bootstrap"
 import userService from '../../services/user.service'
 import uploadService from '../../services/upload.service'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../contexts/auth.context'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
+import { Input, Button, Drawer, Avatar, FileSelector } from "react-rainbow-components"
+import capitalize from '../../utils/capitalize'
+import getInitials from '../../utils/getInitials'
 
 
-const UserEdit = () => {
+const UserEdit = ({ userId, handleCloseUserEdit, showUserEditModal, changeUserModal, getMessages, type }) => {
 
     const { authenticateUser, user, storeToken } = useContext(AuthContext)
     const [currentUser, setCurrentUser] = useState({
-        name: user.name,
-        lastName: user.lastName,
-        email: user.email,
-        avatar: user.avatar
+        name: '',
+        lastName: '',
+        email: '',
+        avatar: ''
     })
-    const navigate = useNavigate()
+
+    useEffect(() => { }, [handleCloseUserEdit, showUserEditModal])
+
+    useEffect(() => {
+        getUser(userId)
+    }, [userId,])
+
 
     const handleInputChange = e => {
 
@@ -24,8 +32,19 @@ const UserEdit = () => {
 
     }
 
-    const handleFormSubmit = e => {
+    const closeModal = () => {
+        if (type) handleCloseUserEdit()
+        else changeUserModal()
+    }
 
+    const getUser = () => {
+        userService
+            .getUser(userId)
+            .then(({ data }) => setCurrentUser(data))
+            .catch(err => console.log(err))
+    }
+
+    const handleFormSubmit = e => {
         e.preventDefault()
 
         const formData = new FormData();
@@ -36,72 +55,104 @@ const UserEdit = () => {
             .then(({ data }) => {
 
                 const { cloudinary_url } = data
-                return userService.editUser(user._id, { ...currentUser, avatar: cloudinary_url })
+                return userService.editUser(userId, { ...currentUser, avatar: cloudinary_url })
 
             })
             .then(({ data }) => {
-
-                storeToken(data.authToken)
-                authenticateUser()
-                return navigate('/myprofile')
+                if (user._id === currentUser._id) {
+                    storeToken(data.authToken)
+                    authenticateUser()
+                }
+                getMessages()
+                closeModal()
 
             })
             .catch(err => console.log(err))
     }
+    let initials
+    if (currentUser) initials = getInitials(currentUser?.name, currentUser?.lastName)
 
     return (
-        <Container>
-            <Row>
+        <div>
+            <Drawer
+                header={currentUser && `${capitalize(currentUser.name)} ${capitalize(currentUser.lastName)}`}
+                size='medium'
+                slideFrom="left"
+                isOpen={showUserEditModal}
+                onRequestClose={handleCloseUserEdit}
+            >
 
-                <Form onSubmit={handleFormSubmit} encType="multipart/form-data" >
+                <>
+                    {currentUser &&
+                        <div className='user-modal-container'>
+                            <form encType="multipart/form-data" onSubmit={handleFormSubmit} >
+                                <div className='user-edit-avatar'>
+                                    <Avatar
+                                        src={currentUser.avatar}
+                                        initialsVariant="inverse"
+                                        className="user-info-avatar "
+                                        assistiveText={`${capitalize(currentUser.name)}`}
+                                        title={`${capitalize(currentUser.name)}`}
+                                        initials={initials}
 
-                    <Col md={{ offset: 2, span: 8 }}>
+                                    />
+                                </div>
 
-                        <Row>
-                            <Col>
-                                <FormGroup controlId="name">
-                                    <Form.Label>Name</Form.Label>
-                                    <Form.Control type="text" value={currentUser.name} onChange={handleInputChange} name="name" />
-                                </FormGroup>
-                            </Col>
+                                <FileSelector
+                                    className="rainbow-m-vertical_x-large rainbow-p-horizontal_medium rainbow-m_auto"
+                                    label="File selector"
+                                    name='imageUrl'
+                                    placeholder="Drag & Drop or Click to Browse"
+                                    bottomHelpText="Select only one file"
+                                />
+                                <article>
 
-                            <Col>
-                                <FormGroup controlId="lastName">
-                                    <Form.Label>Last name</Form.Label>
-                                    <Form.Control type="text" value={currentUser.lastName} onChange={handleInputChange} name="lastName" />
-                                </FormGroup>
-                            </Col>
-                        </Row>
 
-                        <hr />
+                                    <p><strong>About me:</strong> <br /> This is a description about me that is not already done.</p>
 
-                        <Row>
-                            <Col>
-                                <FormGroup controlId="imageUrl">
-                                    <Form.Label>Avatar</Form.Label>
-                                    <Form.Control type="file" name="imageUrl" />
-                                </FormGroup>
-                            </Col>
+                                    <Input
+                                        label="Name:"
+                                        name='name'
+                                        value={currentUser.name}
+                                        type="text"
+                                        className="rainbow-p-around_medium"
+                                        onChange={handleInputChange}
+                                    />
 
-                            <Col>
-                                <FormGroup controlId="email">
-                                    <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" value={currentUser.email} onChange={handleInputChange} name="email" />
-                                </FormGroup>
-                            </Col>
+                                    <Input
+                                        label="Last name:"
+                                        name='lastName'
+                                        value={currentUser.lastName}
+                                        type="text"
+                                        className="rainbow-p-around_medium"
+                                        onChange={handleInputChange}
+                                    />
 
-                        </Row>
 
-                        <div className="d-grid m-3">
-                            <Button variant="dark" type="submit">Update</Button>
+                                    <Input
+                                        label="Email:"
+                                        name='email'
+                                        value={currentUser.email}
+                                        type="email"
+                                        className="rainbow-p-around_medium"
+                                        onChange={handleInputChange}
+                                    />
+
+                                    < div className="user-modal-footer" >
+                                        <Button type='submit'>Update</Button>
+                                        <Button onClick={closeModal}> Cancel</Button>
+                                    </div >
+                                </article>
+                            </form>
                         </div>
+                    }
+                </>
+            </Drawer >
 
-                    </Col>
 
 
-                </Form>
-            </Row>
-        </Container>
+
+        </div >
 
 
     )

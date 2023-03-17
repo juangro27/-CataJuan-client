@@ -2,6 +2,8 @@
 
 import React, { useContext } from 'react';
 import rainbowLogo from '../../assets/images/rainbow-logo.svg'
+import logodark from '../../assets/images/logolight.png'
+import logolight from '../../assets/images/logodark.png'
 import SearchForm from '../SearchForm/SearchForm'
 import Navigation from './Navigation/Navigation';
 import { Link } from 'react-router-dom';
@@ -19,7 +21,7 @@ const Header = () => {
             <nav className='navbar'>
                 <Link to='/'>
                     <img
-                        src={rainbowLogo}
+                        src={themeSelected.theme === 'light' ? logodark : logolight}
                         alt="logo"
                         className="header-logo"
                     />

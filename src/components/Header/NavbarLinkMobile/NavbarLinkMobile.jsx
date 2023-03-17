@@ -12,6 +12,12 @@ const NavbarLinkMobile = () => {
 
     const handleClick = (e) => setShowNavbar(!showNavbar)
 
+    const haddleChangeTheme = () => {
+        changeTheme()
+        handleClick()
+
+    }
+
     return (
         <div className={themeSelected.theme === 'dark' ? 'header-menu-mobile header-menu-mobile-dark' : 'header-menu-mobile header-menu-mobile-light'} >
             <a onClick={handleClick}>
@@ -23,9 +29,10 @@ const NavbarLinkMobile = () => {
                     <Link onClick={handleClick} to='./countries'>Countries</Link>
                     <Link onClick={handleClick} to='./posts'>Posts</Link>
                     <Link onClick={handleClick} to='./aboutus'>About Us</Link>
-                    <Link onClick={handleClick} to='./contact'>Contact</Link>
+                    {/* <Link onClick={handleClick} to='./contact'>Contact</Link> */}
                     <Link onClick={handleClick} to='./myprofile'>My Account</Link>
-                    <Link onClick={changeTheme} >{themeSelected.theme === 'light' ? 'Dark mode' : 'Light mode'}</Link>
+                    <Link onClick={handleClick} to='./signup'>Sign Up</Link>
+                    <Link onClick={haddleChangeTheme} >{themeSelected.theme === 'light' ? 'Dark mode' : 'Light mode'}</Link>
                 </div>
             )
             }

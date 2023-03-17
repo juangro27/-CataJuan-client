@@ -51,6 +51,52 @@
     background-color: #fff
 }
 
+.header-user-avatar-light abbr {
+
+    background-color: #1f1f1f;
+    color: #fff;
+
+}
+
+.header-user-avatar-light abbr:hover {
+
+    color: #fff;
+
+}
+
+
+/*  Country details page*/
+
+.country-info-container-light {
+    color: #1f1f1f;
+}
+
+/* index page */
+
+.home-page-container-light p {
+
+    color: #1f1f1f;
+}
+
+.home-page-container-light h1 {
+
+    color: #1f1f1f;
+}
+
+.home-middle-light h2,
+.home-footer-content h2 {
+    color: #1f1f1f;
+}
+
+.aboutus-container-light h1 {
+    color: #1f1f1f;
+}
+
+.aboutus-info-light p,
+.aboutus-info-light h4 {
+    color: #1f1f1f;
+}
+
 /*  Login */
 
 .form-container-light h1 {
@@ -68,19 +114,47 @@
 
 }
 
-@media screen and (min-width: 600px) {
+.comments-container-dark {
+    background-color: #fff;
+}
 
-    .header-user-avatar-light abbr {
 
-        background-color: #1f1f1f;
-        color: #fff;
+/* posts */
 
-    }
+.post-info-buttons-light a {
 
-    .header-user-avatar-light abbr:hover {
+    color: #1f1f1f;
+}
 
-        color: #fff;
+.post-info-buttons-light a:hover {
 
-    }
+    color: #1f1f1f;
+}
+
+/* use profile */
+
+.user-content-light button:hover {
+    color: #fff;
+    backgroundcolor: #1f1f1f;
+}
+
+.user-content-light button {
+
+    color: #fff;
+    background-color: #1f1f1f;
 
 }
+
+.footer-light {
+    background-color: #1f1f1f;
+}
+
+.footer-light p {
+    color: #fff;
+}
+
+.page-title-light {
+    color: #1f1f1f;
+}
+
+@media screen and (min-width: 600px) {}

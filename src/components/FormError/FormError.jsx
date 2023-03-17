@@ -1,4 +1,4 @@
-import { Alert } from "react-bootstrap"
+// import { Alert } from "react-bootstrap"
 import { Notification } from "react-rainbow-components"
 import { useEffect, useState } from "react"
 
@@ -14,24 +14,24 @@ const FormError = ({ errorsArr }) => {
         setErrors(errorsCopy)
     }
 
-    console.log(errors)
 
-    return (< Alert variant={'danger'} className='error-alert'>
-        {
-            errors?.map((elm, index) => {
-                return <Notification
-                    key={index}
-                    className="error-alert-notification"
-                    title="Error"
-                    icon="error"
-                    description={elm}
-                    onRequestClose={() => handleClose(index)}
-                />
-            })
-        }
+    return (
+        < div variant={'danger'} className='error-div'>
+            {
+                errors?.map((elm, index) => {
+                    return <Notification
+                        key={index}
+                        className="error-alert-notification"
+                        title="Error"
+                        icon="error"
+                        description={elm}
+                        onRequestClose={() => handleClose(index)}
+                    />
+                })
+            }
 
 
-    </Alert >
+        </div >
     )
 }
 

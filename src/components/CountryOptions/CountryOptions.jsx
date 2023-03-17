@@ -1,11 +1,13 @@
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react"
+import { useContext } from "react";
 import { Accordion, AccordionSection, Select } from 'react-rainbow-components';
-import { ButtonGroup, ButtonIcon, Button, Pagination } from 'react-rainbow-components';
-import countriesService from "../../services/countries.service"
+import { Button } from 'react-rainbow-components';
+import { ThemeContext } from "../../contexts/theme.context";
 
 const CountryOptions = ({ resetQueries, getQueries, resetPage }) => {
+
+    const { themeSelected } = useContext(ThemeContext)
 
     const resetOptions = () => {
 
@@ -32,7 +34,7 @@ const CountryOptions = ({ resetQueries, getQueries, resetPage }) => {
             <Accordion >
                 <AccordionSection icon={<FontAwesomeIcon icon={faFilter} />}
                     label="Filter/Sort Countries">
-                    <div className="filtering">
+                    <div className={themeSelected.theme === 'light' ? "filtering" : "filtering filtering-dark"}>
                         <div className="filtering-options" id="filter">
                             <Select
                                 label="Protection against discrimination"

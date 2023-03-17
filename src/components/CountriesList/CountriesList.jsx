@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { Link } from 'react-router-dom'
-import { Card, Pagination } from 'react-rainbow-components';
+import { Card, HelpText, Pagination, Spinner } from 'react-rainbow-components';
 import countriesService from "../../services/countries.service"
 import capitalize from '../../utils/capitalize'
 import CountryOptions from "../CountryOptions/CountryOptions"
@@ -14,6 +14,7 @@ const CountriesList = () => {
     const { themeSelected } = useContext(ThemeContext)
     const [countries, setCountries] = useState([])
     const [selectedCountry, setSelectedCountry] = useState('')
+    const [isLoading, setIsLoading] = useState(true)
     const [showModal, setShowModal] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0)
@@ -47,6 +48,7 @@ const CountriesList = () => {
                 setCountries(data.countries)
                 setCurrentPage(data.currentPage)
                 setTotalPages(data.totalPages)
+                setIsLoading(false)
             })
             .catch(err => console.log(err))
 
@@ -111,56 +113,65 @@ const CountriesList = () => {
         setCurrentPage(page)
         setQueries({ ...queries, page: page })
     }
-    console.log(totalPages)
     return (
         <>
-            {(selectedCountry && showModal) &&
-                <ModalCountry handleClose={handleClose} showModal={showModal} country={selectedCountry} />
-            }
 
-            <div className="map">
-                <div id='root' className={themeSelected.theme === 'light' ? 'nivo nivo-light' : 'nivo nivo-dark'}>
-                    <Nivo showCountry={showCountry} />
-                    <p>Safety index map</p>
-                </div>
-            </div>
-
-
-            <CountryOptions getQueries={getQueries} resetQueries={resetQueries} resetPage={resetPage} />
             {
-                countries.length > 0 ?
-                    <div className="content-card-container">
-                        {countries.map(elm => {
-                            return <div key={elm._id} className="country-card-container">
-                                <Link to={elm._id}>
-                                    <Card
-                                        key={elm.id}
-                                        footer={capitalize(elm.name + elm.flag)}
-                                        className='country-card'
-                                    >
-                                        <img src={Image} alt="" />
-                                    </Card>
-
-                                </Link>
-                            </div>
-                        })}
-                    </div>
+                isLoading ?
+                    <Spinner size="large" />
                     :
-                    <p className="country-list-result">No result with the selected filters...</p>
+                    <>
+                        {(selectedCountry && showModal) &&
+                            <ModalCountry handleClose={handleClose} showModal={showModal} country={selectedCountry} />
+                        }
+
+                        <div className="map">
+                            <div id='root' className={themeSelected.theme === 'light' ? 'nivo nivo-light' : 'nivo nivo-dark'}>
+                                <Nivo showCountry={showCountry} />
+                                <div className="map-leyend">
+                                    <p>Safety index map</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <CountryOptions getQueries={getQueries} resetQueries={resetQueries} resetPage={resetPage} />
+                        {
+                            countries.length > 0 ?
+                                <div className="content-card-container">
+                                    {countries.map(elm => {
+                                        return <div key={elm._id} className="country-card-container">
+                                            <Link to={elm._id}>
+                                                <Card
+                                                    key={elm.id}
+                                                    footer={capitalize(elm.name + elm.flag)}
+                                                    className='country-card'
+                                                >
+                                                    <img src={elm.img ? elm.img : Image} alt="" />
+                                                </Card>
+
+                                            </Link>
+                                        </div>
+                                    })}
+                                </div>
+                                :
+                                <p className="country-list-result">No result with the selected filters...</p>
+                        }
+
+                        {
+                            totalPages !== 0 &&
+                            <Pagination
+                                pages={totalPages}
+                                activePage={currentPage}
+                                className={'pagination'}
+                                onChange={handleOnChange}
+                                variant="shaded"
+                            />
+                        }
+
+
+                    </>
             }
-
-            {
-                totalPages !== 0 &&
-                <Pagination
-                    pages={totalPages}
-                    activePage={currentPage}
-                    className={'pagination'}
-                    onChange={handleOnChange}
-                    variant="shaded"
-                />
-            }
-
-
         </>
     )
 

@@ -9,10 +9,10 @@ const NavbarLink = ({ handleClick, selected, to, id, icon, label }) => {
 
     let classActive
 
-    if (selected === id && themeSelected.theme === 'dark') classActive = 'navbar-link navbar-link-dark-selected navbar-link-dark'
-    else if (selected === id && themeSelected.theme === 'light') classActive = 'navbar-link navbar-link-light-selected navbar-link-light'
-    else if (selected !== id && themeSelected.theme === 'light') classActive = 'navbar-link navbar-link-light'
-    else classActive = 'navbar-link navbar-link-dark'
+    if (selected === `/${id}` && themeSelected.theme === 'dark') classActive = 'navbar-link navbar-link-dark-selected navbar-link-dark'
+    else if (selected !== `/${id}` && themeSelected.theme === 'dark') classActive = 'navbar-link navbar-link-dark'
+    else if (selected === `/${id}` && themeSelected.theme === 'light') classActive = 'navbar-link navbar-link-light-selected navbar-link-light'
+    else if (selected !== `/${id}` && themeSelected.theme === 'light') classActive = 'navbar-link navbar-link-light'
 
     return (
         <Link

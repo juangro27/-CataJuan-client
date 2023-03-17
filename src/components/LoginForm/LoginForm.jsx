@@ -3,12 +3,11 @@ import authService from "../../services/auth.service"
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../contexts/auth.context'
 import FormError from "../FormError/FormError"
-import { Button, Input, Notification } from 'react-rainbow-components'
-import styled from 'styled-components'
+import { Button, Input } from 'react-rainbow-components'
 import { ThemeContext } from "../../contexts/theme.context"
 
 
-const LoginForm = () => {
+const LoginForm = ({ handleCloseChat }) => {
 
     const { authenticateUser, storeToken } = useContext(AuthContext)
     const { themeSelected } = useContext(ThemeContext)
@@ -26,7 +25,7 @@ const LoginForm = () => {
         setLoginData({ ...loginData, [name]: value })
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = () => {
 
         authService
             .login(loginData)
@@ -34,13 +33,16 @@ const LoginForm = () => {
                 storeToken(data.authToken)
                 authenticateUser()
             })
-            .then(() => navigate('/'))
+            .then(() => {
+                navigate('/')
+                handleCloseChat()
+            })
             .catch(err => setErrors([err.response.data.errorMessages]))
     }
 
     return (
 
-        <div className="form">
+        < div>
 
 
             <div className={themeSelected.theme === 'light' ? "input input-light" : "input input-dark"}>
@@ -53,7 +55,7 @@ const LoginForm = () => {
                     name="email"
                     value={loginData.email}
                     onChange={handleInputChange}
-                // style={inputStyles}
+
                 />
             </div>
 
@@ -67,7 +69,7 @@ const LoginForm = () => {
                     name="password"
                     value={loginData.password}
                     onChange={handleInputChange}
-                // style={inputStyles}
+
                 />
             </div>
 
@@ -77,7 +79,6 @@ const LoginForm = () => {
                     label="Log in"
                     onClick={() => handleSubmit()}
                     variant="brand"
-                    className="wide-btn"
                 />
             </div>
 

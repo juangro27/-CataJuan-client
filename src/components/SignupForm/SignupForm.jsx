@@ -1,5 +1,4 @@
 import { useContext, useState } from "react"
-import { Form } from "react-bootstrap"
 import authService from "../../services/auth.service"
 import { useNavigate } from 'react-router-dom'
 import FormError from "../FormError/FormError"
@@ -13,7 +12,7 @@ import { ThemeContext } from "../../contexts/theme.context"
 //     color: ${props => props.text.label};
 // `
 
-const SignupForm = () => {
+const SignupForm = ({ handleCloseChat }) => {
 
     const stepNames = ['step-1', 'step-2', 'step-3'];
     const { themeSelected } = useContext(ThemeContext)
@@ -42,7 +41,10 @@ const SignupForm = () => {
 
         authService
             .signup(signupData)
-            .then(() => navigate('/login'))
+            .then(() => {
+                navigate('/login')
+                handleCloseChat()
+            })
             .catch(err => setErrors([err.response.data.errorMessages]))
 
     }
@@ -87,7 +89,7 @@ const SignupForm = () => {
 
     return (
 
-        <div className="form">
+        <div>
             <ProgressIndicator currentStepName={currentStepName} onClick={handleOnClick} className="steps-bar">
                 <ProgressStep name="step-1" />
                 <ProgressStep name="step-2" />
@@ -159,7 +161,7 @@ const SignupForm = () => {
                     </div>
                 </div>
             }
-            <div className="wide-btn">
+            <div className="signup-btn">
                 {
                     currentStepIndex === 2 &&
                     <Button
@@ -188,7 +190,7 @@ const SignupForm = () => {
                 errors?.length > 0 &&
                 <FormError errorsArr={errors} />
             }
-        </div >
+        </ div>
     )
 }
 

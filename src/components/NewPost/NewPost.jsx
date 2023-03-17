@@ -1,46 +1,41 @@
-import { useEffect, useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
-import countriesService from '../../services/countries.service'
+import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import postsService from '../../services/posts.service'
 import uploadService from '../../services/upload.service'
-import { useLocation } from 'react-router-dom'
+import { Input, Button, Modal, Select, FileSelector } from "react-rainbow-components"
 import FormError from "../FormError/FormError"
 import capitalize from '../../utils/capitalize'
+import countriesService from '../../services/countries.service'
 
-const NewPost = () => {
+const NewPost = ({ showModal, handleClose }) => {
 
     const [countries, setCountries] = useState([])
     const [errors, setErrors] = useState([])
-    const location = useLocation()
-    const queryParams = new URLSearchParams(location.search)
-    const myParam = queryParams.get('country')
+    const { id } = useParams()
     const navigate = useNavigate()
+
+    useEffect(() => getCountryNameList, [])
 
     const [postData, setPostData] = useState({
         title: '',
         postImg: '',
         description: '',
-        country: myParam,
+        country: id ? id : '',
     })
 
-    useEffect(() => {
 
-        getNames()
 
-    }, [])
+    const getCountryNameList = () => {
 
-    const getNames = () => {
+        id && setPostData({ ...postData, country: id })
 
         countriesService
-            .getCountriesNames()
+            .getCountriesNamesList()
             .then(({ data }) => setCountries(data))
             .catch(err => console.log(err))
-
     }
 
     const handleInputChange = e => {
-
         const { value, name } = e.target
         setPostData({ ...postData, [name]: value })
 
@@ -49,14 +44,11 @@ const NewPost = () => {
     const handleFormSubmit = (e) => {
 
         e.preventDefault()
-
         const formData = new FormData();
         formData.append('imageUrl', e.target.imageUrl.files[0]);
-
         uploadService
             .uploadImage(formData)
             .then(({ data }) => {
-
                 const { cloudinary_url: postImg } = data
                 return postsService.createPost({ ...postData, postImg })
 
@@ -66,49 +58,86 @@ const NewPost = () => {
 
     }
 
+    const countryList = countries.map(elm => ({
+        value: elm._id,
+        label: capitalize(elm.name)
+    }))
+
     return (
 
-        <Form onSubmit={handleFormSubmit} encType="multipart/form-data" >
+        <div>
 
-            <Form.Group className="mb-3" controlId="title">
-                <Form.Label>Title:</Form.Label>
-                <Form.Control type="text" value={postData.title} onChange={handleInputChange} name="title" />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="description">
-                <Form.Label>Description:</Form.Label>
-                <Form.Control type="text" value={postData.description} onChange={handleInputChange} name="description" />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="country">
-                <Form.Label>Country:</Form.Label>
-                <Form.Select onChange={handleInputChange} name="country" value={myParam ? myParam : ''}>
-                    <option key='' value=''>Select country</option>
-                    {
-                        countries.map(elm => {
-                            return elm._id === myParam ?
-                                <option key={elm._id} value={elm._id}>{capitalize(elm.name)}</option>
-                                :
-                                <option key={elm._id} value={elm._id}>{capitalize(elm.name)}</option>
-                        })
+            <div>
+                <Modal
+                    id="modal-2"
+                    isOpen={showModal}
+                    onRequestClose={handleClose}
+                    title='Create new post'
+                    footer={
+                        < div className="rainbow-flex rainbow-justify_end" >
+                            <Button onClick={handleClose}>
+                                Close
+                            </Button>
+                        </div >
                     }
-                </Form.Select>
+                >
+                    <form encType="multipart/form-data" onSubmit={handleFormSubmit}>
+                        <div>
+                            <Input
+                                label="Title:"
+                                name='title'
+                                type="text"
+                                placeholder='Title'
+                                className="rainbow-p-around_medium"
+                                onChange={handleInputChange}
+                            />
+                            <Input
+                                label="Description:"
+                                name='description'
+                                type="text"
+                                placeholder='Description'
+                                className="rainbow-p-around_medium"
+                                onChange={handleInputChange}
+                            />
 
-            </Form.Group>
+                            <Select
+                                label="Country:"
+                                labelAlignment="left"
+                                id="country"
+                                name="country"
+                                value={postData.country}
+                                onChange={handleInputChange}
+                                options={
+                                    id ?
+                                        countryList
+                                        : [{
+                                            "value": "",
+                                            "label": "Select country..."
+                                        }, ...countryList]
+                                }
+                            />
 
-            <Form.Group className="mb-3" controlId="postImg">
-                <Form.Label>Image</Form.Label>
-                <Form.Control type="file" name="imageUrl" />
-            </Form.Group>
+
+                            <FileSelector
+                                className="rainbow-m-vertical_x-large rainbow-p-horizontal_medium rainbow-m_auto"
+                                label="File selector"
+                                name='imageUrl'
+                                placeholder="Drag & Drop or Click to Browse"
+                                bottomHelpText="Select only one file"
+                            />
+
+                        </div>
+
+                        <Button type="submit">Save</Button>
+                    </form >
+                </Modal>
+            </div>
 
             {errors.length > 0 && <FormError>{errors.map((elm, index) => <p key={index}>{elm}</p>)} </FormError>}
 
 
-            <div className="d-grid mb-3">
-                <Button variant="dark" type="submit">Post</Button>
-            </div>
 
-        </Form >
+        </div >
     )
 }
 

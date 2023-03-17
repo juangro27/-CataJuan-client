@@ -10,7 +10,9 @@ const SignupPage = () => {
         <div className={themeSelected.theme === 'light' ? "form-container form-container-light" : "form-container form-container-dark"}>
 
             <h1>Sign up</h1>
-            <SignupForm />
+            <div className="form">
+                <SignupForm />
+            </div>
 
         </div>
     )

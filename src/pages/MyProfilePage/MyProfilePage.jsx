@@ -1,5 +1,7 @@
+import { faEdit, faHeart, faPlane } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useEffect, useState } from 'react'
-import { Container } from 'react-bootstrap'
+import { Accordion, AccordionSection, Button, Select } from 'react-rainbow-components'
 import { Link } from 'react-router-dom'
 import UserInfo from '../../components/UserInfo/UserInfo'
 import { AuthContext } from '../../contexts/auth.context'
@@ -47,72 +49,84 @@ const MyProfilePage = () => {
     }
 
     return (
-        <Container>
+        <div>
 
             <UserInfo />
 
-            <hr />
-            <h3>My favorite countries</h3>
+            <div className='profile-accordions'>
 
-            {
-                favoriteCountries.length >= 1
+                <Accordion >
+                    <AccordionSection icon={<FontAwesomeIcon icon={faPlane} />}
+                        label="My favorite countries">
 
-                    ? favoriteCountries.map(country => {
-                        return (
-                            <Link key={country._id} to={`/countries/${country._id}`}>
-                                <p>{capitalize(country.name)}</p>
-                            </Link>
-                        )
-                    })
-
-                    : <p>You dont have favorite countries yet.</p>
-            }
-
-            <hr />
-            <h3>My favorite posts</h3>
-
-            {
-                favoritePosts.length >= 1
-
-                    ? favoritePosts.map(post => {
-                        return (
-                            <Link key={post._id} to={`/posts/${post._id}`}>
-                                <p>{capitalize(post.title)}</p>
-                            </Link>
-                        )
-                    })
-
-
-                    : <p>You dont have favorite posts yet.</p>
-            }
-
-
-            <hr />
-            <h3 >My Posts</h3>
-
-            {
-                posts.length >= 1
-
-                    ?
-                    <ul>
                         {
+                            favoriteCountries.length >= 1
 
-                            posts.map(elm => {
-                                return (
-                                    <li key={elm._id}>
-                                        <Link to={`/posts/${elm._id}`}> {capitalize(elm.title)} </Link>
-                                    </li>
-                                )
-                            })
+                                ? favoriteCountries.map(country => {
+                                    return (
+                                        <Link key={country._id} to={`/countries/${country._id}`}>
+                                            <p>{country.flag} {capitalize(country.name)}</p>
+                                        </Link>
+                                    )
+                                })
+
+                                : <p>You dont have favorite countries yet.</p>
                         }
 
-                    </ul>
-                    : <p>You haven't create posts yet.</p>
+                    </AccordionSection>
+                </Accordion >
 
-            }
+                <Accordion >
+                    <AccordionSection icon={<FontAwesomeIcon icon={faHeart} />}
+                        label="My favorite posts">
+
+                        {
+                            favoritePosts.length >= 1
+
+                                ? favoritePosts.map(post => {
+                                    return (
+                                        <Link key={post._id} to={`/posts/${post._id}`}>
+                                            <p>{[post.country.flag]} {capitalize(post.title)} </p>
+                                        </Link>
+                                    )
+                                })
+                                : <p>You dont have favorite posts yet.</p>
+                        }
+
+                    </AccordionSection>
+                </Accordion >
+
+                <Accordion >
+                    <AccordionSection icon={<FontAwesomeIcon icon={faEdit} />}
+                        label="My posts">
+
+                        {
+                            posts.length >= 1
+
+                                ?
+                                <ul>
+                                    {
+
+                                        posts.map(elm => {
+                                            return (
+                                                <li key={elm._id}>
+                                                    <Link to={`/posts/${elm._id}`}>{elm.country.flag} {capitalize(elm.title)}</Link>
+                                                </li>
+                                            )
+                                        })
+                                    }
+
+                                </ul>
+                                : <p>You haven't created posts yet.</p>
+
+                        }
+
+                    </AccordionSection>
+                </Accordion >
+            </div>
 
 
-        </Container>
+        </div>
     )
 }
 export default MyProfilePage

@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import postsService from "../../services/posts.service"
 import { Accordion, AccordionSection, Select, Button } from 'react-rainbow-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { ThemeContext } from "../../contexts/theme.context";
 
 
 const PostsOptions = ({ country, filterPosts }) => {
 
+    const { themeSelected } = useContext(ThemeContext)
     const [queries, setQueries] = useState({ sort: {} })
     useEffect(() => {
 
@@ -63,9 +65,11 @@ const PostsOptions = ({ country, filterPosts }) => {
     return (
         <div className="post-sorting">
             <Accordion >
-                <AccordionSection icon={<FontAwesomeIcon icon={faFilter} />}
+                <AccordionSection
+                    className="post-accordion"
+                    icon={<FontAwesomeIcon icon={faFilter} />}
                     label="Sort Posts">
-                    <div id='options'>
+                    <div id='options' className="country-posts-options">
                         <Select
                             label="Sort by:"
                             labelAlignment="left"
@@ -86,7 +90,7 @@ const PostsOptions = ({ country, filterPosts }) => {
                         label="Reset"
                         onClick={resetOptions}
                         variant="brand"
-                        className="wide-btn"
+                        className={themeSelected.theme === 'light' ? "wide-btn" : "wide-btn wide-btn-dark"}
                     />
 
                 </AccordionSection>

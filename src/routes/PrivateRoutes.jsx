@@ -1,4 +1,5 @@
 import { useContext } from "react"
+import { Spinner } from "react-rainbow-components"
 import { Outlet, Navigate } from "react-router-dom"
 import { AuthContext } from "../contexts/auth.context"
 
@@ -8,7 +9,7 @@ const PrivateRoute = () => {
 
 
     if (isLoading) {
-        return <h1>LOADING...</h1>
+        return <Spinner size="large" />
     }
 
     if (!user) {

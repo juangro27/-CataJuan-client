@@ -57,12 +57,14 @@ const Nivo = ({ showCountry }) => {
     }
 
     return (
-        <MyResponsiveChoropleth
-            data={data}
-            domain={[-200, 383]}
+        <div className='nivo-map'>
+            <MyResponsiveChoropleth
+                data={data}
+                domain={[-200, 383]}
+                onClick={handleMapClick}
+            />
+        </div>
 
-            onClick={handleMapClick}
-        />
     )
 }
 
